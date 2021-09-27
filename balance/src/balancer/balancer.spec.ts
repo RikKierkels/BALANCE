@@ -1,18 +1,24 @@
-import {balance, BalancedETF, ETF} from './balancer';
+import {balance, Fund, FundWeight, Portfolio} from './balancer';
 
-test("given a collection of ETF's and an amount to spend, balances the ETF's",  () => {
-    const etfs: ETF[] = [
-        {name: 'World', quantity: 10, price: 10, targetPercentage: 50},
-        {name: 'EM', quantity: 5, price: 20, targetPercentage: 25},
-        {name: 'S&P500', quantity: 5, price: 40, targetPercentage: 25},
-    ];
-    const expectedBalancedEtfs: BalancedETF[] = [
-        {name: 'World', quantity: 30, percentage: 50},
-        {name: 'EM', quantity: 5, percentage: 16.66},
-        {name: 'S&P500', quantity: 5, percentage: 33.33},
-    ];
+test("given a portfolio and an amount to spend, balances the portfolio",  () => {
+    const portfolioToBalance: Portfolio = {
+        funds: [
+            {name: 'World', quantity: 10, price: 10, weight: {actual: 0.25, target: 0.5}},
+            {name: 'EM', quantity: 5, price: 20, weight: {actual: 0.25, target: 0.25}},
+            {name: 'S&P500', quantity: 5, price: 40, weight: {actual: 0.5, target: 0.25}}
+        ],
+        total: 400
+    };
+    const expectedBalancedPortfolio: Portfolio = {
+        funds: [
+            {name: 'World', quantity: 30, price: 10, weight: {actual: 0.5, target: 0.5}},
+            {name: 'EM', quantity: 5, price: 20, weight: {actual: 0.166, target: 0.25}},
+            {name: 'S&P500', quantity: 5, price: 40, weight: {actual: 0.333, target: 0.25}}
+        ],
+        total: 600
+    };
 
-    const actualBalancedEtfs = balance(etfs, 200);
+    const actualBalancedPortfolio = balance(portfolioToBalance, 200);
 
-    expect(actualBalancedEtfs).toEqual(expectedBalancedEtfs);
+    expect(actualBalancedPortfolio).toEqual(expectedBalancedPortfolio);
 });

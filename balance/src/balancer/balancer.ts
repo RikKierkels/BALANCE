@@ -1,18 +1,22 @@
-export type ETF = {
+export type Fund = {
     name: string;
     quantity: number;
     price: number;
-    targetPercentage: number;
+    weight: FundWeight;
 };
 
-export type BalancedETF = {
-    name: string;
-    quantity: number;
-    percentage: number;
+export type FundWeight = {
+    actual: number;
+    target: number;
 };
 
-const balance = (etfs: ETF[], amount: number): BalancedETF[] => {
-    return [];
+export type Portfolio = {
+    funds: Fund[];
+    total: number;
+};
+
+const balance = (portfolio: Portfolio, amount: number): Portfolio => {
+    return {} as Portfolio;
 };
 
 export {
