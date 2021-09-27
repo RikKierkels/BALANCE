@@ -15,33 +15,32 @@ type FundWeight = {
     target: number;
 };
 
-const indexOfMinimum = (xs: number[]) => xs.reduce((min, current, i, xs) => (current < xs[min] ? i : min), 0);
+function repeat<T>(times: number): (f: (arg: T) => T) => (arg: T) => T {
+    return (f) => (arg) => times === 0 ?
+        arg :
+        repeat<T>(--times)(f)(f(arg));
+};
+
 const difference = (a: number,b: number) => a - b;
 const differenceBetweenWeights = ({weight}: Fund) => difference(weight.actual, weight.target);
 const byDifferenceInWeights = (a: Fund, b: Fund) => differenceBetweenWeights(a) - differenceBetweenWeights(b);
 
-const balance = (portfolio: Portfolio, amount: number): Portfolio => {
-    let prices = portfolio.funds.map(({price}) => price);
-    let targets = portfolio.funds.map(({weight}) => weight.target);
-    let stocks = portfolio.funds.map(({quantity}) => quantity);
+const _balance = (amount: number) => ({funds, total}: Portfolio): Portfolio => {
+    const fundsToBalance = funds.sort(byDifferenceInWeights).filter(fund => fund.price <= amount);
+    if (fundsToBalance.length == 0) return {funds, total};
+    const fundToBalance = fundsToBalance[0];
 
-    let funds = portfolio.funds;
-    let total = portfolio.total;
+    total += fundToBalance.price;
+    const index = funds.indexOf(fundToBalance);
+    funds[index] = ({...fundToBalance, quantity: fundToBalance.quantity + 1});
+    funds = funds.map(fund => ({...fund, weight: {...fund.weight, actual: (fund.quantity * fund.price) / total}}))
 
-    while(true) {
-        const fundsToBalance = funds.sort(byDifferenceInWeights).filter(fund => fund.price <= amount);
-        if (fundsToBalance.length == 0) break;
-        const fundToBalance = fundsToBalance[0];
-
-        total += fundToBalance.price;
-        amount -= fundToBalance.price;
-        const index = funds.indexOf(fundToBalance);
-        funds[index] = ({...fundToBalance, quantity: fundToBalance.quantity + 1});
-        funds = funds.map(fund => ({...fund, weight: {...fund.weight, actual: (fund.quantity * fund.price) / total}}))
-    }
-
-    return {funds, total};
+    return _balance(amount - fundToBalance.price)({funds, total});
 };
+
+// TODO: Get rid of the explicit Portfolio type
+const balance = (portfolio: Portfolio, amount: number, times: number) =>
+    repeat<Portfolio>(times)(_balance(amount))(portfolio);
 
 export {
     balance
