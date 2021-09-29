@@ -1,5 +1,5 @@
 import { Fund, Portfolio } from "./portfolio";
-import { diff, compareKeepOne, repeat, mapIf } from "../common";
+import { compareKeepOne, diff, repeat } from "../common";
 
 const weightGap = ({ weight }: Fund) => diff(weight.target, weight.actual);
 const weightGapComparer = (a: Fund, b: Fund) => weightGap(a) < weightGap(b);
