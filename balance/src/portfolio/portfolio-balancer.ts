@@ -1,9 +1,9 @@
 import { Fund, Portfolio } from "./portfolio";
-import { compareKeepOne, diff, repeat } from "../common";
+import { compareToKeepOne, diff, isEmpty, repeat } from "../common";
 
 const weightGap = ({ weight }: Fund) => diff(weight.target, weight.actual);
 const weightGapComparer = (a: Fund, b: Fund) => weightGap(a) < weightGap(b);
-const fundWithLargestWeightGap = compareKeepOne(weightGapComparer);
+const fundWithLargestWeightGap = compareToKeepOne(weightGapComparer);
 const isAffordable =
   (amount: number) =>
   ({ price }: Fund) =>
@@ -22,15 +22,15 @@ const _balance =
   (amount: number) =>
   ({ funds, total }: Portfolio): Portfolio => {
     const affordableFunds = funds.filter(isAffordable(amount));
-    const fundToIncrease = fundWithLargestWeightGap(affordableFunds);
-    if (!fundToIncrease) return { funds, total };
+    if (isEmpty(affordableFunds)) return { funds, total };
 
+    const { id, price } = fundWithLargestWeightGap(affordableFunds);
     const portfolio: Portfolio = {
-      funds: funds.map((fund) => (fund === fundToIncrease ? increaseQuantityByOne(fund) : fund)),
-      total: total + fundToIncrease.price,
+      funds: funds.map((fund) => (fund.id === id ? increaseQuantityByOne(fund) : fund)),
+      total: total + price,
     };
 
-    return _balance(amount - fundToIncrease.price)(updateWeights(portfolio));
+    return _balance(amount - price)(updateWeights(portfolio));
   };
 
 const balance = (portfolio: Portfolio, amount: number, times: number) => repeat(times)(_balance(amount))(portfolio);

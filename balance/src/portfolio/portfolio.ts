@@ -4,7 +4,7 @@ export type Portfolio = {
 };
 
 export type Fund = {
-  name: string;
+  id: string;
   quantity: number;
   price: number;
   weight: FundWeight;

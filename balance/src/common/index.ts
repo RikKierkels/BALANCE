@@ -4,9 +4,11 @@ export const repeat =
   (arg: T): T =>
     times === 0 ? arg : repeat(--times)(fn)(fn(arg));
 
-export const compareKeepOne =
+export const compareToKeepOne =
   <T>(compareFn: (a: T, B: T) => boolean) =>
-  (xs: T[]): T | null =>
-    xs.length === 0 ? null : xs.reduce((prev, curr) => (compareFn(prev, curr) ? curr : prev));
+  (xs: T[]): T =>
+    xs.reduce((prev, curr) => (compareFn(prev, curr) ? curr : prev));
 
 export const diff = (a: number, b: number) => a - b;
+
+export const isEmpty = <T>(xs: T[]): boolean => !xs?.length;
