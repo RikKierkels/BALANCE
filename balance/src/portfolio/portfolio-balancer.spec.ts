@@ -24,3 +24,18 @@ test("given a portfolio and an amount to spend, balances the portfolio once", ()
 
   expect(actualPortfolio).toEqual(expectedPortfolio);
 });
+
+test("given a portfolio and an amount to spend, balances the portfolio multiple times", () => {
+  const expectedPortfolio: Portfolio = {
+    funds: [
+      { id: "World", quantity: 120, price: 10, weight: { actual: 0.5, target: 0.5 } },
+      { id: "EM", quantity: 30, price: 20, weight: { actual: 0.25, target: 0.25 } },
+      { id: "S&P500", quantity: 15, price: 40, weight: { actual: 0.25, target: 0.25 } },
+    ],
+    total: 2400,
+  };
+
+  let actualPortfolio = balance(portfolio(), 200, 10);
+
+  expect(actualPortfolio).toEqual(expectedPortfolio);
+});
