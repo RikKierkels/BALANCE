@@ -10,6 +10,19 @@ const portfolio = (): Portfolio => ({
   total: 400,
 });
 
+const emptyPortfolio = (): Portfolio => ({
+  funds: [],
+  total: 0,
+});
+
+test("given an empty portfolio, doesn't balance the portfolio", () => {
+  const expectedPortfolio = emptyPortfolio();
+
+  const actualPortfolio = balance(expectedPortfolio, 200, 1);
+
+  expect(actualPortfolio).toEqual(expectedPortfolio);
+});
+
 test("given a portfolio and an amount to spend, balances the portfolio once", () => {
   const expectedPortfolio: Portfolio = {
     funds: [
