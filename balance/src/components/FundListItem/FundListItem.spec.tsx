@@ -9,7 +9,7 @@ test("has the funds identifier", () => {
 
   render(<FundListItem fund={fund} />);
 
-  const name = screen.getByText(fund.id);
+  const name = screen.getByText("World");
   expect(name).toBeInTheDocument();
 });
 
@@ -18,7 +18,7 @@ test("has the quantity ", () => {
 
   render(<FundListItem fund={fund} />);
 
-  const name = screen.getByText(fund.quantity);
+  const name = screen.getByText("10");
   expect(name).toBeInTheDocument();
 });
 
@@ -27,7 +27,7 @@ test("has the price ", () => {
 
   render(<FundListItem fund={fund} />);
 
-  const name = screen.getByText(fund.price);
+  const name = screen.getByText(`€10,00`);
   expect(name).toBeInTheDocument();
 });
 
@@ -36,7 +36,7 @@ test("has the actual weight ", () => {
 
   render(<FundListItem fund={fund} />);
 
-  const name = screen.getByText(fund.weight.actual);
+  const name = screen.getByText("25%");
   expect(name).toBeInTheDocument();
 });
 
@@ -45,6 +45,6 @@ test("has the target weight ", () => {
 
   render(<FundListItem fund={fund} />);
 
-  const name = screen.getByText(fund.weight.target);
+  const name = screen.getByText("50%");
   expect(name).toBeInTheDocument();
 });
