@@ -1,5 +1,5 @@
 import { balance } from "./portfolio-balancer";
-import { Portfolio } from "./portfolio";
+import { Portfolio } from "../../portfolio/portfolio";
 
 const portfolio = (): Portfolio => ({
   funds: [
