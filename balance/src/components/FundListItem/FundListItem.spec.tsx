@@ -27,7 +27,7 @@ test("has the price ", () => {
 
   render(<FundListItem fund={fund} />);
 
-  const name = screen.getByText(`€10,00`);
+  const name = screen.getByText(`€ 10,00`);
   expect(name).toBeInTheDocument();
 });
 
@@ -36,7 +36,7 @@ test("has the actual weight ", () => {
 
   render(<FundListItem fund={fund} />);
 
-  const name = screen.getByText("25%");
+  const name = screen.getByText("25,00%");
   expect(name).toBeInTheDocument();
 });
 
@@ -45,6 +45,6 @@ test("has the target weight ", () => {
 
   render(<FundListItem fund={fund} />);
 
-  const name = screen.getByText("50%");
+  const name = screen.getByText("50,00%");
   expect(name).toBeInTheDocument();
 });
