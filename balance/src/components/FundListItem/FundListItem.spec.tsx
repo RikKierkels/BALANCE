@@ -4,7 +4,7 @@ import FundListItem from "./FundListItem";
 
 const makeFund = (): Fund => ({ id: "World", quantity: 10, price: 10, weight: { actual: 0.25, target: 0.5 } });
 
-test("has the funds identifier", () => {
+test("renders the funds identifier", () => {
   const fund = makeFund();
 
   render(<FundListItem fund={fund} />);
@@ -13,7 +13,7 @@ test("has the funds identifier", () => {
   expect(name).toBeInTheDocument();
 });
 
-test("has the quantity ", () => {
+test("renders the funds quantity", () => {
   const fund = makeFund();
 
   render(<FundListItem fund={fund} />);
@@ -22,7 +22,7 @@ test("has the quantity ", () => {
   expect(name).toBeInTheDocument();
 });
 
-test("has the price ", () => {
+test("renders the funds price", () => {
   const fund = makeFund();
 
   render(<FundListItem fund={fund} />);
@@ -31,7 +31,7 @@ test("has the price ", () => {
   expect(name).toBeInTheDocument();
 });
 
-test("has the actual weight ", () => {
+test("renders the funds actual weight as a percentage", () => {
   const fund = makeFund();
 
   render(<FundListItem fund={fund} />);
@@ -40,7 +40,7 @@ test("has the actual weight ", () => {
   expect(name).toBeInTheDocument();
 });
 
-test("has the target weight ", () => {
+test("renders the funds target weight as a percentage", () => {
   const fund = makeFund();
 
   render(<FundListItem fund={fund} />);

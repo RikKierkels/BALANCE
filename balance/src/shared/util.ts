@@ -1,3 +1,5 @@
+type Maybe<T> = T | null | undefined;
+
 export const repeat =
   (times: number) =>
   <T>(fn: (arg: T) => T) =>
