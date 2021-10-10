@@ -29,6 +29,7 @@ export const defaultTheme: DefaultTheme = {
     sizes: {
       sm: "14px",
       md: "16px",
+      lg: "20px",
     },
   },
 };

@@ -5,6 +5,8 @@ import FundList from "./components/FundList/FundList";
 import Theme from "./design/Theme";
 import PortfolioHeader from "./components/PortfolioHeader/PortfolioHeader";
 import PortfolioTotal from "./components/PortfolioTotal/PortfolioTotal";
+import BalanceButton from "./components/BalanceButton/BalanceButton";
+import styled from "styled-components";
 
 const App = () => {
   const [portfolio, _] = useState<Portfolio>({
@@ -18,17 +20,26 @@ const App = () => {
 
   return (
     <Theme>
-      <PortfolioHeader>
-        <span />
-        <PortfolioTotal total={portfolio.total} />
-      </PortfolioHeader>
-      <FundList>
-        {portfolio.funds.map((fund) => (
-          <FundListItem key={fund.id} fund={fund} />
-        ))}
-      </FundList>
+      <AppContainer>
+        <PortfolioHeader>
+          <span />
+          <PortfolioTotal total={portfolio.total} />
+        </PortfolioHeader>
+        <FundList>
+          {portfolio.funds.map((fund) => (
+            <FundListItem key={fund.id} fund={fund} />
+          ))}
+        </FundList>
+        <BalanceButton>Balance</BalanceButton>
+      </AppContainer>
     </Theme>
   );
 };
+
+const AppContainer = styled.section`
+  ${FundList} {
+    margin-bottom: ${({ theme }) => theme.spacing.md};
+  }
+`;
 
 export default App;

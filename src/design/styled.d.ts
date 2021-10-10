@@ -32,6 +32,7 @@ declare module "styled-components" {
     sizes: {
       sm: string;
       md: string;
+      lg: string;
     };
   };
 
