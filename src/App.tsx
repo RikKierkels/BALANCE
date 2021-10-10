@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { ThemeProvider } from "styled-components";
 import { Portfolio } from "./shared/portfolio";
-import GlobalStyle from "./design/global-styles";
-import { themeDefault } from "./design/theme-default";
 import Center from "./components/Center/Center";
 import FundListItem from "./components/FundListItem/FundListItem";
 import FundList from "./components/FundList/FundList";
+import Theme from "./design/Theme";
 
 function App() {
   const [portfolio, _] = useState<Portfolio>({
@@ -18,8 +16,7 @@ function App() {
   });
 
   return (
-    <ThemeProvider theme={themeDefault}>
-      <GlobalStyle />
+    <Theme>
       <Center>
         <FundList>
           {portfolio.funds.map((fund) => (
@@ -27,7 +24,7 @@ function App() {
           ))}
         </FundList>
       </Center>
-    </ThemeProvider>
+    </Theme>
   );
 }
 

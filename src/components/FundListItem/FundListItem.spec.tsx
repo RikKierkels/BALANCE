@@ -1,9 +1,9 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen } from "../../shared/utils-test";
 import { Fund } from "../../shared/portfolio";
 import FundListItem from "./FundListItem";
 
 const makeFund = (): Fund => ({
-  id: "World",
+  id: "HSBC MSCI World",
   quantity: 10,
   price: 10,
   total: 100,
@@ -15,42 +15,33 @@ test("renders the funds identifier", () => {
 
   render(<FundListItem fund={fund} />);
 
-  const name = screen.getByText("World");
+  const name = screen.getByText("HSBC MSCI World");
   expect(name).toBeInTheDocument();
 });
 
-test("renders the funds quantity", () => {
+test("renders the funds quantity and price", () => {
   const fund = makeFund();
 
   render(<FundListItem fund={fund} />);
 
-  const name = screen.getByText("10");
-  expect(name).toBeInTheDocument();
+  const quantityTimesPrice = screen.getByText("10 x € 10,00");
+  expect(quantityTimesPrice).toBeInTheDocument();
 });
 
-test("renders the funds price", () => {
+test("renders the funds total price", () => {
   const fund = makeFund();
 
   render(<FundListItem fund={fund} />);
 
-  const name = screen.getByText(`€ 10,00`);
-  expect(name).toBeInTheDocument();
+  const total = screen.getByText(`€ 100,00`);
+  expect(total).toBeInTheDocument();
 });
 
-test("renders the funds actual weight as a percentage", () => {
+test("renders the funds weights", () => {
   const fund = makeFund();
 
   render(<FundListItem fund={fund} />);
 
-  const name = screen.getByText("25,00%");
-  expect(name).toBeInTheDocument();
-});
-
-test("renders the funds target weight as a percentage", () => {
-  const fund = makeFund();
-
-  render(<FundListItem fund={fund} />);
-
-  const name = screen.getByText("50,00%");
-  expect(name).toBeInTheDocument();
+  const weights = screen.getByText("25,00% / 50,00%");
+  expect(weights).toBeInTheDocument();
 });

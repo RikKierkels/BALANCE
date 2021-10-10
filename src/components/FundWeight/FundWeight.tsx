@@ -1,12 +1,19 @@
 import React from "react";
-import { FundWeight } from "../../shared/portfolio";
+import { FundWeight as FundWeightType } from "../../shared/portfolio";
+import { usePercentageFormatter } from "../../shared/use-formatter";
 
 type Props = {
-  weight: FundWeight;
+  weight: FundWeightType;
 };
 
-const FundWeight = ({ weight }: Props) => {
-  return null;
+const FundWeight = ({ weight: { actual, target } }: Props) => {
+  const { format } = usePercentageFormatter();
+
+  return (
+    <span>
+      {format(actual)} / {format(target)}
+    </span>
+  );
 };
 
 export default FundWeight;

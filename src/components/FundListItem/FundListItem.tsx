@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { useCurrencyFormatter, usePercentageFormatter } from "../../shared/use-formatter";
 import { Fund } from "../../shared/portfolio";
 import FundTotal from "../FundTotal/FundTotal";
 import FundWeight from "../FundWeight/FundWeight";
+import FundQuantityPrice from "../FundQuantityPrice/FundQuantityPrice";
 
 const Row = styled.li`
   display: grid;
@@ -16,21 +16,15 @@ type Props = {
   fund: Fund;
 };
 
-const FundListItem = ({ fund: { id, quantity, price, total, weight } }: Props) => {
-  const currencyFormatter = useCurrencyFormatter();
-
-  return (
-    <Row>
-      <span>{id}</span>
-      <span>
-        {quantity} x {currencyFormatter.format(price)}
-      </span>
-      <FundTotal total={total} />
-      <FundWeight weight={weight} />
-      <div>E</div>
-      <div>D</div>
-    </Row>
-  );
-};
+const FundListItem = ({ fund: { id, quantity, price, total, weight } }: Props) => (
+  <Row>
+    <span>{id}</span>
+    <FundQuantityPrice quantity={quantity} price={price} />
+    <FundTotal total={total} />
+    <FundWeight weight={weight} />
+    <div>E</div>
+    <div>D</div>
+  </Row>
+);
 
 export default FundListItem;

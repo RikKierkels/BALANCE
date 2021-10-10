@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import { useCurrencyFormatter } from "../../shared/use-formatter";
 
 type Props = {
@@ -6,8 +6,9 @@ type Props = {
 };
 
 const FundTotal = ({ total }: Props) => {
-  const currencyFormatter = useCurrencyFormatter();
-  return <span>{currencyFormatter.format(total)}</span>;
+  const { format } = useCurrencyFormatter();
+
+  return <span>{format(total)}</span>;
 };
 
 export default FundTotal;
