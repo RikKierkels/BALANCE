@@ -1,4 +1,4 @@
-import { useCurrencyFormatter, usePercentageFormatter } from "./useFormatter";
+import { useCurrencyFormatter, usePercentageFormatter } from "./use-formatter";
 import { renderHook } from "@testing-library/react-hooks";
 
 test.each([

@@ -1,6 +1,15 @@
 import { FC } from "react";
 import { Fund } from "../../shared/portfolio";
-import { useCurrencyFormatter, usePercentageFormatter } from "../../shared/useFormatter";
+import { useCurrencyFormatter, usePercentageFormatter } from "../../shared/use-formatter";
+import styled from "styled-components";
+
+const Row = styled.li`
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 80px 80px;
+  align-items: center;
+  padding: ${({ theme }) => theme.spacing.lg};
+  background-color: ${({ theme }) => theme.colors.fundRow.background};
+`;
 
 type Props = {
   fund: Fund;
@@ -11,13 +20,18 @@ const FundListItem: FC<Props> = ({ fund }) => {
   const percentageFormatter = usePercentageFormatter();
 
   return (
-    <li>
-      <div>{fund.id}</div>
-      <div>{fund.quantity}</div>
-      <div>{currencyFormatter.format(fund.price)}</div>
-      <div>{percentageFormatter.format(fund.weight.actual)}</div>
-      <div>{percentageFormatter.format(fund.weight.target)}</div>
-    </li>
+    <Row>
+      <span>{fund.id}</span>
+      <span>
+        {fund.quantity} x {currencyFormatter.format(fund.price)}
+      </span>
+      <span>{currencyFormatter.format(fund.quantity * fund.price)}</span>
+      <span>
+        {percentageFormatter.format(fund.weight.actual)} / {percentageFormatter.format(fund.weight.target)}
+      </span>
+      <div>E</div>
+      <div>D</div>
+    </Row>
   );
 };
 

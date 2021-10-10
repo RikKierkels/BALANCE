@@ -7,6 +7,7 @@ export type Fund = {
   id: string;
   quantity: number;
   price: number;
+  total: number;
   weight: FundWeight;
 };
 

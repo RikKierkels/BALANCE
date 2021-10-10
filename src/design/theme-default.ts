@@ -1,6 +1,6 @@
 import { DefaultTheme } from "styled-components";
 
-export const theme: DefaultTheme = {
+export const themeDefault: DefaultTheme = {
   colors: {
     background: "#F3F3F3",
     actions: {
