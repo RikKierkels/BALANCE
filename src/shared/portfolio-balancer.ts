@@ -25,7 +25,7 @@ const increaseQuantity =
   (fund: Fund): Fund => ({ ...fund, quantity: fund.quantity + by, total: fund.total + by * fund.price });
 const increaseQuantityByOne = increaseQuantity(1);
 
-const updateQuantityOf =
+const increaseQuantityOf =
   ({ id, price }: Fund) =>
   ({ funds, total }: Portfolio): Portfolio => ({
     funds: funds.map((fund) => (fund.id === id ? increaseQuantityByOne(fund) : fund)),
@@ -39,7 +39,7 @@ const _balance =
     if (isEmpty(affordableFunds)) return portfolio;
 
     const fundToBuy = fundWithLargestWeightGap(affordableFunds);
-    const balancePortfolio = pipe(updateQuantityOf(fundToBuy), updateWeights);
+    const balancePortfolio = pipe(increaseQuantityOf(fundToBuy), updateWeights);
 
     return _balance(amount - fundToBuy.price)(balancePortfolio(portfolio));
   };

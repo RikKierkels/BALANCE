@@ -11,7 +11,7 @@ export type Fund = {
   weight: FundWeight;
 };
 
-type FundWeight = {
+export type FundWeight = {
   actual: number;
   target: number;
 };

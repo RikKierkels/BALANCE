@@ -1,11 +1,11 @@
-import React, { FC, FunctionComponent } from "react";
+import React, { FC } from "react";
 import { useCurrencyFormatter } from "../../shared/use-formatter";
 
 type Props = {
   total: number;
 };
 
-const FundTotal: FC<Props> = ({ total }) => {
+const FundTotal = ({ total }: Props) => {
   const currencyFormatter = useCurrencyFormatter();
   return <span>{currencyFormatter.format(total)}</span>;
 };

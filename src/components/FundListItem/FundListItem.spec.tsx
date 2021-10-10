@@ -2,7 +2,13 @@ import { render, screen } from "@testing-library/react";
 import { Fund } from "../../shared/portfolio";
 import FundListItem from "./FundListItem";
 
-const makeFund = (): Fund => ({ id: "World", quantity: 10, price: 10, weight: { actual: 0.25, target: 0.5 } });
+const makeFund = (): Fund => ({
+  id: "World",
+  quantity: 10,
+  price: 10,
+  total: 100,
+  weight: { actual: 0.25, target: 0.5 },
+});
 
 test("renders the funds identifier", () => {
   const fund = makeFund();

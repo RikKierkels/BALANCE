@@ -2,7 +2,7 @@ import React, { FC, FunctionComponent } from "react";
 
 type Props = {};
 
-const Header: FC<Props> = (props) => {
+const Header = ({}: Props) => {
   return null;
 };
 
