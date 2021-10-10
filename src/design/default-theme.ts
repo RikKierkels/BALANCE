@@ -1,6 +1,9 @@
 import { DefaultTheme } from "styled-components";
 
 export const defaultTheme: DefaultTheme = {
+  app: {
+    width: "1020px",
+  },
   colors: {
     background: "#F3F3F3",
     actions: {

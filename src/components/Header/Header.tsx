@@ -1,9 +1,9 @@
-import React from "react";
+import styled from "styled-components";
+import { row } from "../../design/shared";
 
-type Props = {};
-
-const Header = ({}: Props) => {
-  return null;
-};
+const Header = styled.div`
+  background-color: ${({ theme }) => theme.colors.header.background};
+  ${row}
+`;
 
 export default Header;

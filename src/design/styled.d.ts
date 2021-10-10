@@ -1,6 +1,10 @@
 import "styled-components";
 
 declare module "styled-components" {
+  type App = {
+    width: string;
+  };
+
   type Colors = {
     actions: {
       primary: string;
@@ -32,6 +36,7 @@ declare module "styled-components" {
   };
 
   export interface DefaultTheme {
+    app: App;
     colors: Colors;
     spacing: Spacing;
     font: Font;

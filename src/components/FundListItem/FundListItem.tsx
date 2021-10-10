@@ -1,16 +1,14 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Fund } from "../../shared/portfolio";
+import { row } from "../../design/shared";
 import FundTotal from "../FundTotal/FundTotal";
 import FundWeight from "../FundWeight/FundWeight";
 import FundQuantityPrice from "../FundQuantityPrice/FundQuantityPrice";
 
-const Row = styled.li`
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
-  align-items: center;
-  padding: ${({ theme }) => theme.spacing.lg};
+const FundRow = styled.li`
   background-color: ${({ theme }) => theme.colors.fundRow.background};
   font-size: ${({ theme }) => theme.font.sizes.sm};
+  ${row}
 `;
 
 const FundId = styled.span`
@@ -23,12 +21,12 @@ type Props = {
 };
 
 const FundListItem = ({ fund: { id, quantity, price, total, weight } }: Props) => (
-  <Row>
+  <FundRow>
     <FundId>{id}</FundId>
     <FundQuantityPrice quantity={quantity} price={price} />
     <FundTotal total={total} />
     <FundWeight weight={weight} />
-  </Row>
+  </FundRow>
 );
 
 export default FundListItem;
