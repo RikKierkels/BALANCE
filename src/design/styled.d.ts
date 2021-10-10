@@ -25,8 +25,8 @@ declare module "styled-components" {
   };
 
   type Font = {
-    family: string;
     sizes: {
+      sm: string;
       md: string;
     };
   };

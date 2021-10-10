@@ -23,8 +23,8 @@ export const defaultTheme: DefaultTheme = {
     lg: "2rem",
   },
   font: {
-    family: "'Fira Sans', 'Helvetica Neue', sans-serif",
     sizes: {
+      sm: "14px",
       md: "16px",
     },
   },
