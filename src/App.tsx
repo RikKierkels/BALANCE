@@ -3,7 +3,8 @@ import { Portfolio } from "./shared/portfolio";
 import FundListItem from "./components/FundListItem/FundListItem";
 import FundList from "./components/FundList/FundList";
 import Theme from "./design/Theme";
-import Header from "./components/Header/Header";
+import PortfolioHeader from "./components/PortfolioHeader/PortfolioHeader";
+import PortfolioTotal from "./components/PortfolioTotal/PortfolioTotal";
 
 const App = () => {
   const [portfolio, _] = useState<Portfolio>({
@@ -17,10 +18,13 @@ const App = () => {
 
   return (
     <Theme>
-      <Header />
+      <PortfolioHeader>
+        <span />
+        <PortfolioTotal total={portfolio.total} />
+      </PortfolioHeader>
       <FundList>
         {portfolio.funds.map((fund) => (
-          <FundListItem fund={fund} />
+          <FundListItem key={fund.id} fund={fund} />
         ))}
       </FundList>
     </Theme>

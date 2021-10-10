@@ -6,9 +6,9 @@ import FundWeight from "../FundWeight/FundWeight";
 import FundQuantityPrice from "../FundQuantityPrice/FundQuantityPrice";
 
 const FundRow = styled.li`
+  ${row};
   background-color: ${({ theme }) => theme.colors.fundRow.background};
   font-size: ${({ theme }) => theme.font.sizes.sm};
-  ${row}
 `;
 
 const FundId = styled.span`

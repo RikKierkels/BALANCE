@@ -1,7 +1,10 @@
 import React from "react";
+import { render, screen } from "./shared/utils-test";
+import App from "./App";
 
-test("renders learn react link", () => {});
+test("renders the total worth of the portfolio", () => {
+  render(<App />);
 
-test("renders learn react link", () => {});
-
-test("renders learn react link", () => {});
+  const total = screen.getByText("€ 400,00");
+  expect(total).toBeInTheDocument();
+});

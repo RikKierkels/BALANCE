@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { row } from "../../design/shared";
 
-const Header = styled.div`
+const PortfolioHeader = styled.div`
+  ${row};
   background-color: ${({ theme }) => theme.colors.header.background};
-  ${row}
+  grid-template-columns: 2.5fr 2fr;
 `;
 
-export default Header;
+export default PortfolioHeader;
