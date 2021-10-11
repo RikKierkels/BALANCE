@@ -44,6 +44,6 @@ const _balance =
     return _balance(amount - fundToBuy.price)(balancePortfolio(portfolio));
   };
 
-const balance = (portfolio: Portfolio, amount: number, times: number) => repeat(times)(_balance(amount))(portfolio);
+const balance = (portfolio: Portfolio, amount: number, times: number = 1) => repeat(times)(_balance(amount))(portfolio);
 
 export { balance };

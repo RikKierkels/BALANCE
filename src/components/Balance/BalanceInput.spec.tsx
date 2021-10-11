@@ -2,6 +2,8 @@ import { render, screen } from "../../shared/utils-test";
 import BalanceInput from "./BalanceInput";
 import { fireEvent } from "@testing-library/react";
 
+const getNumberInput = () => screen.getByRole("spinbutton");
+
 test("renders the currency symbol", () => {
   render(<BalanceInput amount={100} onChange={() => {}} />);
 
@@ -12,26 +14,26 @@ test("renders the currency symbol", () => {
 test("renders an initial amount", () => {
   render(<BalanceInput amount={100} onChange={() => {}} />);
 
-  const input = screen.getByRole("spinbutton");
+  const input = getNumberInput();
   expect(input).toHaveValue(100);
 });
 
-test("calls onChange when amount is changed to a number", () => {
+test("calls change handler when amount is set to a number", () => {
   const mockedHandleChange = jest.fn();
-  render(<BalanceInput amount={undefined} onChange={mockedHandleChange} />);
+  render(<BalanceInput amount={null} onChange={mockedHandleChange} />);
 
-  const input = screen.getByRole("spinbutton");
+  const input = getNumberInput();
   fireEvent.change(input, { target: { value: "200" } });
 
   expect(mockedHandleChange).toHaveBeenCalledTimes(1);
   expect(mockedHandleChange).toHaveBeenCalledWith(200);
 });
 
-test("calls onChange when amount is emptied", () => {
+test("calls change handler when amount is set to an empty value", () => {
   const mockedHandleChange = jest.fn();
   render(<BalanceInput amount={100} onChange={mockedHandleChange} />);
 
-  const input = screen.getByRole("spinbutton");
+  const input = getNumberInput();
   fireEvent.change(input, { target: { value: "" } });
 
   expect(mockedHandleChange).toHaveBeenCalledTimes(1);

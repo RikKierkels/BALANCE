@@ -1,5 +1,5 @@
-import { useCurrencyFormatter, usePercentageFormatter } from "./use-formatter";
 import { renderHook } from "@testing-library/react-hooks";
+import { useCurrencyFormatter, usePercentageFormatter } from "./use-formatter";
 
 test.each([
   [15.138, "€ 15,14"],

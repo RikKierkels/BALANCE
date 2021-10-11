@@ -1,25 +1,34 @@
-import React, { useState } from "react";
-import { Portfolio } from "./shared/portfolio";
+import React from "react";
+import styled from "styled-components";
+import Theme from "./design/Theme";
 import FundListItem from "./components/Fund/FundListItem";
 import FundList from "./components/Fund/FundList";
-import Theme from "./design/Theme";
 import PortfolioHeader from "./components/Portfolio/PortfolioHeader";
 import PortfolioTotal from "./components/Portfolio/PortfolioTotal";
-import styled from "styled-components";
 import { PrimaryButton } from "./components/Buttons/Buttons";
 import BalanceInput from "./components/Balance/BalanceInput";
 import BalanceForm from "./components/Balance/BalanceForm";
+import useLocalStorageReducer from "./shared/use-local-storage-reducer";
+import { reducer } from "./shared/reducer";
 
 const App = () => {
-  const [amount, setAmount] = useState<number | null>(null);
-  const [portfolio, _] = useState<Portfolio>({
-    funds: [
-      { id: "HSBC World", quantity: 10, price: 10, total: 100, weight: { actual: 0.25, target: 0.5 } },
-      { id: "iShares Emerging Markets", quantity: 5, price: 20, total: 100, weight: { actual: 0.25, target: 0.25 } },
-      { id: "Vanguard S&P500", quantity: 5, price: 40, total: 200, weight: { actual: 0.5, target: 0.25 } },
-    ],
-    total: 400,
-  });
+  const [{ portfolio, amount }, dispatch] = useLocalStorageReducer(
+    reducer,
+    {
+      portfolio: {
+        funds: [
+          { id: "HSBC World", quantity: 10, price: 10, total: 100, weight: { actual: 0.25, target: 0.5 } },
+          { id: "iShares Emerging", quantity: 5, price: 20, total: 100, weight: { actual: 0.25, target: 0.25 } },
+          { id: "Vanguard S&P500", quantity: 5, price: 40, total: 200, weight: { actual: 0.5, target: 0.25 } },
+        ],
+        total: 400,
+      },
+      amount: null,
+    },
+    "state",
+  );
+
+  const handleSubmit = (event: React.FormEvent) => (event.preventDefault(), dispatch({ type: "balanced" }));
 
   return (
     <Theme>
@@ -33,9 +42,12 @@ const App = () => {
             <FundListItem key={fund.id} fund={fund} />
           ))}
         </FundList>
-        <BalanceForm onSubmit={() => {}}>
+        <BalanceForm onSubmit={handleSubmit}>
           <PrimaryButton type="submit">Balance</PrimaryButton>
-          <BalanceInput amount={amount} onChange={setAmount} />
+          <BalanceInput
+            amount={amount}
+            onChange={(amount) => dispatch({ type: "amountChanged", payload: { amount } })}
+          />
         </BalanceForm>
       </AppContainer>
     </Theme>
