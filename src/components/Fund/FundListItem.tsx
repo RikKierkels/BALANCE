@@ -1,9 +1,9 @@
 import styled, { css } from "styled-components";
 import { Fund } from "../../shared/portfolio";
 import { row } from "../../design/shared";
-import FundTotal from "../FundTotal/FundTotal";
-import FundWeight from "../FundWeight/FundWeight";
-import FundQuantityPrice from "../FundQuantityPrice/FundQuantityPrice";
+import FundTotal from "./FundTotal";
+import FundWeight from "./FundWeight";
+import FundQuantityPrice from "./FundQuantityPrice";
 
 const FundRow = styled.li`
   ${row};

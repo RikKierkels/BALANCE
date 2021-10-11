@@ -18,11 +18,10 @@ const GlobalStyle = createGlobalStyle`
   }
 
   input,
-  textarea,
   button {
     margin: 0;
     padding: 0;
-    border: 1px solid transparent;
+    border: 0;
   }
 
   button {

@@ -14,6 +14,16 @@ test.each([
   expect(actualCurrency).toEqual(expectedCurrency);
 });
 
+test("has the currency symbol", () => {
+  const {
+    result: { current },
+  } = renderHook(() => useCurrencyFormatter());
+
+  const symbol = current.symbol;
+
+  expect(symbol).toEqual("€");
+});
+
 test.each([
   [0.89156, "89,16%"],
   [0.5, "50,00%"],
