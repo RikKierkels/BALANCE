@@ -3,19 +3,19 @@ import styled from "styled-components";
 import { useCurrencyFormatter } from "../../shared/use-formatter";
 
 type Props = {
-  amount?: number;
-  onChange: (amount?: number) => void;
+  amount: number | null;
+  onChange: (amount: Props["amount"]) => void;
 };
 
 const BalanceInput = ({ amount, onChange }: Props) => {
   const { symbol } = useCurrencyFormatter();
-  const handleChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) =>
-    onChange(value ? parseInt(value, 10) : undefined);
+  const handleChange = ({ target: { valueAsNumber } }: ChangeEvent<HTMLInputElement>) =>
+    onChange(valueAsNumber || null);
 
   return (
     <InputContainer>
       <Currency>{symbol}</Currency>
-      <Input type="number" min={0} required={true} value={amount} onChange={handleChange} />
+      <Input type="number" min={0} required={true} value={amount ?? ""} onChange={handleChange} />
     </InputContainer>
   );
 };

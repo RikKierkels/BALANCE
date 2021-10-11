@@ -27,7 +27,7 @@ test("calls onChange when amount is changed to a number", () => {
   expect(mockedHandleChange).toHaveBeenCalledWith(200);
 });
 
-test("calls onChange when amount is empty", () => {
+test("calls onChange when amount is emptied", () => {
   const mockedHandleChange = jest.fn();
   render(<BalanceInput amount={100} onChange={mockedHandleChange} />);
 
@@ -35,5 +35,5 @@ test("calls onChange when amount is empty", () => {
   fireEvent.change(input, { target: { value: "" } });
 
   expect(mockedHandleChange).toHaveBeenCalledTimes(1);
-  expect(mockedHandleChange).toHaveBeenCalledWith(undefined);
+  expect(mockedHandleChange).toHaveBeenCalledWith(null);
 });

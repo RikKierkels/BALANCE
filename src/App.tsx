@@ -11,7 +11,7 @@ import BalanceInput from "./components/Balance/BalanceInput";
 import BalanceForm from "./components/Balance/BalanceForm";
 
 const App = () => {
-  const [amount, setAmount] = useState<number | undefined>();
+  const [amount, setAmount] = useState<number | null>(null);
   const [portfolio, _] = useState<Portfolio>({
     funds: [
       { id: "HSBC World", quantity: 10, price: 10, total: 100, weight: { actual: 0.25, target: 0.5 } },
