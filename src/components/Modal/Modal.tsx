@@ -46,6 +46,7 @@ const Container = styled.div`
 
 const Card = styled.section`
   width: calc(${({ theme }) => theme.app.width} * 0.5);
+  padding: ${({ theme }) => theme.spacing.md};
   background-color: ${({ theme }) => theme.colors.modal.background};
 `;
 
