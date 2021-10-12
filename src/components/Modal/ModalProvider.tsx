@@ -1,16 +1,12 @@
 import React, { PropsWithChildren, useCallback, useState } from "react";
 import Modal from "./Modal";
 
-const ModalContext = React.createContext<React.ReactNode>(undefined);
-
-export const useModal = () => {
-  const context = React.useContext(ModalContext);
-  if (!context) {
-    throw new Error("useModal must be used within a ModalProvider.");
-  }
-
-  return context;
+type ModalContext = {
+  close: () => void;
+  open: React.Dispatch<React.SetStateAction<React.ReactNode>>;
+  isOpen: boolean;
 };
+const ModalContext = React.createContext<ModalContext | undefined>(undefined);
 
 type Props = PropsWithChildren<{}>;
 
@@ -30,3 +26,12 @@ const ModalProvider = ({ children }: Props) => {
 };
 
 export default ModalProvider;
+
+export const useModal = () => {
+  const context = React.useContext(ModalContext);
+  if (!context) {
+    throw new Error("useModal must be used within a ModalProvider.");
+  }
+
+  return context;
+};
