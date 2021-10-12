@@ -5,18 +5,24 @@ export const defaultTheme: DefaultTheme = {
     width: "1020px",
   },
   colors: {
-    background: "#F3F3F3",
+    background: "#f3f3f3",
     actions: {
-      primary: "#2AAD7C",
+      primary: "#2aad7c",
+      primaryOffset: "#ffffff",
       secondary: "",
     },
     header: {
-      background: "#EBEBEB",
+      background: "#ebebeb",
     },
-    fundRow: {
-      background: "#FFFFFF",
-      positive: "#2AAD7C",
-      negative: "#D4434B",
+    fund: {
+      background: "#ffffff",
+      border: "#F3F3F3",
+      positive: "#2aad7c",
+      negative: "#d4434b",
+    },
+    modal: {
+      background: "#ffffff",
+      backdrop: "rgba(235, 235, 235, 0.75)",
     },
   },
   spacing: {
@@ -26,10 +32,11 @@ export const defaultTheme: DefaultTheme = {
     lg: "2rem",
   },
   font: {
-    sizes: {
-      sm: "14px",
-      md: "16px",
-      lg: "20px",
-    },
+    sm: "14px",
+    md: "16px",
+    lg: "20px",
+  },
+  animations: {
+    easeOutCubic: "cubic-bezier(0.215, 0.61, 0.335, 1)",
   },
 };

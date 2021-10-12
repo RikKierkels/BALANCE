@@ -11,8 +11,10 @@ import BalanceForm from "./components/Balance/BalanceForm";
 import useLocalStorageReducer from "./shared/use-local-storage-reducer";
 import { reducer } from "./shared/reducer";
 import { AddIcon } from "./components/Icons";
+import { useModal } from "./components/Modal/ModalProvider";
 
 const App = () => {
+  const { open } = useModal();
   const [{ portfolio, amount }, dispatch] = useLocalStorageReducer(
     reducer,
     {
@@ -34,7 +36,7 @@ const App = () => {
   return (
     <AppContainer>
       <PortfolioHeader>
-        <IconButton>
+        <IconButton onClick={() => open(<div>Hi mom</div>)}>
           <AddIcon />
         </IconButton>
         <PortfolioTotal total={portfolio.total} />

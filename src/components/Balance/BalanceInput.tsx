@@ -22,7 +22,7 @@ const BalanceInput = ({ amount, onChange }: Props) => {
 
 const InputContainer = styled.div`
   display: flex;
-  font-size: ${({ theme }) => theme.font.sizes.lg};
+  font-size: ${({ theme }) => theme.font.lg};
 `;
 
 const Currency = styled.div`
@@ -31,11 +31,11 @@ const Currency = styled.div`
   align-items: center;
   height: 100%;
   padding: ${({ theme }) => theme.spacing.md};
-  background-color: white;
+  background-color: ${({ theme }) => theme.colors.fund.background};
 `;
 
 const Input = styled.input`
-  border-left: 1px solid ${({ theme }) => theme.colors.background};
+  border-left: 1px solid ${({ theme }) => theme.colors.fund.border};
   flex: 1 1 auto;
   min-width: 0;
   padding: ${({ theme }) => theme.spacing.md};

@@ -6,18 +6,24 @@ declare module "styled-components" {
   };
 
   type Colors = {
+    background: string;
     actions: {
       primary: string;
+      primaryOffset: string;
       secondary: string;
     };
-    background: string;
     header: {
       background: string;
     };
-    fundRow: {
+    fund: {
       background: string;
+      border: string;
       positive: string;
       negative: string;
+    };
+    modal: {
+      backdrop: string;
+      background: string;
     };
   };
 
@@ -29,11 +35,13 @@ declare module "styled-components" {
   };
 
   type Font = {
-    sizes: {
-      sm: string;
-      md: string;
-      lg: string;
-    };
+    sm: string;
+    md: string;
+    lg: string;
+  };
+
+  type Animations = {
+    easeOutCubic: string;
   };
 
   export interface DefaultTheme {
@@ -41,5 +49,6 @@ declare module "styled-components" {
     colors: Colors;
     spacing: Spacing;
     font: Font;
+    animations: Animations;
   }
 }

@@ -6,6 +6,7 @@ type Props = {
 
 const PortfolioTotal = ({ total }: Props) => {
   const { format } = useCurrencyFormatter();
+
   return <span>{format(total)}</span>;
 };
 

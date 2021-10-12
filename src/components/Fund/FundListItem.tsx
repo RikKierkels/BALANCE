@@ -7,12 +7,12 @@ import FundQuantityPrice from "./FundQuantityPrice";
 
 const FundRow = styled.li`
   ${row};
-  background-color: ${({ theme }) => theme.colors.fundRow.background};
-  font-size: ${({ theme }) => theme.font.sizes.sm};
+  background-color: ${({ theme }) => theme.colors.fund.background};
+  font-size: ${({ theme }) => theme.font.sm};
 `;
 
 const FundId = styled.span`
-  font-size: ${({ theme }) => theme.font.sizes.md};
+  font-size: ${({ theme }) => theme.font.md};
   font-weight: 500;
 `;
 

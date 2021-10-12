@@ -9,15 +9,15 @@ const Button = styled.button`
 export const PrimaryButton = styled(Button)`
   border: 2px solid transparent;
   background-color: ${({ theme }) => theme.colors.actions.primary};
-  color: white;
-  font-size: ${({ theme }) => theme.font.sizes.lg};
-  transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  color: ${({ theme }) => theme.colors.actions.primaryOffset};
+  font-size: ${({ theme }) => theme.font.lg};
+  transition: 0.3s ${({ theme }) => theme.animations.easeOutCubic};
 
   &:focus,
   &:hover {
-    background-color: white;
-    color: ${({ theme }) => theme.colors.actions.primary};
     border: 2px solid ${({ theme }) => theme.colors.actions.primary};
+    background-color: ${({ theme }) => theme.colors.actions.primaryOffset};
+    color: ${({ theme }) => theme.colors.actions.primary};
   }
 `;
 
