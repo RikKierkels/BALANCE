@@ -2,10 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import Theme from "./design/Theme";
+import ModalProvider from "./components/Modal/ModalProvider";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Theme>
+      <ModalProvider>
+        <App />
+      </ModalProvider>
+    </Theme>
   </React.StrictMode>,
   document.getElementById("root"),
 );
