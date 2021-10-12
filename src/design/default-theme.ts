@@ -6,10 +6,12 @@ export const defaultTheme: DefaultTheme = {
   },
   colors: {
     background: "#f3f3f3",
-    actions: {
+    button: {
       primary: "#2aad7c",
       primaryOffset: "#ffffff",
       secondary: "",
+      iconLightHover: "rgba(255,255,255, 0.2)",
+      iconDarkHover: "rgba(0,0,0,0.2)",
     },
     header: {
       background: "#ebebeb",
@@ -22,7 +24,8 @@ export const defaultTheme: DefaultTheme = {
     },
     modal: {
       background: "#ffffff",
-      backdrop: "rgba(235, 235, 235, 0.75)",
+      backdrop: "rgba(0, 0, 0, 0.8)",
+      closeIcon: "#ffffff",
     },
   },
   spacing: {

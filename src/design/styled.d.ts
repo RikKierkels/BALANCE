@@ -7,10 +7,12 @@ declare module "styled-components" {
 
   type Colors = {
     background: string;
-    actions: {
+    button: {
       primary: string;
       primaryOffset: string;
       secondary: string;
+      iconLightHover: string;
+      iconDarkHover: string;
     };
     header: {
       background: string;
@@ -24,6 +26,7 @@ declare module "styled-components" {
     modal: {
       backdrop: string;
       background: string;
+      closeIcon: string;
     };
   };
 

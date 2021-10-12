@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Fund } from "../../shared/portfolio";
 import { row } from "../../design/shared";
 import FundTotal from "./FundTotal";

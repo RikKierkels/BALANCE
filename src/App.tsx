@@ -1,17 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import Theme from "./design/Theme";
 import FundListItem from "./components/Fund/FundListItem";
 import FundList from "./components/Fund/FundList";
 import PortfolioHeader from "./components/Portfolio/PortfolioHeader";
 import PortfolioTotal from "./components/Portfolio/PortfolioTotal";
-import { PrimaryButton, IconButton } from "./components/Buttons";
 import BalanceInput from "./components/Balance/BalanceInput";
 import BalanceForm from "./components/Balance/BalanceForm";
 import useLocalStorageReducer from "./shared/use-local-storage-reducer";
 import { reducer } from "./shared/reducer";
-import { AddIcon } from "./components/Icons";
+import { ReactComponent as AddIcon } from "../src/assets/plus.svg";
 import { useModal } from "./components/Modal/ModalProvider";
+import PrimaryButton from "./components/Buttons/PrimaryButton";
+import IconButton from "./components/Buttons/IconButton";
 
 const App = () => {
   const { open } = useModal();
@@ -48,7 +48,11 @@ const App = () => {
       </FundList>
       <BalanceForm onSubmit={handleSubmit}>
         <PrimaryButton type="submit">Balance</PrimaryButton>
-        <BalanceInput amount={amount} onChange={(amount) => dispatch({ type: "amountChanged", payload: { amount } })} />
+        <BalanceInput
+          required={true}
+          amount={amount}
+          onChange={(amount) => dispatch({ type: "amountChanged", payload: { amount } })}
+        />
       </BalanceForm>
     </AppContainer>
   );
