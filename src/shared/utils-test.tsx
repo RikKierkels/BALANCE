@@ -4,9 +4,9 @@ import Theme from "../design/Theme";
 import ModalProvider from "../components/Modal/ModalProvider";
 
 const Providers = ({ children }: PropsWithChildren<{}>) => (
-  <ModalProvider>
-    <Theme>{children}</Theme>
-  </ModalProvider>
+  <Theme>
+    <ModalProvider>{children}</ModalProvider>
+  </Theme>
 );
 
 const customRender = (ui: React.ReactElement, options: RenderOptions = {}) =>

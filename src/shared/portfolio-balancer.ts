@@ -10,9 +10,14 @@ const isAffordable =
   ({ price }: Fund) =>
     price <= amount;
 
+const updateTotal = ({ funds }: Portfolio): Portfolio => ({
+  funds,
+  total: funds.reduce((sum, { total }) => sum + total, 0),
+});
+
 const updateWeight = (total: number) => (fund: Fund) => ({
   ...fund,
-  weight: { ...fund.weight, actual: (fund.quantity * fund.price) / total },
+  weight: { ...fund.weight, actual: fund.total / total },
 });
 
 const updateWeights = ({ funds, total }: Portfolio): Portfolio => ({
@@ -26,10 +31,10 @@ const increaseQuantity =
 const increaseQuantityByOne = increaseQuantity(1);
 
 const increaseQuantityOf =
-  ({ id, price }: Fund) =>
+  ({ id }: Fund) =>
   ({ funds, total }: Portfolio): Portfolio => ({
     funds: funds.map((fund) => (fund.id === id ? increaseQuantityByOne(fund) : fund)),
-    total: total + price,
+    total,
   });
 
 const _balance =
@@ -39,11 +44,11 @@ const _balance =
     if (isEmpty(affordableFunds)) return portfolio;
 
     const fundToBuy = fundWithLargestWeightGap(affordableFunds);
-    const balancePortfolio = pipe(increaseQuantityOf(fundToBuy), updateWeights);
+    const balancePortfolio = pipe(increaseQuantityOf(fundToBuy), updateTotal, updateWeights);
 
     return _balance(amount - fundToBuy.price)(balancePortfolio(portfolio));
   };
 
 const balance = (portfolio: Portfolio, amount: number, times: number = 1) => repeat(times)(_balance(amount))(portfolio);
 
-export { balance };
+export { balance, updateWeights, updateTotal };

@@ -4,13 +4,11 @@ import styled from "styled-components";
 type ButtonProps = PropsWithChildren<React.ComponentPropsWithoutRef<"button">>;
 type Props = { isLight?: boolean } & ButtonProps;
 
-const IconButton = React.forwardRef(
-  ({ children, isLight = false, ...props }: Props, ref: React.Ref<HTMLButtonElement>) => (
-    <Button isLight={isLight} ref={ref} {...props}>
-      <IconWrapper>{children}</IconWrapper>
-    </Button>
-  ),
-);
+const IconButton = React.forwardRef<HTMLButtonElement, Props>(({ children, isLight = false, ...props }, ref) => (
+  <Button isLight={isLight} ref={ref} {...props}>
+    <IconWrapper>{children}</IconWrapper>
+  </Button>
+));
 
 const Button = styled.button<{ isLight: boolean }>`
   display: inline-flex;

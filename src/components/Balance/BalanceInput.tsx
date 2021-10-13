@@ -8,7 +8,7 @@ type Props = {
   onChange: (amount: Props["amount"]) => void;
 } & InputProps;
 
-const BalanceInput = React.forwardRef(({ amount, onChange, ...props }: Props, ref: React.Ref<HTMLInputElement>) => {
+const BalanceInput = React.forwardRef<HTMLInputElement, Props>(({ amount, onChange, ...props }, ref) => {
   const { symbol } = useCurrencyFormatter();
   const handleChange = ({ target: { valueAsNumber } }: ChangeEvent<HTMLInputElement>) =>
     onChange(valueAsNumber || null);

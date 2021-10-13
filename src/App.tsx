@@ -12,31 +12,23 @@ import { ReactComponent as AddIcon } from "../src/assets/plus.svg";
 import { useModal } from "./components/Modal/ModalProvider";
 import PrimaryButton from "./components/Buttons/PrimaryButton";
 import IconButton from "./components/Buttons/IconButton";
+import FundForm, { PartialFund } from "./components/Fund/FundForm";
 
 const App = () => {
-  const { open } = useModal();
+  const { open, close } = useModal();
   const [{ portfolio, amount }, dispatch] = useLocalStorageReducer(
     reducer,
-    {
-      portfolio: {
-        funds: [
-          { id: "HSBC World", quantity: 10, price: 10, total: 100, weight: { actual: 0.25, target: 0.5 } },
-          { id: "iShares Emerging", quantity: 5, price: 20, total: 100, weight: { actual: 0.25, target: 0.25 } },
-          { id: "Vanguard S&P500", quantity: 5, price: 40, total: 200, weight: { actual: 0.5, target: 0.25 } },
-        ],
-        total: 400,
-      },
-      amount: null,
-    },
+    { portfolio: { funds: [], total: 0 }, amount: null },
     "state",
   );
 
-  const handleSubmit = (event: React.FormEvent) => (event.preventDefault(), dispatch({ type: "balanced" }));
+  const handleBalance = (event: React.FormEvent) => (event.preventDefault(), dispatch({ type: "balanced" }));
+  const handleAddFund = (fund: PartialFund) => (dispatch({ type: "fundAdded", payload: { fund } }), close());
 
   return (
     <AppContainer>
       <PortfolioHeader>
-        <IconButton onClick={() => open(<div>Hi mom</div>)}>
+        <IconButton onClick={() => open(<FundForm onSubmit={handleAddFund} />)}>
           <AddIcon />
         </IconButton>
         <PortfolioTotal total={portfolio.total} />
@@ -46,7 +38,7 @@ const App = () => {
           <FundListItem key={fund.id} fund={fund} />
         ))}
       </FundList>
-      <BalanceForm onSubmit={handleSubmit}>
+      <BalanceForm onSubmit={handleBalance}>
         <PrimaryButton type="submit">Balance</PrimaryButton>
         <BalanceInput
           required={true}
