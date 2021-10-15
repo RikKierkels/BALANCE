@@ -15,8 +15,7 @@ test("renders the funds identifier", () => {
 
   render(<FundListItem fund={fund} />);
 
-  const name = screen.getByText("HSBC MSCI World");
-  expect(name).toBeInTheDocument();
+  expect(screen.getByText("HSBC MSCI World")).toBeInTheDocument();
 });
 
 test("renders the funds quantity and price", () => {
@@ -24,8 +23,7 @@ test("renders the funds quantity and price", () => {
 
   render(<FundListItem fund={fund} />);
 
-  const quantityTimesPrice = screen.getByText("10 x € 10,00");
-  expect(quantityTimesPrice).toBeInTheDocument();
+  expect(screen.getByText("10 x € 10,00")).toBeInTheDocument();
 });
 
 test("renders the funds total price", () => {
@@ -33,8 +31,7 @@ test("renders the funds total price", () => {
 
   render(<FundListItem fund={fund} />);
 
-  const total = screen.getByText(`€ 100,00`);
-  expect(total).toBeInTheDocument();
+  expect(screen.getByText(`€ 100,00`)).toBeInTheDocument();
 });
 
 test("renders the funds weights", () => {
@@ -42,6 +39,5 @@ test("renders the funds weights", () => {
 
   render(<FundListItem fund={fund} />);
 
-  const weights = screen.getByText("25,00% / 50,00%");
-  expect(weights).toBeInTheDocument();
+  expect(screen.getByText("25,00% / 50,00%")).toBeInTheDocument();
 });

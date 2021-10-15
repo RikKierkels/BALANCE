@@ -16,7 +16,15 @@ const BalanceInput = React.forwardRef<HTMLInputElement, Props>(({ amount, onChan
   return (
     <InputContainer>
       <Currency>{symbol}</Currency>
-      <Input type="number" min={0} value={amount ?? ""} onChange={handleChange} ref={ref} {...props} />
+      <Input
+        aria-label="amount"
+        type="number"
+        min={0}
+        value={amount ?? ""}
+        onChange={handleChange}
+        ref={ref}
+        {...props}
+      />
     </InputContainer>
   );
 });
