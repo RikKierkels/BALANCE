@@ -6,7 +6,7 @@ import PortfolioHeader from "./components/Portfolio/PortfolioHeader";
 import PortfolioTotal from "./components/Portfolio/PortfolioTotal";
 import BalanceInput from "./components/Balance/BalanceInput";
 import BalanceForm from "./components/Balance/BalanceForm";
-import useLocalStorageReducer from "./shared/use-local-storage-reducer";
+import useLocalStorageReducer from "./hooks/use-local-storage-reducer";
 import { reducer } from "./shared/reducer";
 import { ReactComponent as AddIcon } from "../src/assets/plus.svg";
 import { useModal } from "./components/Modal/ModalProvider";

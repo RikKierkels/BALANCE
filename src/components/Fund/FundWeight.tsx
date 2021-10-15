@@ -1,6 +1,6 @@
 import React from "react";
 import { FundWeight as FundWeightType } from "../../shared/portfolio";
-import { usePercentageFormatter } from "../../shared/use-formatter";
+import { usePercentageFormatter } from "../../hooks/use-formatter";
 
 type Props = {
   weight: FundWeightType;

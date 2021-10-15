@@ -1,5 +1,5 @@
 import React from "react";
-import { useCurrencyFormatter } from "../../shared/use-formatter";
+import { useCurrencyFormatter } from "../../hooks/use-formatter";
 
 type Props = {
   total: number;

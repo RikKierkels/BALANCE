@@ -1,4 +1,4 @@
-import { useCurrencyFormatter } from "../../shared/use-formatter";
+import { useCurrencyFormatter } from "../../hooks/use-formatter";
 
 type Props = {
   quantity: number;

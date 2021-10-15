@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from "react";
 import styled from "styled-components";
-import { useCurrencyFormatter } from "../../shared/use-formatter";
+import { useCurrencyFormatter } from "../../hooks/use-formatter";
 
 type InputProps = Omit<React.ComponentPropsWithoutRef<"input">, "value" | "onChange">;
 type Props = {

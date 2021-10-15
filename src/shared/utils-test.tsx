@@ -4,14 +4,11 @@ import * as customQueries from "./custom-queries";
 import Theme from "../design/Theme";
 import ModalProvider from "../components/Modal/ModalProvider";
 
-const Providers = ({ children }: PropsWithChildren<{}>) => (
+const AllProviders = ({ children }: PropsWithChildren<{}>) => (
   <Theme>
     <ModalProvider>{children}</ModalProvider>
   </Theme>
 );
-
-const customRender = (ui: React.ReactElement, options: Omit<RenderOptions, "queries"> = {}) =>
-  render(ui, { wrapper: Providers, queries: { ...queries, ...customQueries }, ...options });
 
 const boundQueries = Object.entries(customQueries).reduce((queries, [queryName, queryFn]) => {
   // eslint-disable-next-line no-param-reassign
@@ -21,11 +18,11 @@ const boundQueries = Object.entries(customQueries).reduce((queries, [queryName, 
 }, {} as BoundFunctions<typeof customQueries>);
 
 const customScreen = { ...screen, ...boundQueries };
-
 const customWithin = (element: HTMLElement) => within(element, { ...queries, ...customQueries });
+const customRender = (ui: React.ReactElement, options: Omit<RenderOptions, "queries"> = {}) =>
+  render(ui, { wrapper: AllProviders, queries: { ...queries, ...customQueries }, ...options });
 
 export * from "@testing-library/react";
-
-export { customRender as render };
 export { customScreen as screen };
 export { customWithin as within };
+export { customRender as render };
