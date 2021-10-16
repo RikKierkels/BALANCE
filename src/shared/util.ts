@@ -1,11 +1,3 @@
-import { ThunkOrValue, trampoline } from "trampoline-ts";
-
-export const repeat =
-  (times: number) =>
-  <T>(fn: (arg: T) => T) =>
-  (arg: T): T =>
-    times === 0 ? arg : repeat(--times)(fn)(fn(arg));
-
 export const compareToKeepOne =
   <T>(compareFn: (a: T, B: T) => boolean) =>
   (xs: T[]): T =>

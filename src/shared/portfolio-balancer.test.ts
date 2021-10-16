@@ -18,7 +18,7 @@ const makeEmptyPortfolio = (): Portfolio => ({
 test("given an empty portfolio, doesn't balance the portfolio", () => {
   const expectedPortfolio = makeEmptyPortfolio();
 
-  const actualPortfolio = balance(expectedPortfolio, 200, 1);
+  const actualPortfolio = balance(expectedPortfolio, 200);
 
   expect(actualPortfolio).toEqual(expectedPortfolio);
 });
@@ -33,22 +33,7 @@ test("given a portfolio and an amount to spend, balances the portfolio once", ()
     total: 600,
   };
 
-  const actualPortfolio = balance(makePortfolio(), 200, 1);
-
-  expect(actualPortfolio).toEqual(expectedPortfolio);
-});
-
-test("given a portfolio and an amount to spend, balances the portfolio multiple times", () => {
-  const expectedPortfolio: Portfolio = {
-    funds: [
-      { id: "World", quantity: 120, price: 10, total: 1200, weight: { actual: 0.5, target: 0.5 } },
-      { id: "EM", quantity: 30, price: 20, total: 600, weight: { actual: 0.25, target: 0.25 } },
-      { id: "S&P500", quantity: 15, price: 40, total: 600, weight: { actual: 0.25, target: 0.25 } },
-    ],
-    total: 2400,
-  };
-
-  let actualPortfolio = balance(makePortfolio(), 200, 10);
+  const actualPortfolio = balance(makePortfolio(), 200);
 
   expect(actualPortfolio).toEqual(expectedPortfolio);
 });
