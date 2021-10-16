@@ -3,7 +3,7 @@ import { Fund } from "../../shared/portfolio";
 import FundListItem from "./FundListItem";
 
 const makeFund = (): Fund => ({
-  id: "HSBC MSCI World",
+  name: "HSBC MSCI World",
   quantity: 10,
   price: 10,
   total: 100,

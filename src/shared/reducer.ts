@@ -1,3 +1,4 @@
+import { v4 as uuid } from "uuid";
 import { Portfolio } from "./portfolio";
 import { balance, updateTotal, updateWeights } from "./portfolio-balancer";
 import { PartialFund } from "../components/Fund/FundForm";
@@ -19,14 +20,21 @@ export const reducer = (state: State, action: Action): State => {
     case "balanced":
       return state.amount ? { ...state, portfolio: balance(state.portfolio, state.amount) } : state;
     case "fundAdded":
-      const { id, quantity, price, weight } = action.payload.fund;
+      const { name, quantity, price, weight } = action.payload.fund;
       return {
         ...state,
         portfolio: updatePortfolio({
           ...state.portfolio,
           funds: [
             ...state.portfolio.funds,
-            { id, quantity, price, total: quantity * price, weight: { target: normaliseWeight(weight), actual: 0 } },
+            {
+              id: uuid(),
+              name: name,
+              quantity,
+              price,
+              total: quantity * price,
+              weight: { target: normaliseWeight(weight), actual: 0 },
+            },
           ],
         }),
       };

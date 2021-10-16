@@ -9,9 +9,9 @@ type Props = {
   fund: Fund;
 };
 
-const FundListItem = ({ fund: { id, quantity, price, total, weight } }: Props) => (
+const FundListItem = ({ fund: { name, quantity, price, total, weight } }: Props) => (
   <FundRow>
-    <FundId>{id}</FundId>
+    <FundName>{name}</FundName>
     <FundQuantityPrice quantity={quantity} price={price} />
     <FundTotal total={total} />
     <FundWeight weight={weight} />
@@ -24,7 +24,7 @@ const FundRow = styled.li`
   font-size: ${({ theme }) => theme.font.sm};
 `;
 
-const FundId = styled.span`
+const FundName = styled.span`
   font-size: ${({ theme }) => theme.font.md};
   font-weight: 500;
 `;

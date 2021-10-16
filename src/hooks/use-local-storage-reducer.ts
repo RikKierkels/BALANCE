@@ -10,7 +10,7 @@ const useLocalStorageReducer = <S, A>(reducer: Reducer<S, A>, initialState: S, k
       storeState(newState);
       return newState;
     },
-    [storeState, reducer],
+    [reducer, storeState],
   );
 
   return useReducer(localeStorageReducer, storedState as S);

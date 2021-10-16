@@ -4,12 +4,12 @@ import Input from "../Form/Input";
 import { Fund } from "../../shared/portfolio";
 import PrimaryButton from "../Buttons/PrimaryButton";
 
-export type PartialFund = Pick<Fund, "id" | "quantity" | "price"> & {
+export type PartialFund = Pick<Fund, "name" | "quantity" | "price"> & {
   weight: Fund["weight"]["target"];
 };
 
-const toFormValues = ({ id, quantity, price, weight }: Fund): PartialFund => ({
-  id,
+const toFormValues = ({ name, quantity, price, weight }: Fund): PartialFund => ({
+  name: name,
   quantity,
   price,
   weight: weight.target,
@@ -24,7 +24,7 @@ const FundForm = ({ fund, onSubmit }: Props) => (
   <StyledForm<PartialFund> onSubmit={onSubmit} defaultValues={fund ? toFormValues(fund) : {}}>
     {({ register, formState: { errors } }) => (
       <>
-        <Input label="Name" {...register("id", { required: true })} />
+        <Input label="Name" {...register("name", { required: true })} />
         <Input
           label="Quantity"
           type="number"

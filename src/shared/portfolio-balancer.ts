@@ -32,9 +32,9 @@ const increaseQuantity =
 const increaseQuantityByOne = increaseQuantity(1);
 
 const increaseQuantityOf =
-  ({ id }: Fund) =>
+  ({ name }: Fund) =>
   ({ funds, total }: Portfolio): Portfolio => ({
-    funds: funds.map((fund) => (fund.id === id ? increaseQuantityByOne(fund) : fund)),
+    funds: funds.map((fund) => (fund.name === name ? increaseQuantityByOne(fund) : fund)),
     total,
   });
 

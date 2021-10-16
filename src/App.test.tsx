@@ -14,8 +14,22 @@ const stubUseLocalStorage = (state: ReturnType<typeof reducer>) =>
 
 const makePortfolio = (): Portfolio => ({
   funds: [
-    { id: "HSBC World", quantity: 10, price: 10, total: 100, weight: { actual: 0.25, target: 0.5 } },
-    { id: "iShares EM", quantity: 15, price: 20, total: 300, weight: { actual: 0.75, target: 0.5 } },
+    {
+      id: "bd34eb98-fc84-4487-b847-50012ac50e02",
+      name: "HSBC World",
+      quantity: 10,
+      price: 10,
+      total: 100,
+      weight: { actual: 0.25, target: 0.5 },
+    },
+    {
+      id: "902c0974-7a6c-4f5e-8124-afcce9300fcf",
+      name: "iShares EM",
+      quantity: 15,
+      price: 20,
+      total: 300,
+      weight: { actual: 0.75, target: 0.5 },
+    },
   ],
   total: 400,
 });

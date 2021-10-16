@@ -5,6 +5,7 @@ export type Portfolio = {
 
 export type Fund = {
   id: string;
+  name: string;
   quantity: number;
   price: number;
   total: number;
