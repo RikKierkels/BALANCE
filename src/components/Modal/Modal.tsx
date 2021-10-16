@@ -1,7 +1,8 @@
 import { PropsWithChildren, useRef } from "react";
 import ReactDOM from "react-dom";
-import { useClickAway, useKey } from "react-use";
 import styled from "styled-components";
+import useClickAway from "react-use/lib/useClickAway";
+import useKey from "react-use/lib/useKey";
 import { ReactComponent as CloseIcon } from "../../assets/times.svg";
 import IconButton from "../Buttons/IconButton";
 import { useModal } from "./ModalProvider";

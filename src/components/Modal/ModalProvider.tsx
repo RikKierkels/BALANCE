@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useCallback, useState } from "react";
-import { useLockBodyScroll } from "react-use";
+import useLockBodyScroll from "react-use/lib/useLockBodyScroll";
 import Modal from "./Modal";
 
 type ModalContext = {

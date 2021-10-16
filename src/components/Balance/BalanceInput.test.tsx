@@ -23,3 +23,13 @@ test("calls change handler when amount is set to a number", () => {
   expect(mockedHandleChange).toHaveBeenCalledTimes(3);
   expect(mockedHandleChange).toHaveBeenCalledWith(200);
 });
+
+test("calls change handler when the amount is cleared", () => {
+  const mockedHandleChange = jest.fn();
+  render(<BalanceInput amount={200} onChange={mockedHandleChange} />);
+
+  userEvent.clear(screen.getNumberInputByName(/amount/i));
+
+  expect(mockedHandleChange).toHaveBeenCalledTimes(1);
+  expect(mockedHandleChange).toHaveBeenCalledWith(null);
+});

@@ -1,5 +1,5 @@
 import { Reducer, useCallback, useReducer } from "react";
-import { useLocalStorage } from "react-use";
+import useLocalStorage from "react-use/lib/useLocalStorage";
 
 const useLocalStorageReducer = <S, A>(reducer: Reducer<S, A>, initialState: S, key: string) => {
   const [storedState, storeState] = useLocalStorage(key, initialState);

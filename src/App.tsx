@@ -50,7 +50,7 @@ const App = () => {
   );
 };
 
-const AppContainer = styled.section`
+const AppContainer = styled.main`
   ${FundList} {
     margin-bottom: ${({ theme }) => theme.spacing.md};
   }
