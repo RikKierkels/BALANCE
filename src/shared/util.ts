@@ -1,3 +1,5 @@
+import { ThunkOrValue, trampoline } from "trampoline-ts";
+
 export const repeat =
   (times: number) =>
   <T>(fn: (arg: T) => T) =>

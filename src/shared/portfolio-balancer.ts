@@ -1,3 +1,4 @@
+import { trampoline, ThunkOrValue } from "trampoline-ts";
 import { Fund, Portfolio } from "./portfolio";
 import { compareToKeepOne, diff, isEmpty, pipe, repeat } from "./util";
 
@@ -37,18 +38,17 @@ const increaseQuantityOf =
     total,
   });
 
-const _balance =
-  (amount: number) =>
-  (portfolio: Portfolio): Portfolio => {
-    const affordableFunds = portfolio.funds.filter(isAffordable(amount));
-    if (isEmpty(affordableFunds)) return portfolio;
+const _balance = trampoline((portfolio: Portfolio, amount: number): ThunkOrValue<Portfolio> => {
+  const affordableFunds = portfolio.funds.filter(isAffordable(amount));
+  if (isEmpty(affordableFunds)) return portfolio;
 
-    const fundToBuy = fundWithLargestWeightGap(affordableFunds);
-    const balancePortfolio = pipe(increaseQuantityOf(fundToBuy), updateTotal, updateWeights);
+  const fundToBuy = fundWithLargestWeightGap(affordableFunds);
+  const balancePortfolio = pipe(increaseQuantityOf(fundToBuy), updateTotal, updateWeights);
 
-    return _balance(amount - fundToBuy.price)(balancePortfolio(portfolio));
-  };
+  return _balance.cont(balancePortfolio(portfolio), amount - fundToBuy.price);
+});
 
-const balance = (portfolio: Portfolio, amount: number, times: number = 1) => repeat(times)(_balance(amount))(portfolio);
+const balance = (portfolio: Portfolio, amount: number, times: number = 1) =>
+  repeat(times)((_portfolio: Portfolio) => _balance(_portfolio, amount))(portfolio);
 
 export { balance, updateWeights, updateTotal };

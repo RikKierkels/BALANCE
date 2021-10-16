@@ -11,8 +11,8 @@ const AllProviders = ({ children }: PropsWithChildren<{}>) => (
 );
 
 const boundQueries = Object.entries(customQueries).reduce((queries, [queryName, queryFn]) => {
-  // eslint-disable-next-line no-param-reassign
   // @ts-ignore
+  // eslint-disable-next-line no-param-reassign
   queries[queryName] = queryFn.bind(null, document.body);
   return queries;
 }, {} as BoundFunctions<typeof customQueries>);
