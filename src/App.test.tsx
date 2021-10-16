@@ -21,7 +21,7 @@ const makePortfolio = (): Portfolio => ({
 });
 
 describe("when rendered without stored state", () => {
-  it("doesn't render the total amount", () => {
+  it("renders the total amount", () => {
     render(<App />);
 
     expect(screen.getByTestId("portfolio-total")).toHaveTextContent("€ 0,00");

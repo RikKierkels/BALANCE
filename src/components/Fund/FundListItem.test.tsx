@@ -11,33 +11,25 @@ const makeFund = (): Fund => ({
 });
 
 test("renders the funds identifier", () => {
-  const fund = makeFund();
-
-  render(<FundListItem fund={fund} />);
+  render(<FundListItem fund={makeFund()} />);
 
   expect(screen.getByText("HSBC MSCI World")).toBeInTheDocument();
 });
 
 test("renders the funds quantity and price", () => {
-  const fund = makeFund();
-
-  render(<FundListItem fund={fund} />);
+  render(<FundListItem fund={makeFund()} />);
 
   expect(screen.getByText("10 x € 10,00")).toBeInTheDocument();
 });
 
 test("renders the funds total price", () => {
-  const fund = makeFund();
-
-  render(<FundListItem fund={fund} />);
+  render(<FundListItem fund={makeFund()} />);
 
   expect(screen.getByText(`€ 100,00`)).toBeInTheDocument();
 });
 
 test("renders the funds weights", () => {
-  const fund = makeFund();
-
-  render(<FundListItem fund={fund} />);
+  render(<FundListItem fund={makeFund()} />);
 
   expect(screen.getByText("25,00% / 50,00%")).toBeInTheDocument();
 });

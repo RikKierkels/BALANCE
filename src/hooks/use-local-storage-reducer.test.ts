@@ -3,7 +3,7 @@ import { act, renderHook } from "@testing-library/react-hooks";
 import useLocalStorageReducer from "./use-local-storage-reducer";
 
 const spiedStorageSetter = jest.spyOn(Storage.prototype, "setItem");
-beforeEach(() => spiedStorageSetter.mockClear());
+beforeEach(spiedStorageSetter.mockClear);
 
 type State = { count: number };
 type Action = { type: "increment" };
