@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as EditIcon } from "../../assets/pencil.svg";
+import { ReactComponent as UpdateIcon } from "../../assets/pencil.svg";
 import { Fund } from "../../shared/portfolio";
 import { row } from "../../design/shared";
 import IconButton from "../Buttons/IconButton";
@@ -10,17 +10,17 @@ import FundQuantityPrice from "./FundQuantityPrice";
 
 type Props = {
   fund: Fund;
-  onEditClicked: () => void;
+  onUpdateClicked: () => void;
 };
 
-const FundListItem = ({ fund: { name, quantity, price, total, weight }, onEditClicked }: Props) => (
+const FundListItem = ({ fund: { name, quantity, price, total, weight }, onUpdateClicked }: Props) => (
   <FundRow>
     <FundName>{name}</FundName>
     <FundQuantityPrice quantity={quantity} price={price} />
     <FundTotal total={total} />
     <FundWeight weight={weight} />
-    <IconButton onClick={onEditClicked}>
-      <EditIcon />
+    <IconButton onClick={onUpdateClicked}>
+      <UpdateIcon />
     </IconButton>
   </FundRow>
 );

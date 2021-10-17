@@ -51,7 +51,7 @@ const App = () => {
           <FundListItem
             key={fund.id}
             fund={fund}
-            onEditClicked={() => open(<FundForm fund={fund} onSubmit={handleUpdateFund(fund.id)} />)}
+            onUpdateClicked={() => open(<FundForm fund={fund} onSubmit={handleUpdateFund(fund.id)} />)}
           />
         ))}
       </FundList>

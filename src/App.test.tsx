@@ -165,7 +165,7 @@ describe("updating an existing fund in the portfolio", () => {
     userEvent.click(within(fund).getButtonByName(/pencil/i));
 
     const nameInput = screen.getTextInputByName(/name/i);
-    userEvent.type(nameInput, " EDIT");
+    userEvent.type(nameInput, " UPDATED");
 
     const quantityInput = screen.getNumberInputByName(/quantity/i);
     userEvent.clear(quantityInput);
@@ -189,7 +189,7 @@ describe("updating an existing fund in the portfolio", () => {
     expect(fundOne.getByText("€ 100,00")).toBeInTheDocument();
     expect(fundOne.getByText("14,08% / 50,00%")).toBeInTheDocument();
 
-    expect(fundTwo.getByText("iShares EM EDIT")).toBeInTheDocument();
+    expect(fundTwo.getByText("iShares EM UPDATED")).toBeInTheDocument();
     expect(fundTwo.getByText("20 x € 30,50")).toBeInTheDocument();
     expect(fundTwo.getByText("€ 610,00")).toBeInTheDocument();
     expect(fundTwo.getByText("85,92% / 75,00%")).toBeInTheDocument();
