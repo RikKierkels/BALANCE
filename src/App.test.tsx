@@ -6,13 +6,13 @@ import App from "./App";
 import { Portfolio } from "./shared/portfolio";
 import { reducer } from "./shared/reducer";
 
-const makeSpiedUseLocalStorage = () => jest.spyOn(useLocalStorage, "default");
-beforeEach(() => makeSpiedUseLocalStorage().mockRestore());
+const createSpiedUseLocalStorage = () => jest.spyOn(useLocalStorage, "default");
+beforeEach(() => createSpiedUseLocalStorage().mockRestore());
 
 const stubUseLocalStorage = (state: ReturnType<typeof reducer>) =>
-  makeSpiedUseLocalStorage().mockReturnValue([state, jest.fn(), jest.fn()]);
+  createSpiedUseLocalStorage().mockReturnValue([state, jest.fn(), jest.fn()]);
 
-const makePortfolio = (): Portfolio => ({
+const createPortfolio = (): Portfolio => ({
   funds: [
     {
       id: "bd34eb98-fc84-4487-b847-50012ac50e02",
@@ -56,7 +56,7 @@ describe("when rendered without stored state", () => {
 
 describe("when rendered with stored state", () => {
   it("renders the total amount", async () => {
-    stubUseLocalStorage({ amount: 100, portfolio: makePortfolio() });
+    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio() });
 
     render(<App />);
 
@@ -64,7 +64,7 @@ describe("when rendered with stored state", () => {
   });
 
   it("renders the stored funds", () => {
-    stubUseLocalStorage({ amount: 100, portfolio: makePortfolio() });
+    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio() });
 
     render(<App />);
 
@@ -84,7 +84,7 @@ describe("when rendered with stored state", () => {
   });
 
   it("sets the amount input's value", () => {
-    stubUseLocalStorage({ amount: 100, portfolio: makePortfolio() });
+    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio() });
 
     render(<App />);
 
@@ -94,7 +94,7 @@ describe("when rendered with stored state", () => {
 
 describe("balancing the portfolio", () => {
   it("renders the balanced portfolio", async () => {
-    stubUseLocalStorage({ amount: 100, portfolio: makePortfolio() });
+    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio() });
 
     render(<App />);
 
@@ -124,7 +124,7 @@ describe("balancing the portfolio", () => {
 
 describe("creating a new fund in the portfolio", () => {
   it("renders the updated portfolio", async () => {
-    stubUseLocalStorage({ amount: 100, portfolio: makePortfolio() });
+    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio() });
 
     render(<App />);
 
@@ -157,7 +157,7 @@ describe("creating a new fund in the portfolio", () => {
 
 describe("updating an existing fund in the portfolio", () => {
   it("renders the updated portfolio", async () => {
-    stubUseLocalStorage({ amount: 100, portfolio: makePortfolio() });
+    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio() });
 
     render(<App />);
 

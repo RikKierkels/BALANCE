@@ -31,13 +31,13 @@ const withPercentage = (options: FormatterOptions = DEFAULT_OPTIONS): FormatterO
   style: "percent",
 });
 
-const makeNumberFormatter = ({ locale, ...options }: FormatterOptions) => new Intl.NumberFormat(locale, options);
+const createNumberFormatter = ({ locale, ...options }: FormatterOptions) => new Intl.NumberFormat(locale, options);
 const toCurrencySymbol = (parts: NumberFormatPart[]) => parts.find((part) => part.type === "currency")?.value;
 
 // Only exposing .format as .formatToParts breaks when compiled with Babel.
 // Issue similar to: https://github.com/formatjs/date-time-format-timezone/issues/17
 export const useCurrencyFormatter = (options?: CurrencyFormatterOptions) => {
-  const formatter = makeNumberFormatter(withCurrency(options));
+  const formatter = createNumberFormatter(withCurrency(options));
 
   return {
     format: formatter.format,
@@ -46,5 +46,5 @@ export const useCurrencyFormatter = (options?: CurrencyFormatterOptions) => {
 };
 
 export const usePercentageFormatter = (options?: PercentageFormatterOptions) => ({
-  format: makeNumberFormatter(withPercentage(options)).format,
+  format: createNumberFormatter(withPercentage(options)).format,
 });
