@@ -12,7 +12,8 @@ import { ReactComponent as AddIcon } from "../src/assets/plus.svg";
 import { useModal } from "./components/Modal/ModalProvider";
 import PrimaryButton from "./components/Buttons/PrimaryButton";
 import IconButton from "./components/Buttons/IconButton";
-import FundForm, { PartialFund } from "./components/Fund/FundForm";
+import FundForm from "./components/Fund/FundForm";
+import { FundCreateOrUpdate } from "./shared/portfolio";
 
 const App = () => {
   const { open, close } = useModal();
@@ -22,28 +23,44 @@ const App = () => {
     "state",
   );
 
-  const handleBalance = (event: React.FormEvent) => (event.preventDefault(), dispatch({ type: "balanced" }));
-  const handleAddFund = (fund: PartialFund) => (dispatch({ type: "fundAdded", payload: { fund } }), close());
+  const handleBalancePortfolio = (event: React.FormEvent) => {
+    event.preventDefault();
+    dispatch({ type: "portfolioBalanced" });
+  };
+
+  const handleCreateFund = (fund: FundCreateOrUpdate) => {
+    dispatch({ type: "fundCreated", payload: { fund } });
+    close();
+  };
+
+  const handleUpdateFund = (id: string) => (fund: FundCreateOrUpdate) => {
+    dispatch({ type: "fundUpdated", payload: { id, fund } });
+    close();
+  };
 
   return (
     <AppContainer>
       <PortfolioHeader>
-        <IconButton onClick={() => open(<FundForm onSubmit={handleAddFund} />)}>
+        <IconButton onClick={() => open(<FundForm onSubmit={handleCreateFund} />)}>
           <AddIcon />
         </IconButton>
         <PortfolioTotal total={portfolio.total} />
       </PortfolioHeader>
       <FundList>
         {portfolio.funds.map((fund) => (
-          <FundListItem key={fund.id} fund={fund} />
+          <FundListItem
+            key={fund.id}
+            fund={fund}
+            onEditClicked={() => open(<FundForm fund={fund} onSubmit={handleUpdateFund(fund.id)} />)}
+          />
         ))}
       </FundList>
-      <BalanceForm onSubmit={handleBalance}>
+      <BalanceForm onSubmit={handleBalancePortfolio}>
         <PrimaryButton type="submit">Balance</PrimaryButton>
         <BalanceInput
           required={true}
           amount={amount}
-          onChange={(amount) => dispatch({ type: "amountChanged", payload: { amount } })}
+          onChange={(amount) => dispatch({ type: "amountUpdated", payload: { amount } })}
         />
       </BalanceForm>
     </AppContainer>

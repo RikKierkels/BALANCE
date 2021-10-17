@@ -1,51 +1,54 @@
 import styled from "styled-components";
 import Form from "../Form/Form";
 import Input from "../Form/Input";
-import { Fund } from "../../shared/portfolio";
+import { Fund, FundCreateOrUpdate } from "../../shared/portfolio";
 import PrimaryButton from "../Buttons/PrimaryButton";
 
-export type PartialFund = Pick<Fund, "name" | "quantity" | "price"> & {
-  weight: Fund["weight"]["target"];
-};
+const fromFactorToPercentage = (factor: number) => factor * 100;
+const fromPercentageToFactor = (percentage: number) => percentage / 100;
 
-const toFormValues = ({ name, quantity, price, weight }: Fund): PartialFund => ({
-  name: name,
-  quantity,
-  price,
-  weight: weight.target,
+const toDefaultFormValues = (fund?: Fund): Partial<FundCreateOrUpdate> => ({
+  name: fund?.name ?? "",
+  quantity: fund?.quantity,
+  price: fund?.price,
+  weight: fund?.weight?.target && fromFactorToPercentage(fund?.weight?.target),
 });
 
 type Props = {
   fund?: Fund;
-  onSubmit: (fund: PartialFund) => void;
+  onSubmit: (fund: FundCreateOrUpdate) => void;
 };
 
-const FundForm = ({ fund, onSubmit }: Props) => (
-  <StyledForm<PartialFund> onSubmit={onSubmit} defaultValues={fund ? toFormValues(fund) : {}}>
-    {({ register, formState: { errors } }) => (
-      <>
-        <Input label="Name" {...register("name", { required: true })} />
-        <Input
-          label="Quantity"
-          type="number"
-          {...register("quantity", { required: true, min: 0, valueAsNumber: true })}
-        />
-        <Input
-          label="Price"
-          type="number"
-          step="0.001"
-          {...register("price", { required: true, min: 0, valueAsNumber: true })}
-        />
-        <Input
-          label="Target weight"
-          type="number"
-          {...register("weight", { required: true, min: 0, max: 100, valueAsNumber: true })}
-        />
-        <PrimaryButton type="submit">Save</PrimaryButton>
-      </>
-    )}
-  </StyledForm>
-);
+const FundForm = ({ fund, onSubmit }: Props) => {
+  const handleSubmit = (fund: FundCreateOrUpdate) => onSubmit({ ...fund, weight: fromPercentageToFactor(fund.weight) });
+
+  return (
+    <StyledForm<FundCreateOrUpdate> onSubmit={handleSubmit} defaultValues={toDefaultFormValues(fund)}>
+      {({ register, formState: { errors } }) => (
+        <>
+          <Input label="Name" {...register("name", { required: true })} />
+          <Input
+            label="Quantity"
+            type="number"
+            {...register("quantity", { required: true, min: 0, valueAsNumber: true })}
+          />
+          <Input
+            label="Price"
+            type="number"
+            step="0.001"
+            {...register("price", { required: true, min: 0, valueAsNumber: true })}
+          />
+          <Input
+            label="Target weight"
+            type="number"
+            {...register("weight", { required: true, min: 0, max: 100, valueAsNumber: true })}
+          />
+          <PrimaryButton type="submit">Save</PrimaryButton>
+        </>
+      )}
+    </StyledForm>
+  );
+};
 
 const StyledForm = styled(Form)`
   display: flex;

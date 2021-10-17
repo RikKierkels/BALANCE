@@ -92,27 +92,6 @@ describe("when rendered with stored state", () => {
   });
 });
 
-describe("adding a new fund to the portfolio", () => {
-  it("renders the updated portfolio", async () => {
-    render(<App />);
-
-    userEvent.click(screen.getButtonByName(/plus/i));
-    userEvent.type(screen.getTextInputByName(/name/i), "HSBC World");
-    userEvent.type(screen.getNumberInputByName(/quantity/i), "10");
-    userEvent.type(screen.getNumberInputByName(/price/i), "100");
-    userEvent.type(screen.getNumberInputByName(/weight/i), "25");
-    userEvent.click(screen.getButtonByName(/save/i));
-
-    expect(await screen.findByTestId("portfolio-total")).toHaveTextContent("€ 1.000,00");
-
-    const fund = within(screen.getByRole("listitem"));
-    expect(fund.getByText("HSBC World")).toBeInTheDocument();
-    expect(fund.getByText("10 x € 100,00")).toBeInTheDocument();
-    expect(fund.getByText("€ 1.000,00")).toBeInTheDocument();
-    expect(fund.getByText("100,00% / 25,00%")).toBeInTheDocument();
-  });
-});
-
 describe("balancing the portfolio", () => {
   it("renders the balanced portfolio", async () => {
     stubUseLocalStorage({ amount: 100, portfolio: makePortfolio() });
@@ -140,5 +119,79 @@ describe("balancing the portfolio", () => {
     expect(fundTwo.getByText("15 x € 20,00")).toBeInTheDocument();
     expect(fundTwo.getByText("€ 300,00")).toBeInTheDocument();
     expect(fundTwo.getByText("50,00% / 50,00%")).toBeInTheDocument();
+  });
+});
+
+describe("creating a new fund in the portfolio", () => {
+  it("renders the updated portfolio", async () => {
+    stubUseLocalStorage({ amount: 100, portfolio: makePortfolio() });
+
+    render(<App />);
+
+    userEvent.click(screen.getButtonByName(/plus/i));
+    userEvent.type(screen.getTextInputByName(/name/i), "S&P 500");
+    userEvent.type(screen.getNumberInputByName(/quantity/i), "10");
+    userEvent.type(screen.getNumberInputByName(/price/i), "100");
+    userEvent.type(screen.getNumberInputByName(/weight/i), "25");
+    userEvent.click(screen.getButtonByName(/save/i));
+
+    expect(await screen.findByTestId("portfolio-total")).toHaveTextContent("€ 1.400,00");
+    const [fundOne, fundTwo, fundThree] = screen.getAllByRole("listitem").map(within);
+
+    expect(fundOne.getByText("HSBC World")).toBeInTheDocument();
+    expect(fundOne.getByText("10 x € 10,00")).toBeInTheDocument();
+    expect(fundOne.getByText("€ 100,00")).toBeInTheDocument();
+    expect(fundOne.getByText("7,14% / 50,00%")).toBeInTheDocument();
+
+    expect(fundTwo.getByText("iShares EM")).toBeInTheDocument();
+    expect(fundTwo.getByText("15 x € 20,00")).toBeInTheDocument();
+    expect(fundTwo.getByText("€ 300,00")).toBeInTheDocument();
+    expect(fundTwo.getByText("21,43% / 50,00%")).toBeInTheDocument();
+
+    expect(fundThree.getByText("S&P 500")).toBeInTheDocument();
+    expect(fundThree.getByText("10 x € 100,00")).toBeInTheDocument();
+    expect(fundThree.getByText("€ 1.000,00")).toBeInTheDocument();
+    expect(fundThree.getByText("71,43% / 25,00%")).toBeInTheDocument();
+  });
+});
+
+describe("updating an existing fund in the portfolio", () => {
+  it("renders the updated portfolio", async () => {
+    stubUseLocalStorage({ amount: 100, portfolio: makePortfolio() });
+
+    render(<App />);
+
+    const [_, fund] = screen.getAllByRole("listitem");
+    userEvent.click(within(fund).getButtonByName(/pencil/i));
+
+    const nameInput = screen.getTextInputByName(/name/i);
+    userEvent.type(nameInput, " EDIT");
+
+    const quantityInput = screen.getNumberInputByName(/quantity/i);
+    userEvent.clear(quantityInput);
+    userEvent.type(quantityInput, "20");
+
+    const priceInput = screen.getNumberInputByName(/price/i);
+    userEvent.clear(priceInput);
+    userEvent.type(priceInput, "30.50");
+
+    const weightInput = screen.getNumberInputByName(/weight/i);
+    userEvent.clear(weightInput);
+    userEvent.type(weightInput, "75");
+
+    userEvent.click(screen.getButtonByName(/save/i));
+    expect(await screen.findByTestId("portfolio-total")).toHaveTextContent("€ 710,00");
+
+    const [fundOne, fundTwo] = screen.getAllByRole("listitem").map(within);
+
+    expect(fundOne.getByText("HSBC World")).toBeInTheDocument();
+    expect(fundOne.getByText("10 x € 10,00")).toBeInTheDocument();
+    expect(fundOne.getByText("€ 100,00")).toBeInTheDocument();
+    expect(fundOne.getByText("14,08% / 50,00%")).toBeInTheDocument();
+
+    expect(fundTwo.getByText("iShares EM EDIT")).toBeInTheDocument();
+    expect(fundTwo.getByText("20 x € 30,50")).toBeInTheDocument();
+    expect(fundTwo.getByText("€ 610,00")).toBeInTheDocument();
+    expect(fundTwo.getByText("85,92% / 75,00%")).toBeInTheDocument();
   });
 });

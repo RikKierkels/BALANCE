@@ -1,41 +1,48 @@
 import { v4 as uuid } from "uuid";
-import { Portfolio } from "./portfolio";
+import { Fund, FundCreateOrUpdate, Portfolio } from "./portfolio";
 import { balance, updateTotal, updateWeights } from "./portfolio-balancer";
-import { PartialFund } from "../components/Fund/FundForm";
 import { pipe } from "./util";
 
+const createOrUpdateFund = (id: string, { name, quantity, price, weight }: FundCreateOrUpdate): Fund => ({
+  id,
+  name: name,
+  quantity,
+  price,
+  total: quantity * price,
+  weight: { target: weight, actual: 0 },
+});
+const createFund = (fund: FundCreateOrUpdate) => createOrUpdateFund(uuid(), fund);
+const updateFund = createOrUpdateFund;
 const updatePortfolio = pipe(updateTotal, updateWeights);
-const normaliseWeight = (weight: number) => (weight > 1 ? weight / 100 : weight);
 
 type State = { portfolio: Portfolio; amount: number | null };
 type Action =
-  | { type: "amountChanged"; payload: { amount: number | null } }
-  | { type: "balanced" }
-  | { type: "fundAdded"; payload: { fund: PartialFund } };
+  | { type: "amountUpdated"; payload: { amount: number | null } }
+  | { type: "portfolioBalanced" }
+  | { type: "fundCreated"; payload: { fund: FundCreateOrUpdate } }
+  | { type: "fundUpdated"; payload: { id: string; fund: FundCreateOrUpdate } };
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case "amountChanged":
+    case "amountUpdated":
       return { ...state, amount: action.payload.amount };
-    case "balanced":
+    case "portfolioBalanced":
       return state.amount ? { ...state, portfolio: balance(state.portfolio, state.amount) } : state;
-    case "fundAdded":
-      const { name, quantity, price, weight } = action.payload.fund;
+    case "fundCreated":
       return {
         ...state,
         portfolio: updatePortfolio({
           ...state.portfolio,
-          funds: [
-            ...state.portfolio.funds,
-            {
-              id: uuid(),
-              name: name,
-              quantity,
-              price,
-              total: quantity * price,
-              weight: { target: normaliseWeight(weight), actual: 0 },
-            },
-          ],
+          funds: [...state.portfolio.funds, createFund(action.payload.fund)],
+        }),
+      };
+    case "fundUpdated":
+      const { fund: updatedFund, id } = action.payload;
+      return {
+        ...state,
+        portfolio: updatePortfolio({
+          ...state.portfolio,
+          funds: state.portfolio.funds.map((fund) => (fund.id === id ? updateFund(id, updatedFund) : fund)),
         }),
       };
   }

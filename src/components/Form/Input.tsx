@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 type InputProps = React.ComponentPropsWithoutRef<"input">;
-type Props = { label?: string } & InputProps;
+export type Props = { label?: string } & InputProps;
 
 const Input = React.forwardRef<HTMLInputElement, Props>(({ label, ...props }, ref) => (
   <StyledLabel>
