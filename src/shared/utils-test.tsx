@@ -29,8 +29,8 @@ export { customWithin as within };
 export { customRender as render };
 
 export const hideConsoleError = (fn: (...args: any[]) => void) => {
-  const spiedConsoleError = () => jest.spyOn(console, "error");
-  spiedConsoleError().mockImplementation(() => {});
+  const spiedConsoleError = jest.spyOn(console, "error");
+  spiedConsoleError.mockImplementation(() => {});
   fn();
-  spiedConsoleError().mockRestore();
+  spiedConsoleError.mockRestore();
 };
