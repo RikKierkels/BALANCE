@@ -41,7 +41,7 @@ const App = () => {
   return (
     <AppContainer>
       <PortfolioHeader>
-        <IconButton onClick={() => open(<FundForm onSubmit={handleCreateFund} />)}>
+        <IconButton onClick={() => open(<FundForm onSubmit={handleCreateFund} />, { title: "Create a new fund" })}>
           <AddIcon />
         </IconButton>
         <PortfolioTotal total={portfolio.total} />

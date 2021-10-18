@@ -2,11 +2,21 @@ import React, { PropsWithChildren, useCallback, useState } from "react";
 import useLockBodyScroll from "react-use/lib/useLockBodyScroll";
 import Modal from "./Modal";
 
+type ModalState = {
+  content: React.ReactNode;
+  options?: ModalOptions;
+};
+
+type ModalOptions = {
+  title?: string;
+};
+
 type ModalContext = {
   close: () => void;
-  open: React.Dispatch<React.SetStateAction<React.ReactNode>>;
+  open: (content: ModalState["content"], options?: ModalState["options"]) => void;
   isOpen: boolean;
 };
+
 const Context = React.createContext<ModalContext | undefined>(undefined);
 
 export const useModal = () => {
@@ -18,19 +28,23 @@ export const useModal = () => {
   return context;
 };
 
+const EMPTY_MODAL: ModalState = { content: null, options: { title: "" } };
+
 const ModalProvider = ({ children }: PropsWithChildren<{}>) => {
-  const [modal, setModal] = useState<React.ReactNode>();
-
-  const close = useCallback(() => setModal(undefined), [setModal]);
-  const open = setModal;
-  const isOpen = !!modal;
-
+  const [{ content, options }, setModal] = useState<ModalState>(EMPTY_MODAL);
+  const isOpen = !!content;
   useLockBodyScroll(isOpen);
 
+  const context: ModalContext = {
+    close: useCallback(() => setModal(EMPTY_MODAL), [setModal]),
+    open: useCallback((content, options) => setModal({ content, options }), [setModal]),
+    isOpen,
+  };
+
   return (
-    <Context.Provider value={{ close, open, isOpen }}>
+    <Context.Provider value={context}>
       {children}
-      {isOpen && <Modal>{modal}</Modal>}
+      {isOpen && <Modal title={options?.title}>{content}</Modal>}
     </Context.Provider>
   );
 };
