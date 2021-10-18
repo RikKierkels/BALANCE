@@ -8,7 +8,8 @@ const fromFactorToPercentage = (factor: number) => factor * 100;
 const fromPercentageToFactor = (percentage: number) => percentage / 100;
 
 const toDefaultFormValues = (fund?: Fund): Partial<FundCreateOrUpdate> => ({
-  name: fund?.name ?? "",
+  id: fund?.id,
+  name: fund?.name,
   quantity: fund?.quantity,
   price: fund?.price,
   weight: fund?.weight?.target && fromFactorToPercentage(fund?.weight?.target),
@@ -19,7 +20,7 @@ type Props = {
   onSubmit: (fund: FundCreateOrUpdate) => void;
 };
 
-const FundForm = ({ fund, onSubmit }: Props) => {
+const FundCreateOrUpdateForm = ({ fund, onSubmit }: Props) => {
   const handleSubmit = (fund: FundCreateOrUpdate) => onSubmit({ ...fund, weight: fromPercentageToFactor(fund.weight) });
 
   return (
@@ -59,4 +60,4 @@ const StyledForm = styled(Form)`
   }
 ` as typeof Form;
 
-export default FundForm;
+export default FundCreateOrUpdateForm;

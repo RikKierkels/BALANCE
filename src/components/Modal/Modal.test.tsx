@@ -1,11 +1,15 @@
-import { render, screen } from "../../shared/utils-test";
+import { hideConsoleError, render, screen } from "../../shared/utils-test";
 import Modal from "./Modal";
 
 const root = document.createElement("div");
 root.setAttribute("id", "modal-root");
 
 test("when container element is not present, throws an error", () => {
-  expect(() => render(<Modal />)).toThrowError("Error rendering <Modal/>. Cannot find an element with id: modal-root.");
+  hideConsoleError(() =>
+    expect(() => render(<Modal />)).toThrowError(
+      "Error rendering <Modal/>. Cannot find an element with id: modal-root.",
+    ),
+  );
 });
 
 test("when a title is provided, renders a title", () => {

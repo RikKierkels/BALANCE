@@ -1,30 +1,16 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useCurrencyFormatter } from "../../hooks/use-formatter";
 
-type InputProps = Omit<React.ComponentPropsWithoutRef<"input">, "value" | "onChange">;
-type Props = {
-  amount: number | null;
-  onChange: (amount: Props["amount"]) => void;
-} & InputProps;
+type Props = React.ComponentPropsWithoutRef<"input">;
 
-const BalanceInput = React.forwardRef<HTMLInputElement, Props>(({ amount, onChange, ...props }, ref) => {
+const InputCurrency = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   const { symbol } = useCurrencyFormatter();
-  const handleChange = ({ target: { valueAsNumber } }: ChangeEvent<HTMLInputElement>) =>
-    onChange(valueAsNumber || null);
 
   return (
     <InputContainer>
       <Currency>{symbol}</Currency>
-      <Input
-        aria-label="amount"
-        type="number"
-        min={0}
-        value={amount ?? ""}
-        onChange={handleChange}
-        ref={ref}
-        {...props}
-      />
+      <Input type="number" ref={ref} {...props} />
     </InputContainer>
   );
 });
@@ -51,4 +37,4 @@ const Input = styled.input`
   font-size: inherit;
 `;
 
-export default BalanceInput;
+export default InputCurrency;

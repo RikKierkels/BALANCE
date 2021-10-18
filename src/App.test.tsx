@@ -104,7 +104,7 @@ describe("balancing the portfolio", () => {
 
     userEvent.click(screen.getButtonByName(/balance/i));
 
-    expect(screen.getByTestId("portfolio-total")).toHaveTextContent("€ 600,00");
+    expect(await screen.findByTestId("portfolio-total")).toHaveTextContent("€ 600,00");
 
     const funds = screen.getAllByRole("listitem");
     expect(funds).toHaveLength(2);

@@ -15,19 +15,17 @@ const createFund = (fund: FundCreateOrUpdate) => createOrUpdateFund(uuid(), fund
 const updateFund = createOrUpdateFund;
 const updatePortfolio = pipe(updateTotal, updateWeights);
 
-type State = { portfolio: Portfolio; amount: number | null };
+type State = { portfolio: Portfolio; amount?: number };
 type Action =
-  | { type: "amountUpdated"; payload: { amount: number | null } }
-  | { type: "portfolioBalanced" }
+  | { type: "portfolioBalanced"; payload: { amount: number } }
   | { type: "fundCreated"; payload: { fund: FundCreateOrUpdate } }
-  | { type: "fundUpdated"; payload: { id: string; fund: FundCreateOrUpdate } };
+  | { type: "fundUpdated"; payload: { fund: FundCreateOrUpdate } };
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case "amountUpdated":
-      return { ...state, amount: action.payload.amount };
     case "portfolioBalanced":
-      return state.amount ? { ...state, portfolio: balance(state.portfolio, state.amount) } : state;
+      const { amount } = action.payload;
+      return { ...state, amount, portfolio: balance(state.portfolio, amount) };
     case "fundCreated":
       return {
         ...state,
@@ -37,7 +35,8 @@ export const reducer = (state: State, action: Action): State => {
         }),
       };
     case "fundUpdated":
-      const { fund: updatedFund, id } = action.payload;
+      const { fund: updatedFund } = action.payload;
+      const id = updatedFund.id;
       return {
         ...state,
         portfolio: updatePortfolio({

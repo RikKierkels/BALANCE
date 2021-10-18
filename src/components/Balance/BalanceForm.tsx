@@ -1,6 +1,9 @@
 import styled from "styled-components";
+import Form from "../Form/Form";
 
-const BalanceForm = styled.form`
+export type BalanceFormValues = { amount: number };
+
+const BalanceForm = styled(Form)`
   display: flex;
 
   > * {
@@ -10,6 +13,6 @@ const BalanceForm = styled.form`
   > *:not(:last-child) {
     margin-right: ${({ theme }) => theme.spacing.sm};
   }
-`;
+` as typeof Form;
 
 export default BalanceForm;

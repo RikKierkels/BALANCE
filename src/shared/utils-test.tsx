@@ -6,6 +6,7 @@ import ModalProvider from "../components/Modal/ModalProvider";
 
 const AllProviders = ({ children }: PropsWithChildren<{}>) => (
   <Theme>
+    <div id="modal-root" />
     <ModalProvider>{children}</ModalProvider>
   </Theme>
 );
@@ -26,3 +27,10 @@ export * from "@testing-library/react";
 export { customScreen as screen };
 export { customWithin as within };
 export { customRender as render };
+
+export const hideConsoleError = (fn: (...args: any[]) => void) => {
+  const spiedConsoleError = () => jest.spyOn(console, "error");
+  spiedConsoleError().mockImplementation(() => {});
+  fn();
+  spiedConsoleError().mockRestore();
+};

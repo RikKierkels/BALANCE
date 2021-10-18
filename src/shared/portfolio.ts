@@ -17,6 +17,6 @@ export type FundWeight = {
   target: number;
 };
 
-export type FundCreateOrUpdate = Pick<Fund, "name" | "quantity" | "price"> & {
+export type FundCreateOrUpdate = Pick<Fund, "id" | "name" | "quantity" | "price"> & {
   weight: Fund["weight"]["target"];
 };

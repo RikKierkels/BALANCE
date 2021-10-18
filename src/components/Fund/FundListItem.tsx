@@ -10,16 +10,16 @@ import FundQuantityPrice from "./FundQuantityPrice";
 
 type Props = {
   fund: Fund;
-  onUpdateClicked: () => void;
+  onUpdateClick: () => void;
 };
 
-const FundListItem = ({ fund: { name, quantity, price, total, weight }, onUpdateClicked }: Props) => (
+const FundListItem = ({ fund: { name, quantity, price, total, weight }, onUpdateClick }: Props) => (
   <FundRow>
     <FundName>{name}</FundName>
     <FundQuantityPrice quantity={quantity} price={price} />
     <FundTotal total={total} />
     <FundWeight weight={weight} />
-    <IconButton onClick={onUpdateClicked}>
+    <IconButton onClick={onUpdateClick}>
       <UpdateIcon />
     </IconButton>
   </FundRow>
