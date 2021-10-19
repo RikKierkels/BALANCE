@@ -19,7 +19,8 @@ type State = { portfolio: Portfolio; amount?: number };
 type Action =
   | { type: "portfolioBalanced"; payload: { amount: number } }
   | { type: "fundCreated"; payload: { fund: FundCreateOrUpdate } }
-  | { type: "fundUpdated"; payload: { fund: FundCreateOrUpdate } };
+  | { type: "fundUpdated"; payload: { fund: FundCreateOrUpdate } }
+  | { type: "fundDeleted"; payload: { id: string } };
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -42,6 +43,14 @@ export const reducer = (state: State, action: Action): State => {
         portfolio: updatePortfolio({
           ...state.portfolio,
           funds: state.portfolio.funds.map((fund) => (fund.id === id ? updateFund(id, updatedFund) : fund)),
+        }),
+      };
+    case "fundDeleted":
+      return {
+        ...state,
+        portfolio: updatePortfolio({
+          ...state.portfolio,
+          funds: state.portfolio.funds.filter((fund) => fund.id !== action.payload.id),
         }),
       };
   }

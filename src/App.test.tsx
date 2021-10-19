@@ -195,3 +195,25 @@ describe("updating an existing fund in the portfolio", () => {
     expect(fundTwo.getByText("85,92% / 75,00%")).toBeInTheDocument();
   });
 });
+
+describe("deleting a fund in the portfolio", () => {
+  it("renders the updated portfolio", async () => {
+    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio() });
+
+    render(<App />);
+
+    const [_, fund] = screen.getAllByRole("listitem");
+    userEvent.click(within(fund).getButtonByName(/times/i));
+
+    expect(await screen.findByTestId("portfolio-total")).toHaveTextContent("€ 100,00");
+
+    const funds = screen.getAllByRole("listitem").map(within);
+    expect(funds).toHaveLength(1);
+    const [fundOne] = funds;
+
+    expect(fundOne.getByText("HSBC World")).toBeInTheDocument();
+    expect(fundOne.getByText("10 x € 10,00")).toBeInTheDocument();
+    expect(fundOne.getByText("€ 100,00")).toBeInTheDocument();
+    expect(fundOne.getByText("100,00% / 50,00%")).toBeInTheDocument();
+  });
+});

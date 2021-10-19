@@ -26,7 +26,7 @@ const App = () => {
   const handleOpenCreateModal = () =>
     open(<FundCreateOrUpdateForm onSubmit={handleCreateFund} />, { title: "Create a new fund" });
 
-  const handleOpenUpdateModal = (fund: Fund) => () =>
+  const handleOpenUpdateModal = (fund: Fund) =>
     open(<FundCreateOrUpdateForm fund={fund} onSubmit={handleUpdateFund} />, { title: "Update your fund" });
 
   const handleBalancePortfolio = ({ amount }: BalanceFormValues) =>
@@ -42,6 +42,8 @@ const App = () => {
     close();
   };
 
+  const handleDeleteFund = (id: string) => dispatch({ type: "fundDeleted", payload: { id } });
+
   return (
     <AppContainer>
       <PortfolioHeader>
@@ -52,7 +54,12 @@ const App = () => {
       </PortfolioHeader>
       <FundList>
         {portfolio.funds.map((fund) => (
-          <FundListItem key={fund.id} fund={fund} onUpdateClick={handleOpenUpdateModal(fund)} />
+          <FundListItem
+            key={fund.id}
+            fund={fund}
+            onUpdateClick={handleOpenUpdateModal}
+            onDeleteClick={handleDeleteFund}
+          />
         ))}
       </FundList>
       <BalanceForm<BalanceFormValues> onSubmit={handleBalancePortfolio} defaultValues={{ amount }}>
