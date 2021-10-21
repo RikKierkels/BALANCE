@@ -1,8 +1,9 @@
+import React from "react";
 import styled from "styled-components";
-import Form from "../Form/Form";
-import Input from "../Form/Input";
 import { Fund, FundCreateOrUpdate } from "../../shared/portfolio";
 import PrimaryButton from "../Buttons/PrimaryButton";
+import Input from "../Form/Input";
+import Form from "../Form/Form";
 
 const fromFactorToPercentage = (factor: number) => factor * 100;
 const fromPercentageToFactor = (percentage: number) => percentage / 100;
@@ -24,7 +25,7 @@ const FundCreateOrUpdateForm = ({ fund, onSubmit }: Props) => {
   const handleSubmit = (fund: FundCreateOrUpdate) => onSubmit({ ...fund, weight: fromPercentageToFactor(fund.weight) });
 
   return (
-    <StyledForm<FundCreateOrUpdate> onSubmit={handleSubmit} defaultValues={toDefaultFormValues(fund)}>
+    <StyledForm<FundCreateOrUpdate> defaultValues={toDefaultFormValues(fund)} onSubmit={handleSubmit}>
       {({ register, formState: { errors } }) => (
         <>
           <Input label="Name" {...register("name", { required: true })} />

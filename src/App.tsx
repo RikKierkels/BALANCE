@@ -5,15 +5,17 @@ import FundList from "./components/Fund/FundList";
 import PortfolioHeader from "./components/Portfolio/PortfolioHeader";
 import PortfolioTotal from "./components/Portfolio/PortfolioTotal";
 import InputCurrency from "./components/Form/InputCurrency";
-import BalanceForm, { BalanceFormValues } from "./components/Balance/BalanceForm";
+import BalanceForm, { BalanceAmount } from "./components/Balance/BalanceForm";
 import useLocalStorageReducer from "./hooks/use-local-storage-reducer";
 import { reducer } from "./shared/reducer";
 import { ReactComponent as AddIcon } from "../src/assets/plus.svg";
+import { ReactComponent as MoneyIcon } from "../src/assets/money.svg";
 import { useModal } from "./components/Modal/ModalProvider";
 import PrimaryButton from "./components/Buttons/PrimaryButton";
 import IconButton from "./components/Buttons/IconButton";
 import FundCreateOrUpdateForm from "./components/Fund/FundCreateOrUpdateForm";
-import { Fund, FundCreateOrUpdate } from "./shared/portfolio";
+import { Fund, FundCreateOrUpdate, FundPrices } from "./shared/portfolio";
+import FundPricesUpdateForm from "./components/Fund/FundPricesUpdateForm";
 
 const App = () => {
   const { open, close } = useModal();
@@ -24,12 +26,17 @@ const App = () => {
   );
 
   const handleOpenCreateModal = () =>
-    open(<FundCreateOrUpdateForm onSubmit={handleCreateFund} />, { title: "Create a new fund" });
+    open(<FundCreateOrUpdateForm onSubmit={handleCreateFund} />, { title: "Fund creation" });
 
   const handleOpenUpdateModal = (fund: Fund) =>
-    open(<FundCreateOrUpdateForm fund={fund} onSubmit={handleUpdateFund} />, { title: "Update your fund" });
+    open(<FundCreateOrUpdateForm fund={fund} onSubmit={handleUpdateFund} />, { title: "Fund update" });
 
-  const handleBalancePortfolio = ({ amount }: BalanceFormValues) =>
+  const handleOpenUpdatePricesModal = () =>
+    open(<FundPricesUpdateForm funds={portfolio.funds} onSubmit={handleUpdatePrices} />, {
+      title: "Price update",
+    });
+
+  const handleBalancePortfolio = ({ amount }: BalanceAmount) =>
     dispatch({ type: "portfolioBalanced", payload: { amount } });
 
   const handleCreateFund = (fund: FundCreateOrUpdate) => {
@@ -42,14 +49,24 @@ const App = () => {
     close();
   };
 
+  const handleUpdatePrices = (prices: FundPrices) => {
+    dispatch({ type: "fundPricesUpdated", payload: { prices } });
+    close();
+  };
+
   const handleDeleteFund = (id: string) => dispatch({ type: "fundDeleted", payload: { id } });
 
   return (
     <AppContainer>
       <PortfolioHeader>
-        <IconButton onClick={handleOpenCreateModal}>
-          <AddIcon />
-        </IconButton>
+        <div>
+          <IconButton onClick={handleOpenCreateModal}>
+            <AddIcon />
+          </IconButton>
+          <IconButton onClick={handleOpenUpdatePricesModal}>
+            <MoneyIcon />
+          </IconButton>
+        </div>
         <PortfolioTotal total={portfolio.total} />
       </PortfolioHeader>
       <FundList>
@@ -62,7 +79,7 @@ const App = () => {
           />
         ))}
       </FundList>
-      <BalanceForm<BalanceFormValues> onSubmit={handleBalancePortfolio} defaultValues={{ amount }}>
+      <BalanceForm<BalanceAmount> defaultValues={{ amount }} onSubmit={handleBalancePortfolio}>
         {({ register }) => (
           <>
             <PrimaryButton type="submit">Balance</PrimaryButton>

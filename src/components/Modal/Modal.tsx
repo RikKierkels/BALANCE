@@ -60,7 +60,7 @@ const Dialog = styled.section`
 `;
 
 const Title = styled.h2`
-  margin-bottom: ${({ theme }) => theme.spacing.md};
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
   text-align: center;
   font-weight: 500;
 `;
