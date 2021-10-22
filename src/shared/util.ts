@@ -1,4 +1,4 @@
-export const compareToKeepOne =
+export const reducedCompare =
   <T>(compareFn: (a: T, B: T) => boolean) =>
   (xs: T[]): T =>
     xs.reduce((prev, curr) => (compareFn(prev, curr) ? curr : prev));
@@ -14,3 +14,6 @@ export const pipe = <T extends any[], R>(fn1: (...args: T) => R, ...fns: Array<(
 export const diff = (a: number, b: number) => a - b;
 
 export const isEmpty = <T>(xs: T[]): boolean => !xs?.length;
+
+export const zip = <T, R>(arrayOne: T[], arrayTwo: R[]): [T, R][] =>
+  Array.from({ length: arrayOne.length }, (_, i) => [arrayOne[i], arrayTwo[i]]);

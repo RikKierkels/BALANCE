@@ -21,7 +21,7 @@ const App = () => {
   const { open, close } = useModal();
   const [{ amount, portfolio }, dispatch] = useLocalStorageReducer(
     reducer,
-    { amount: undefined, portfolio: { funds: [], total: 0 } },
+    { amount: undefined, portfolio: { funds: [], total: 0 }, increment: null },
     "state",
   );
 

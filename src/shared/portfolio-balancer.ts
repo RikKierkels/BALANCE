@@ -1,10 +1,10 @@
 import { trampoline, ThunkOrValue } from "trampoline-ts";
-import { compareToKeepOne, diff, isEmpty, pipe } from "./util";
+import { reducedCompare, diff, isEmpty, pipe } from "./util";
 import { Fund, Portfolio } from "./portfolio";
 
 const weightGap = ({ weight }: Fund) => diff(weight.target, weight.actual);
 const weightGapComparer = (a: Fund, b: Fund) => weightGap(a) < weightGap(b);
-const fundWithLargestWeightGap = compareToKeepOne(weightGapComparer);
+const fundWithLargestWeightGap = reducedCompare(weightGapComparer);
 
 const isAffordable =
   (amount: number) =>
