@@ -195,12 +195,15 @@ describe("updating an existing fund in the portfolio", () => {
 });
 
 describe("deleting a fund in the portfolio", () => {
-  it("renders the updated portfolio", async () => {
+  it("when confirmed, deletes the fund and renders the updated portfolio", async () => {
     stubUseLocalStorage({ amount: 100, portfolio: createPortfolio(), increment: null });
     render(<App />);
 
     const [_, fund] = screen.getAllByRole("listitem");
     userEvent.click(within(fund).getButtonByName(/times/i));
+
+    const modal = screen.getByRole("dialog");
+    userEvent.click(within(modal).getByText(/remove/i));
 
     expect(await screen.findByTestId("portfolio-total")).toHaveTextContent("€ 100,00");
     const funds = screen.getAllByRole("listitem").map(within);
@@ -211,6 +214,21 @@ describe("deleting a fund in the portfolio", () => {
     expect(fundOne.getByText("10 x € 10,00")).toBeInTheDocument();
     expect(fundOne.getByText("€ 100,00")).toBeInTheDocument();
     expect(fundOne.getByText("100,00% / 50,00%")).toBeInTheDocument();
+  });
+
+  it("when cancelled, keeps the fund and doesn't update the portfolio", async () => {
+    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio(), increment: null });
+    render(<App />);
+
+    const [_, fund] = screen.getAllByRole("listitem");
+    userEvent.click(within(fund).getButtonByName(/times/i));
+
+    const modal = screen.getByRole("dialog");
+    userEvent.click(within(modal).getByText(/cancel/i));
+
+    expect(await screen.findByTestId("portfolio-total")).toHaveTextContent("€ 400,00");
+    const funds = screen.getAllByRole("listitem").map(within);
+    expect(funds).toHaveLength(2);
   });
 });
 
