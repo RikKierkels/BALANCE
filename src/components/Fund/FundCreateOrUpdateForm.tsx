@@ -14,7 +14,7 @@ const toDefaultFormValues = (fund?: Fund): Partial<FundCreateOrUpdate> => ({
   name: fund?.name,
   quantity: fund?.quantity,
   price: fund?.price,
-  weight: fund?.weight?.target && fromFactorToPercentage(fund?.weight?.target),
+  weight: fund?.weight?.target && fromFactorToPercentage(fund.weight.target),
 });
 
 type Props = {
