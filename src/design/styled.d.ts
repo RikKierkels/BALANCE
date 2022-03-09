@@ -11,6 +11,7 @@ declare module "styled-components" {
       primary: string;
       primaryOffset: string;
       secondary: string;
+      secondaryOffset: string;
       iconLightHover: string;
       iconDarkHover: string;
     };

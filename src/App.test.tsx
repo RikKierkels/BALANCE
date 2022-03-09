@@ -203,7 +203,7 @@ describe("deleting a fund in the portfolio", () => {
     userEvent.click(within(fund).getButtonByName(/times/i));
 
     const modal = screen.getByRole("dialog");
-    userEvent.click(within(modal).getByText(/remove/i));
+    userEvent.click(within(modal).getButtonByName(/remove/i));
 
     expect(await screen.findByTestId("portfolio-total")).toHaveTextContent("€ 100,00");
     const funds = screen.getAllByRole("listitem").map(within);
@@ -224,7 +224,7 @@ describe("deleting a fund in the portfolio", () => {
     userEvent.click(within(fund).getButtonByName(/times/i));
 
     const modal = screen.getByRole("dialog");
-    userEvent.click(within(modal).getByText(/cancel/i));
+    userEvent.click(within(modal).getButtonByName(/cancel/i));
 
     expect(await screen.findByTestId("portfolio-total")).toHaveTextContent("€ 400,00");
     const funds = screen.getAllByRole("listitem").map(within);

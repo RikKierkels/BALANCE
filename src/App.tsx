@@ -17,6 +17,7 @@ import FundCreateOrUpdateForm from "./components/Fund/FundCreateOrUpdateForm";
 import { Fund, FundCreateOrUpdate, FundPrices } from "./shared/portfolio";
 import FundPricesUpdateForm from "./components/Fund/FundPricesUpdateForm";
 import { inputs } from "./components/Form/form-helpers";
+import FundDeleteConfirmation from "./components/Fund/FundDeleteConfirmation";
 
 const App = () => {
   const { open, close } = useModal();
@@ -26,45 +27,53 @@ const App = () => {
     "state",
   );
 
-  const handleOpenCreateModal = () =>
-    open(<FundCreateOrUpdateForm onSubmit={handleCreateFund} />, { title: "Fund creation" });
-
-  const handleOpenUpdateModal = (fund: Fund) =>
-    open(<FundCreateOrUpdateForm fund={fund} onSubmit={handleUpdateFund} />, { title: "Fund update" });
-
-  const handleOpenUpdatePricesModal = () =>
-    open(<FundPricesUpdateForm funds={portfolio.funds} onSubmit={handleUpdatePrices} />, {
-      title: "Price update",
-    });
-
-  const handleBalancePortfolio = ({ amount }: BalanceAmount) =>
-    dispatch({ type: "portfolioBalanced", payload: { amount } });
+  const handleOpenCreateFundModal = () =>
+    open(<FundCreateOrUpdateForm onSubmit={handleCreateFund} />, { title: "Add a new fund" });
 
   const handleCreateFund = (fund: FundCreateOrUpdate) => {
     dispatch({ type: "fundCreated", payload: { fund } });
     close();
   };
 
+  const handleOpenUpdateFundModal = (fund: Fund) =>
+    open(<FundCreateOrUpdateForm fund={fund} onSubmit={handleUpdateFund} />, { title: "Update your fund" });
+
   const handleUpdateFund = (fund: FundCreateOrUpdate) => {
     dispatch({ type: "fundUpdated", payload: { fund } });
     close();
   };
+
+  const handleOpenDeleteFundModal = (id: string) =>
+    open(<FundDeleteConfirmation onConfirm={() => handleDeleteFund(id)} onCancel={close} />, {
+      title: "Are you sure you want to remove this fund?",
+    });
+
+  const handleDeleteFund = (id: string) => {
+    dispatch({ type: "fundDeleted", payload: { id } });
+    close();
+  };
+
+  const handleOpenUpdateFundPricesModal = () =>
+    open(<FundPricesUpdateForm funds={portfolio.funds} onSubmit={handleUpdatePrices} />, {
+      title: "Update fund prices",
+    });
 
   const handleUpdatePrices = (prices: FundPrices) => {
     dispatch({ type: "fundPricesUpdated", payload: { prices } });
     close();
   };
 
-  const handleDeleteFund = (id: string) => dispatch({ type: "fundDeleted", payload: { id } });
+  const handleBalancePortfolio = ({ amount }: BalanceAmount) =>
+    dispatch({ type: "portfolioBalanced", payload: { amount } });
 
   return (
     <AppContainer>
       <PortfolioHeader>
         <div>
-          <IconButton onClick={handleOpenCreateModal}>
+          <IconButton onClick={handleOpenCreateFundModal}>
             <AddIcon />
           </IconButton>
-          <IconButton onClick={handleOpenUpdatePricesModal}>
+          <IconButton onClick={handleOpenUpdateFundPricesModal}>
             <MoneyIcon />
           </IconButton>
         </div>
@@ -75,8 +84,8 @@ const App = () => {
           <FundListItem
             key={fund.id}
             fund={fund}
-            onUpdateClick={handleOpenUpdateModal}
-            onDeleteClick={handleDeleteFund}
+            onUpdateClick={handleOpenUpdateFundModal}
+            onDeleteClick={handleOpenDeleteFundModal}
           />
         ))}
       </FundList>

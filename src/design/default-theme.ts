@@ -9,7 +9,8 @@ export const defaultTheme: DefaultTheme = {
     button: {
       primary: "#2aad7c",
       primaryOffset: "#ffffff",
-      secondary: "",
+      secondary: "#d4434b",
+      secondaryOffset: "#ffffff",
       iconLightHover: "rgba(255,255,255, 0.2)",
       iconDarkHover: "rgba(0,0,0,0.2)",
     },
