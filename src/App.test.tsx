@@ -50,13 +50,13 @@ describe("when rendered without stored state", () => {
   it("the amount input has no value", () => {
     render(<App />);
 
-    expect(screen.getNumberInputByName(/amount/i)).toHaveValue(null);
+    expect(screen.getByLabelText(/amount/i)).toHaveValue(null);
   });
 });
 
 describe("when rendered with stored state", () => {
   it("renders the total amount", async () => {
-    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio() });
+    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio(), increment: null });
 
     render(<App />);
 
@@ -64,7 +64,7 @@ describe("when rendered with stored state", () => {
   });
 
   it("renders the stored funds", () => {
-    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio() });
+    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio(), increment: null });
 
     render(<App />);
 
@@ -84,21 +84,21 @@ describe("when rendered with stored state", () => {
   });
 
   it("sets the amount input's value", () => {
-    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio() });
+    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio(), increment: null });
 
     render(<App />);
 
-    expect(screen.getNumberInputByName(/amount/i)).toHaveValue(100);
+    expect(screen.getByLabelText(/amount/i)).toHaveValue(100);
   });
 });
 
 describe("balancing the portfolio", () => {
   it("renders the balanced portfolio", async () => {
-    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio() });
+    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio(), increment: null });
 
     render(<App />);
 
-    const amountInput = screen.getNumberInputByName(/amount/i);
+    const amountInput = screen.getByLabelText(/amount/i);
     userEvent.clear(amountInput);
     userEvent.type(amountInput, "200");
     userEvent.click(screen.getButtonByName(/balance/i));
@@ -120,16 +120,16 @@ describe("balancing the portfolio", () => {
 
 describe("creating a new fund in the portfolio", () => {
   it("renders the updated portfolio", async () => {
-    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio() });
+    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio(), increment: null });
 
     render(<App />);
 
     userEvent.click(screen.getButtonByName(/plus/i));
     const modal = within(screen.getByRole("dialog"));
-    userEvent.type(modal.getTextInputByName(/name/i), "S&P 500");
-    userEvent.type(modal.getNumberInputByName(/quantity/i), "10");
-    userEvent.type(modal.getNumberInputByName(/price/i), "100");
-    userEvent.type(modal.getNumberInputByName(/weight/i), "25");
+    userEvent.type(modal.getByLabelText(/name/i), "S&P 500");
+    userEvent.type(modal.getByLabelText(/quantity/i), "10");
+    userEvent.type(modal.getByLabelText(/price/i), "100");
+    userEvent.type(modal.getByLabelText(/weight/i), "25");
     userEvent.click(modal.getButtonByName(/save/i));
 
     expect(await screen.findByTestId("portfolio-total")).toHaveTextContent("€ 1.400,00");
@@ -154,7 +154,7 @@ describe("creating a new fund in the portfolio", () => {
 
 describe("updating an existing fund in the portfolio", () => {
   it("renders the updated portfolio", async () => {
-    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio() });
+    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio(), increment: null });
 
     render(<App />);
 
@@ -162,18 +162,18 @@ describe("updating an existing fund in the portfolio", () => {
     userEvent.click(within(fund).getButtonByName(/pencil/i));
     const modal = within(screen.getByRole("dialog"));
 
-    const nameInput = modal.getTextInputByName(/name/i);
+    const nameInput = modal.getByLabelText(/name/i);
     userEvent.type(nameInput, " UPDATED");
 
-    const quantityInput = modal.getNumberInputByName(/quantity/i);
+    const quantityInput = modal.getByLabelText(/quantity/i);
     userEvent.clear(quantityInput);
     userEvent.type(quantityInput, "20");
 
-    const priceInput = modal.getNumberInputByName(/price/i);
+    const priceInput = modal.getByLabelText(/price/i);
     userEvent.clear(priceInput);
     userEvent.type(priceInput, "30.50");
 
-    const weightInput = modal.getNumberInputByName(/weight/i);
+    const weightInput = modal.getByLabelText(/weight/i);
     userEvent.clear(weightInput);
     userEvent.type(weightInput, "75");
 
@@ -196,7 +196,7 @@ describe("updating an existing fund in the portfolio", () => {
 
 describe("deleting a fund in the portfolio", () => {
   it("renders the updated portfolio", async () => {
-    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio() });
+    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio(), increment: null });
     render(<App />);
 
     const [_, fund] = screen.getAllByRole("listitem");
@@ -216,16 +216,16 @@ describe("deleting a fund in the portfolio", () => {
 
 describe("updating the prices of funds in the portfolio", () => {
   it("renders the updated portfolio", async () => {
-    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio() });
+    stubUseLocalStorage({ amount: 100, portfolio: createPortfolio(), increment: null });
     render(<App />);
 
     userEvent.click(screen.getButtonByName(/money/i));
     const modal = within(screen.getByRole("dialog"));
 
-    const priceInput = modal.getNumberInputByName(/hsbc/i);
+    const priceInput = modal.getByLabelText(/hsbc/i);
     userEvent.clear(priceInput);
     userEvent.type(priceInput, "300");
-    expect(modal.getNumberInputByName(/ishares/i)).toBeInTheDocument();
+    expect(modal.getByLabelText(/ishares/i)).toBeInTheDocument();
     userEvent.click(screen.getButtonByName(/save/i));
 
     expect(await screen.findByTestId("portfolio-total")).toHaveTextContent("€ 3.300,00");

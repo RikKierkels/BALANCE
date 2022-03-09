@@ -28,9 +28,14 @@ declare module "styled-components" {
       background: string;
       closeIcon: string;
     };
+    input: {
+      border: string;
+      error: string;
+    };
   };
 
   type Spacing = {
+    xxs: string;
     xs: string;
     sm: string;
     md: string;
@@ -38,6 +43,7 @@ declare module "styled-components" {
   };
 
   type Font = {
+    xs: string;
     sm: string;
     md: string;
     lg: string;

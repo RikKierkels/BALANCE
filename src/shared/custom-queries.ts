@@ -1,16 +1,16 @@
-import { buildQueries, within, ByRoleOptions } from "@testing-library/react";
+import { buildQueries, within, ByRoleOptions, Matcher, SelectorMatcherOptions } from "@testing-library/react";
 import { ByRoleMatcher } from "@testing-library/dom/types/matches";
 
-const elementWithRoleByName =
+const elementWithRoleByNameQueryAll =
   (role: ByRoleMatcher) => (container: HTMLElement, name: ByRoleOptions["name"], args: Omit<ByRoleOptions, "name">) =>
     within(container).getAllByRole(role, { name, ...args });
-const textInputByName = elementWithRoleByName("textbox");
-const numberInputByName = elementWithRoleByName("spinbutton");
-const buttonByName = elementWithRoleByName("button");
+const textInputByNameQueryAll = elementWithRoleByNameQueryAll("textbox");
+const numberInputByNameQueryAll = elementWithRoleByNameQueryAll("spinbutton");
+const buttonByNameQueryAll = elementWithRoleByNameQueryAll("button");
 
 const [queryTextInputByName, getAllTextInputsByName, getTextInputByName, findAllTextInputsByName, findTextInputByName] =
   buildQueries(
-    textInputByName,
+    textInputByNameQueryAll,
     (_, value) => `Found multiple text inputs with a name of: ${value}`,
     (_, value) => `Unable to find a text input with a name of: ${value}`,
   );
@@ -22,15 +22,30 @@ const [
   findAllNumberInputsByName,
   findNumberInputByName,
 ] = buildQueries(
-  numberInputByName,
+  numberInputByNameQueryAll,
   (_, value) => `Found multiple number inputs with a name of: ${value}`,
   (_, value) => `Unable to find a number input with a name of: ${value}`,
 );
 
 const [queryButtonByName, getAllButtonsByName, getButtonByName, findAllButtonsByName, findButtonByName] = buildQueries(
-  buttonByName,
+  buttonByNameQueryAll,
   (_, value) => `Found multiple buttons with a name of: ${value}`,
   (_, value) => `Unable to find a button with a name of: ${value}`,
+);
+
+const [
+  queryLabelByLabelText,
+  getAllLabelsByLabelText,
+  getLabelByLabelText,
+  findAllLabelsByLabelText,
+  findLabelByLabelText,
+] = buildQueries(
+  (container: HTMLElement, id: Matcher, options?: SelectorMatcherOptions) =>
+    within(container)
+      .getAllByLabelText(id, options)
+      .map((input) => input.closest("label")!),
+  (_, value) => `Found multiple labels with a name of: ${value}`,
+  (_, value) => `Unable to find a label with a name of: ${value}`,
 );
 
 export {
@@ -49,4 +64,9 @@ export {
   getButtonByName,
   findAllButtonsByName,
   findButtonByName,
+  queryLabelByLabelText,
+  getAllLabelsByLabelText,
+  getLabelByLabelText,
+  findAllLabelsByLabelText,
+  findLabelByLabelText,
 };

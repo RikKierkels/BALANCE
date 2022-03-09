@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Fund, FundCreateOrUpdate } from "../../shared/portfolio";
 import PrimaryButton from "../Buttons/PrimaryButton";
 import Input from "../Form/Input";
+import { inputs } from "../Form/form-helpers";
 import Form from "../Form/Form";
 
 const fromFactorToPercentage = (factor: number) => factor * 100;
@@ -28,23 +29,10 @@ const FundCreateOrUpdateForm = ({ fund, onSubmit }: Props) => {
     <StyledForm<FundCreateOrUpdate> defaultValues={toDefaultFormValues(fund)} onSubmit={handleSubmit}>
       {({ register, formState: { errors } }) => (
         <>
-          <Input label="Name" {...register("name", { required: true })} />
-          <Input
-            label="Quantity"
-            type="number"
-            {...register("quantity", { required: true, min: 0, valueAsNumber: true })}
-          />
-          <Input
-            label="Price"
-            type="number"
-            step="0.001"
-            {...register("price", { required: true, min: 0, valueAsNumber: true })}
-          />
-          <Input
-            label="Target weight"
-            type="number"
-            {...register("weight", { required: true, min: 0, max: 100, valueAsNumber: true })}
-          />
+          <Input label="Name" error={errors?.name?.message} {...inputs.name(register)} />
+          <Input label="Quantity" type="number" error={errors?.quantity?.message} {...inputs.quantity(register)} />
+          <Input label="Price" type="number" step="0.001" error={errors?.price?.message} {...inputs.price(register)} />
+          <Input label="Target weight" type="number" error={errors?.weight?.message} {...inputs.weight(register)} />
           <PrimaryButton type="submit">Save</PrimaryButton>
         </>
       )}

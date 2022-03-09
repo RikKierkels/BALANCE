@@ -16,6 +16,7 @@ import IconButton from "./components/Buttons/IconButton";
 import FundCreateOrUpdateForm from "./components/Fund/FundCreateOrUpdateForm";
 import { Fund, FundCreateOrUpdate, FundPrices } from "./shared/portfolio";
 import FundPricesUpdateForm from "./components/Fund/FundPricesUpdateForm";
+import { inputs } from "./components/Form/form-helpers";
 
 const App = () => {
   const { open, close } = useModal();
@@ -83,7 +84,7 @@ const App = () => {
         {({ register }) => (
           <>
             <PrimaryButton type="submit">Balance</PrimaryButton>
-            <InputCurrency aria-label="amount" {...register("amount", { required: true, min: 0 })} />
+            <InputCurrency aria-label="amount" {...inputs.amount(register)} />
           </>
         )}
       </BalanceForm>

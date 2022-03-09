@@ -18,7 +18,7 @@ export const defaultTheme: DefaultTheme = {
     },
     fund: {
       background: "#ffffff",
-      border: "#F3F3F3",
+      border: "#f3f3f3",
       positive: "#2aad7c",
       negative: "#d4434b",
     },
@@ -27,14 +27,20 @@ export const defaultTheme: DefaultTheme = {
       backdrop: "rgba(0, 0, 0, 0.8)",
       closeIcon: "#ffffff",
     },
+    input: {
+      border: "#000000",
+      error: "#d4434b",
+    },
   },
   spacing: {
+    xxs: "0.125rem",
     xs: "0.25rem",
     sm: "0.5rem",
     md: "1rem",
     lg: "2rem",
   },
   font: {
+    xs: "12px",
     sm: "14px",
     md: "16px",
     lg: "20px",
