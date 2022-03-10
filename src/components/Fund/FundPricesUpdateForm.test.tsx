@@ -6,7 +6,7 @@ import { Fund } from "../../shared/portfolio";
 
 const validate = (name: string, message: string, funds: Fund[]) =>
   test(name, async () => {
-    render(<FundPricesUpdateForm onSubmit={jest.fn} funds={funds} />);
+    render(<FundPricesUpdateForm onSubmit={() => {}} funds={funds} />);
 
     fireEvent.click(screen.getButtonByName(/save/i));
 

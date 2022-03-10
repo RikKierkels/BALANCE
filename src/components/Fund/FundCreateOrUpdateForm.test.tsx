@@ -6,7 +6,7 @@ import FundCreateOrUpdateForm from "./FundCreateOrUpdateForm";
 
 const validate = (name: string, cases: [string, Partial<Fund>, string][]) =>
   test.each(cases)(name, async (text, fund, message) => {
-    render(<FundCreateOrUpdateForm onSubmit={jest.fn} fund={createFund(fund)} />);
+    render(<FundCreateOrUpdateForm onSubmit={() => {}} fund={createFund(fund)} />);
 
     fireEvent.click(screen.getButtonByName(/save/i));
 
