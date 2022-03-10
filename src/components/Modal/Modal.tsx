@@ -25,7 +25,7 @@ const Modal = ({ children, title }: Props) => {
       <Container role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <Dialog ref={ref}>
           {title && <Title id="modal-title">{title}</Title>}
-          {children}
+          <Body>{children}</Body>
         </Dialog>
         <CloseButton isLight onClick={close}>
           <StyledCloseIcon />
@@ -57,12 +57,20 @@ const Dialog = styled.section`
   width: calc(${({ theme }) => theme.app.width} * 0.5);
   padding: ${({ theme }) => theme.spacing.lg};
   background-color: ${({ theme }) => theme.colors.modal.background};
+
+  > * + * {
+    margin-top: ${({ theme }) => theme.spacing.lg};
+  }
 `;
 
 const Title = styled.h2`
-  margin-bottom: ${({ theme }) => theme.spacing.lg};
   text-align: center;
   font-weight: 500;
+`;
+
+const Body = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const CloseButton = styled(IconButton)`

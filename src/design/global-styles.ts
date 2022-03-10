@@ -19,13 +19,29 @@ const GlobalStyle = createGlobalStyle`
 
   input,
   button {
-    margin: 0;
-    padding: 0;
     border: 0;
   }
 
   button {
     cursor: pointer;
+  }
+
+  input,
+  button,
+  h1,
+  h2,
+  p,
+  ul,
+  ol,
+  li {
+    margin: 0;
+    padding: 0;
+  }
+
+  ul,
+  ol,
+  li {
+    list-style: none;
   }
 
   body {
@@ -48,21 +64,6 @@ const GlobalStyle = createGlobalStyle`
   *:before,
   *:after {
     box-sizing: inherit;
-  }
-
-  h1,
-  h2,
-  p {
-    margin: 0;
-    padding: 0;
-  }
-
-  ul,
-  ol,
-  li {
-    margin: 0;
-    padding: 0;
-    list-style: none;
   }
 `;
 

@@ -41,6 +41,10 @@ const FundCreateOrUpdateForm = ({ fund, onSubmit }: Props) => {
 };
 
 const StyledForm = styled(Form)`
+  > * {
+    width: 100%;
+  }
+
   > * + * {
     margin-top: ${({ theme }) => theme.spacing.md};
   }

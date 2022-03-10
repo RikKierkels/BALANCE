@@ -16,8 +16,8 @@ const FundDeleteConfirmation = ({ onConfirm, onCancel }: Props) => (
 );
 
 const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 
   * + * {
     margin-left: ${({ theme }) => theme.spacing.md};
