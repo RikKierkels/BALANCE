@@ -6,26 +6,27 @@ export type Props = { label?: string; error?: string } & InputProps;
 
 const Input = React.forwardRef<HTMLInputElement, Props>(({ label, error, className, ...props }, ref) => (
   <StyledLabel className={className}>
-    <LabelText>{label}</LabelText>
+    <span>{label}</span>
     <StyledInput ref={ref} {...props} />
     {!!error && <Error>{error}</Error>}
   </StyledLabel>
 ));
 
 const StyledLabel = styled.label`
-  display: flex;
-  flex-direction: column;
-`;
+  display: block;
 
-const LabelText = styled.span`
-  margin-bottom: ${({ theme }) => theme.spacing.xs};
+  > * {
+    width: 100%;
+  }
+
+  > * + * {
+    margin-top: ${({ theme }) => theme.spacing.xs};
+  }
 `;
 
 const StyledInput = styled.input`
-  width: 100%;
   padding: ${({ theme }) => theme.spacing.sm};
   border: 1px solid ${({ theme }) => theme.colors.input.border};
-  margin-bottom: ${({ theme }) => theme.spacing.xxs};
 `;
 
 const Error = styled.span`
