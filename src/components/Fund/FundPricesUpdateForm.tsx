@@ -26,20 +26,20 @@ const FundPricesUpdateForm = ({ funds, onSubmit }: Props) => (
             {...inputs.price(register, fund.id)}
           />
         ))}
-        <StyledPrimaryButton type="submit">Save</StyledPrimaryButton>
+        <PrimaryButton type="submit">Save</PrimaryButton>
       </>
     )}
   </StyledForm>
 );
 
 const StyledForm = styled(Form)`
+  > * {
+    width: 100%;
+  }
+
   > * + * {
-    margin-bottom: ${({ theme }) => theme.spacing.md};
+    margin-top: ${({ theme }) => theme.spacing.md};
   }
 ` as typeof Form;
-
-const StyledPrimaryButton = styled(PrimaryButton)`
-  width: 100%;
-`;
 
 export default FundPricesUpdateForm;
