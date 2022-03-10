@@ -3,7 +3,7 @@ import { Fund, FundPrices } from "../../shared/portfolio";
 import Input from "../Form/Input";
 import PrimaryButton from "../Buttons/PrimaryButton";
 import React from "react";
-import { inputs } from "../Form/form-helpers";
+import { inputs } from "../Form/input-props";
 import Form from "../Form/Form";
 
 const toFundPrices = (funds: Fund[]): FundPrices =>
@@ -21,8 +21,6 @@ const FundPricesUpdateForm = ({ funds, onSubmit }: Props) => (
         {funds.map((fund) => (
           <Input
             key={fund.id}
-            type="number"
-            step="0.001"
             label={fund.name}
             error={errors?.[fund.id]?.message}
             {...inputs.price(register, fund.id)}
@@ -35,7 +33,7 @@ const FundPricesUpdateForm = ({ funds, onSubmit }: Props) => (
 );
 
 const StyledForm = styled(Form)`
-  > *:not(:last-child) {
+  > * + * {
     margin-bottom: ${({ theme }) => theme.spacing.md};
   }
 ` as typeof Form;

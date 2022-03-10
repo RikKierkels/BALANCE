@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { ReactComponent as UpdateIcon } from "../../assets/pencil.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/times.svg";
 import { Fund } from "../../shared/portfolio";
-import { row } from "../../design/shared";
+import { row } from "../../design/mixins";
 import IconButton from "../Buttons/IconButton";
 import FundTotal from "./FundTotal";
 import FundWeight from "./FundWeight";
@@ -31,7 +31,7 @@ const FundListItem = ({ fund, onUpdateClick, onDeleteClick }: Props) => (
 );
 
 const FundRow = styled.li`
-  ${row};
+  ${row("1.5fr 1fr 1fr 1fr 0.25fr 0.25fr")};
   background-color: ${({ theme }) => theme.colors.fund.background};
   font-size: ${({ theme }) => theme.font.sm};
 `;

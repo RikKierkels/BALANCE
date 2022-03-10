@@ -10,8 +10,8 @@ const BalanceForm = styled(Form)`
     width: 10rem;
   }
 
-  > *:not(:last-child) {
-    margin-right: ${({ theme }) => theme.spacing.sm};
+  > * + * {
+    margin-left: ${({ theme }) => theme.spacing.sm};
   }
 ` as typeof Form;
 

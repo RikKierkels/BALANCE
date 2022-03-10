@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Fund, FundCreateOrUpdate } from "../../shared/portfolio";
 import PrimaryButton from "../Buttons/PrimaryButton";
 import Input from "../Form/Input";
-import { inputs } from "../Form/form-helpers";
+import { inputs } from "../Form/input-props";
 import Form from "../Form/Form";
 
 const fromFactorToPercentage = (factor: number) => factor * 100;
@@ -30,9 +30,9 @@ const FundCreateOrUpdateForm = ({ fund, onSubmit }: Props) => {
       {({ register, formState: { errors } }) => (
         <>
           <Input label="Name" error={errors?.name?.message} {...inputs.name(register)} />
-          <Input label="Quantity" type="number" error={errors?.quantity?.message} {...inputs.quantity(register)} />
-          <Input label="Price" type="number" step="0.001" error={errors?.price?.message} {...inputs.price(register)} />
-          <Input label="Target weight" type="number" error={errors?.weight?.message} {...inputs.weight(register)} />
+          <Input label="Quantity" error={errors?.quantity?.message} {...inputs.quantity(register)} />
+          <Input label="Price" error={errors?.price?.message} {...inputs.price(register)} />
+          <Input label="Target weight" error={errors?.weight?.message} {...inputs.weight(register)} />
           <PrimaryButton type="submit">Save</PrimaryButton>
         </>
       )}
@@ -41,11 +41,8 @@ const FundCreateOrUpdateForm = ({ fund, onSubmit }: Props) => {
 };
 
 const StyledForm = styled(Form)`
-  display: flex;
-  flex-direction: column;
-
-  > *:not(:last-child) {
-    margin-bottom: ${({ theme }) => theme.spacing.md};
+  > * + * {
+    margin-top: ${({ theme }) => theme.spacing.md};
   }
 ` as typeof Form;
 

@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { row } from "../../design/shared";
+import { row } from "../../design/mixins";
 
 const PortfolioHeader = styled.div`
-  ${row};
+  ${row("2.5fr 2fr")};
   background-color: ${({ theme }) => theme.colors.header.background};
-  grid-template-columns: 2.5fr 2fr;
 `;
 
 export default PortfolioHeader;

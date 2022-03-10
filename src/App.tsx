@@ -16,7 +16,7 @@ import IconButton from "./components/Buttons/IconButton";
 import FundCreateOrUpdateForm from "./components/Fund/FundCreateOrUpdateForm";
 import { Fund, FundCreateOrUpdate, FundPrices } from "./shared/portfolio";
 import FundPricesUpdateForm from "./components/Fund/FundPricesUpdateForm";
-import { inputs } from "./components/Form/form-helpers";
+import { inputs } from "./components/Form/input-props";
 import FundDeleteConfirmation from "./components/Fund/FundDeleteConfirmation";
 
 const App = () => {

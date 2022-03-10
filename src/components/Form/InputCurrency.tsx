@@ -10,7 +10,7 @@ const InputCurrency = React.forwardRef<HTMLInputElement, Props>((props, ref) => 
   return (
     <InputContainer>
       <Currency>{symbol}</Currency>
-      <Input type="number" ref={ref} {...props} />
+      <Input ref={ref} {...props} />
     </InputContainer>
   );
 });

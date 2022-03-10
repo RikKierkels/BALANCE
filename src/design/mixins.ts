@@ -16,16 +16,10 @@ export const button = (color: string, colorOffset: string) => css`
   }
 `;
 
-export const row = css`
+export const row = (columns: string) => css`
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr 0.25fr 0.25fr;
+  grid-template-columns: ${columns};
   align-items: center;
   min-height: 5rem;
   padding: ${({ theme }) => theme.spacing.lg};
-`;
-
-export const stack = (spacing: string) => css`
-  * + * {
-    margin-top: ${spacing};
-  }
 `;
