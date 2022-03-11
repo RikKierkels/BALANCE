@@ -15,6 +15,10 @@ declare module "styled-components" {
       iconLightHover: string;
       iconDarkHover: string;
     };
+    link: {
+      primary: string;
+      hover: string;
+    };
     header: {
       background: string;
     };
@@ -42,6 +46,7 @@ declare module "styled-components" {
     sm: string;
     md: string;
     lg: string;
+    xlg: string;
   };
 
   type Font = {

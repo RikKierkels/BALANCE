@@ -14,6 +14,10 @@ export const defaultTheme: DefaultTheme = {
       iconLightHover: "rgba(255,255,255, 0.2)",
       iconDarkHover: "rgba(0,0,0,0.2)",
     },
+    link: {
+      primary: "#2aad7c",
+      hover: "#000000",
+    },
     header: {
       background: "#ebebeb",
     },
@@ -39,7 +43,8 @@ export const defaultTheme: DefaultTheme = {
     xs: "0.25rem",
     sm: "0.5rem",
     md: "1rem",
-    lg: "2rem",
+    lg: "1.5rem",
+    xlg: "2rem",
   },
   font: {
     xs: "12px",

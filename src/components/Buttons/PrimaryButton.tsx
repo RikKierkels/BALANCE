@@ -1,8 +1,10 @@
 import styled from "styled-components";
-import { button } from "../../design/mixins";
+import BaseButton from "./BaseButton";
 
-const PrimaryButton = styled.button`
-  ${({ theme }) => button(theme.colors.button.primary, theme.colors.button.primaryOffset)};
+const PrimaryButton = styled(BaseButton)`
+  border-color: ${({ theme }) => theme.colors.button.primary};
+  background-color: ${({ theme }) => theme.colors.button.primary};
+  color: ${({ theme }) => theme.colors.button.primaryOffset};
 `;
 
 export default PrimaryButton;

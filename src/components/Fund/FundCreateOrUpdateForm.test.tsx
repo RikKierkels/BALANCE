@@ -6,9 +6,9 @@ import FundCreateOrUpdateForm from "./FundCreateOrUpdateForm";
 
 const validate = (name: string, cases: [string, Partial<Fund>, string][]) =>
   test.each(cases)(name, async (text, fund, message) => {
-    render(<FundCreateOrUpdateForm onSubmit={() => {}} fund={createFund(fund)} />);
+    render(<FundCreateOrUpdateForm onCancel={() => {}} onSubmit={() => {}} fund={createFund(fund)} />);
 
-    fireEvent.click(screen.getButtonByName(/save/i));
+    fireEvent.click(screen.getButtonByName(/fund/i));
 
     const label = screen.getLabelByLabelText(text);
     expect(await within(label).findByText(message)).toBeInTheDocument();

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { ReactComponent as UpdateIcon } from "../../assets/pencil.svg";
-import { ReactComponent as DeleteIcon } from "../../assets/times.svg";
 import { Fund } from "../../shared/portfolio";
 import { row } from "../../design/mixins";
 import IconButton from "../Buttons/IconButton";
@@ -11,11 +10,20 @@ import FundQuantityPrice from "./FundQuantityPrice";
 
 type Props = {
   fund: Fund;
+  isSelected: boolean;
+  onSelectedChange: (fund: Fund) => void;
   onUpdateClick: (fund: Fund) => void;
 };
 
-const FundListItem = ({ fund, onUpdateClick }: Props) => (
+const FundListItem = ({ fund, isSelected, onSelectedChange, onUpdateClick }: Props) => (
   <FundRow>
+    <input
+      type="checkbox"
+      aria-label={isSelected ? `Deselect ${fund.name}` : `Select ${fund.name}`}
+      title={isSelected ? `Deselect ${fund.name}` : `Select ${fund.name}`}
+      checked={isSelected}
+      onChange={() => onSelectedChange(fund)}
+    />
     <FundName>{fund.name}</FundName>
     <FundQuantityPrice quantity={fund.quantity} price={fund.price} />
     <FundTotal total={fund.total} />
@@ -27,7 +35,7 @@ const FundListItem = ({ fund, onUpdateClick }: Props) => (
 );
 
 const FundRow = styled.li`
-  ${row("1.5fr 1fr 1fr 1fr 0.25fr")};
+  ${row("0.25fr 1.5fr 1fr 1fr 1fr 0.25fr")};
   background-color: ${({ theme }) => theme.colors.fund.background};
   font-size: ${({ theme }) => theme.font.sm};
 `;

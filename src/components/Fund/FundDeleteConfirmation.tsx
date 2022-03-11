@@ -9,18 +9,27 @@ type Props = {
 };
 
 const FundDeleteConfirmation = ({ onConfirm, onCancel }: Props) => (
-  <ButtonContainer>
-    <SecondaryButton onClick={onCancel}>Cancel</SecondaryButton>
-    <PrimaryButton onClick={onConfirm}>Remove</PrimaryButton>
-  </ButtonContainer>
+  <Confirmation>
+    <p>This will permanently remove the fund(s) and re-balance the portfolio. This action cannot be undone.</p>
+    <Actions>
+      <SecondaryButton onClick={onCancel}>Cancel</SecondaryButton>
+      <PrimaryButton onClick={onConfirm}>Delete</PrimaryButton>
+    </Actions>
+  </Confirmation>
 );
 
-const ButtonContainer = styled.div`
-  margin-left: auto;
-  margin-right: auto;
+const Confirmation = styled.div`
+  > *:last-child {
+    margin-top: ${({ theme }) => theme.spacing.lg};
+  }
+`;
+
+const Actions = styled.div`
+  display: flex;
+  justify-content: flex-end;
 
   * + * {
-    margin-left: ${({ theme }) => theme.spacing.md};
+    margin-left: ${({ theme }) => theme.spacing.sm};
   }
 `;
 

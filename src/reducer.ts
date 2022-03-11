@@ -1,7 +1,7 @@
 import { v4 as uuid } from "uuid";
-import { pipe, zip } from "./util";
-import { Fund, FundCreateOrUpdate, FundIncrement, FundPrices, Portfolio, PortfolioIncrement } from "./portfolio";
-import { balance, updateTotal, updateWeights } from "./portfolio-balancer";
+import { pipe, zip } from "./shared/util";
+import { Fund, FundCreateOrUpdate, FundIncrement, FundPrices, Portfolio, PortfolioIncrement } from "./shared/portfolio";
+import { balance, updateTotal, updateWeights } from "./shared/portfolio-balancer";
 
 const toPortfolioIncrement = (before: Portfolio, after: Portfolio): PortfolioIncrement => ({
   total: after.total - before.total,
@@ -32,23 +32,32 @@ const updateFundPrice = (fund: Fund, price: number) => ({
   total: fund.quantity * price,
 });
 
-type State = { amount?: number; portfolio: Portfolio; increment: PortfolioIncrement | null };
+type State = { selectedFundIds: string[]; amount?: number; portfolio: Portfolio; increment: PortfolioIncrement | null };
 type Action =
   | { type: "portfolioBalanced"; payload: { amount: number } }
   | { type: "fundCreated"; payload: { fund: FundCreateOrUpdate } }
   | { type: "fundUpdated"; payload: { fund: FundCreateOrUpdate } }
   | { type: "fundPricesUpdated"; payload: { prices: FundPrices } }
-  | { type: "fundDeleted"; payload: { id: string } };
+  | { type: "fundsDeleted"; payload: { ids: string[] } }
+  | { type: "fundSelected"; payload: { id: string } }
+  | { type: "fundDeselected"; payload: { id: string } }
+  | { type: "allFundsSelected" }
+  | { type: "allFundsDeselected" };
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "portfolioBalanced":
       const { amount } = action.payload;
       const portfolio = balance(state.portfolio, amount);
-      return { amount, portfolio, increment: toPortfolioIncrement(state.portfolio, portfolio) };
+      return {
+        ...state,
+        amount,
+        portfolio,
+        increment: toPortfolioIncrement(state.portfolio, portfolio),
+      };
     case "fundCreated":
       return {
-        amount: state.amount,
+        ...state,
         portfolio: updatePortfolio({
           total: state.portfolio.total,
           funds: [...state.portfolio.funds, createFund(action.payload.fund)],
@@ -59,7 +68,7 @@ export const reducer = (state: State, action: Action): State => {
       const { fund: updatedFund } = action.payload;
       const id = updatedFund.id;
       return {
-        amount: state.amount,
+        ...state,
         portfolio: updatePortfolio({
           total: state.portfolio.total,
           funds: state.portfolio.funds.map((fund) => (fund.id === id ? updateFund(id, updatedFund) : fund)),
@@ -69,21 +78,30 @@ export const reducer = (state: State, action: Action): State => {
     case "fundPricesUpdated":
       const prices = action.payload.prices;
       return {
-        amount: state.amount,
+        ...state,
         portfolio: updatePortfolio({
           total: state.portfolio.total,
           funds: state.portfolio.funds.map((fund) => (prices[fund.id] ? updateFundPrice(fund, prices[fund.id]) : fund)),
         }),
         increment: null,
       };
-    case "fundDeleted":
+    case "fundsDeleted":
       return {
-        amount: state.amount,
+        ...state,
         portfolio: updatePortfolio({
           total: state.portfolio.total,
-          funds: state.portfolio.funds.filter((fund) => fund.id !== action.payload.id),
+          funds: state.portfolio.funds.filter(({ id }) => !action.payload.ids.includes(id)),
         }),
         increment: null,
+        selectedFundIds: [],
       };
+    case "fundSelected":
+      return { ...state, selectedFundIds: [...state.selectedFundIds, action.payload.id] };
+    case "fundDeselected":
+      return { ...state, selectedFundIds: state.selectedFundIds.filter((fund) => fund !== action.payload.id) };
+    case "allFundsSelected":
+      return { ...state, selectedFundIds: state.portfolio.funds.map(({ id }) => id) };
+    case "allFundsDeselected":
+      return { ...state, selectedFundIds: [] };
   }
 };

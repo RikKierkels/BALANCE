@@ -58,7 +58,7 @@ const Dialog = styled.section`
   background-color: ${({ theme }) => theme.colors.modal.background};
 
   > * {
-    padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
+    padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.xlg};
   }
 
   > *:first-child {

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Fund, FundCreateOrUpdate } from "../../shared/portfolio";
 import PrimaryButton from "../Buttons/PrimaryButton";
@@ -24,7 +24,7 @@ type Props = {
   onSubmit: (fund: FundCreateOrUpdate) => void;
 };
 
-const FundCreateOrUpdateForm = ({ fund, onCancel, onSubmit }: PropsWithChildren<Props>) => {
+const FundCreateOrUpdateForm = ({ fund, onCancel, onSubmit }: Props) => {
   const handleSubmit = (fund: FundCreateOrUpdate) => onSubmit({ ...fund, weight: fromPercentageToFactor(fund.weight) });
 
   return (
@@ -35,12 +35,12 @@ const FundCreateOrUpdateForm = ({ fund, onCancel, onSubmit }: PropsWithChildren<
           <Input label="Quantity" error={errors?.quantity?.message} {...inputs.quantity(register)} />
           <Input label="Price" error={errors?.price?.message} {...inputs.price(register)} />
           <Input label="Target weight" error={errors?.weight?.message} {...inputs.weight(register)} />
-          <Buttons>
+          <Actions>
             <SecondaryButton type="button" onClick={onCancel}>
               Cancel
             </SecondaryButton>
             <PrimaryButton type="submit">{fund ? "Update fund" : "Add fund"}</PrimaryButton>
-          </Buttons>
+          </Actions>
         </>
       )}
     </StyledForm>
@@ -57,11 +57,11 @@ const StyledForm = styled(Form)`
   }
 
   > :last-child {
-    margin-top: calc(${({ theme }) => theme.spacing.md} * 1.5);
+    margin-top: ${({ theme }) => theme.spacing.lg};
   }
 ` as typeof Form;
 
-const Buttons = styled.div`
+const Actions = styled.div`
   display: flex;
   justify-content: flex-end;
 

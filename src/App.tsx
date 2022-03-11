@@ -7,24 +7,30 @@ import PortfolioTotal from "./components/Portfolio/PortfolioTotal";
 import InputCurrency from "./components/Form/InputCurrency";
 import BalanceForm, { BalanceAmount } from "./components/Balance/BalanceForm";
 import useLocalStorageReducer from "./hooks/use-local-storage-reducer";
-import { reducer } from "./shared/reducer";
+import { reducer } from "./reducer";
 import { ReactComponent as AddIcon } from "../src/assets/plus.svg";
-import { ReactComponent as MoneyIcon } from "../src/assets/money.svg";
+import { ReactComponent as DeleteIcon } from "../src/assets/times.svg";
 import { useModal } from "./components/Modal/ModalProvider";
 import PrimaryButton from "./components/Buttons/PrimaryButton";
-import IconButton from "./components/Buttons/IconButton";
 import FundCreateOrUpdateForm from "./components/Fund/FundCreateOrUpdateForm";
 import { Fund, FundCreateOrUpdate, FundPrices } from "./shared/portfolio";
 import FundPricesUpdateForm from "./components/Fund/FundPricesUpdateForm";
 import { inputs } from "./components/Form/input-props";
+import FundDeleteConfirmation from "./components/Fund/FundDeleteConfirmation";
+import LinkButton from "./components/Buttons/LinkButton";
 
 const App = () => {
   const { open, close } = useModal();
-  const [{ amount, portfolio }, dispatch] = useLocalStorageReducer(
+  const [{ selectedFundIds, amount, portfolio }, dispatch] = useLocalStorageReducer(
     reducer,
-    { amount: undefined, portfolio: { funds: [], total: 0 }, increment: null },
+    { selectedFundIds: [], amount: undefined, portfolio: { funds: [], total: 0 }, increment: null },
     "state",
   );
+
+  const isFundSelected = (id: string) => selectedFundIds.includes(id);
+  const hasSelectedAllFunds = portfolio.funds.map(({ id }) => id).every(isFundSelected);
+  const hasSelectedAnyFund = !!selectedFundIds.length;
+  const hasFunds = !!portfolio.funds.length;
 
   const handleOpenCreateFundModal = () =>
     open(<FundCreateOrUpdateForm onCancel={close} onSubmit={handleCreateFund} />, { title: "Add fund" });
@@ -44,14 +50,19 @@ const App = () => {
     close();
   };
 
-  const handleDeleteFund = (id: string) => {
-    dispatch({ type: "fundDeleted", payload: { id } });
+  const handleOpenDeleteFundModal = () =>
+    open(<FundDeleteConfirmation onConfirm={handleDeleteFunds} onCancel={close} />, {
+      title: `Delete ${selectedFundIds.length} fund${selectedFundIds.length > 1 ? "s" : ""}?`,
+    });
+
+  const handleDeleteFunds = () => {
+    dispatch({ type: "fundsDeleted", payload: { ids: selectedFundIds } });
     close();
   };
 
   const handleOpenUpdateFundPricesModal = () =>
     open(<FundPricesUpdateForm funds={portfolio.funds} onSubmit={handleUpdatePrices} />, {
-      title: "Update fund prices",
+      title: "Update prices",
     });
 
   const handleUpdatePrices = (prices: FundPrices) => {
@@ -62,22 +73,51 @@ const App = () => {
   const handleBalancePortfolio = ({ amount }: BalanceAmount) =>
     dispatch({ type: "portfolioBalanced", payload: { amount } });
 
+  const handleSelectedFundChange = ({ id }: Fund) =>
+    dispatch({ type: isFundSelected(id) ? "fundDeselected" : "fundSelected", payload: { id } });
+
+  const handleSelectedAllFundsChange = () =>
+    dispatch({ type: hasSelectedAllFunds ? "allFundsDeselected" : "allFundsSelected" });
+
+  const handleDeselectAllFunds = () => {
+    dispatch({ type: "allFundsDeselected" });
+  };
+
   return (
     <AppContainer>
       <PortfolioHeader>
-        <div>
-          <IconButton onClick={handleOpenCreateFundModal}>
-            <AddIcon />
-          </IconButton>
-          <IconButton onClick={handleOpenUpdateFundPricesModal}>
-            <MoneyIcon />
-          </IconButton>
-        </div>
+        <input
+          type="checkbox"
+          aria-label={hasSelectedAllFunds ? "Deselect all funds" : "Select all funds"}
+          title={hasSelectedAllFunds ? "Deselect all funds" : "Select all funds"}
+          checked={hasSelectedAllFunds}
+          onChange={handleSelectedAllFundsChange}
+        />
         <PortfolioTotal total={portfolio.total} />
+        <Actions>
+          {hasSelectedAnyFund ? (
+            <>
+              <LinkButton onClick={handleDeselectAllFunds}>Deselect</LinkButton>
+              <PrimaryButton left={<DeleteIcon />} onClick={handleOpenDeleteFundModal}>
+                Delete
+              </PrimaryButton>
+            </>
+          ) : (
+            <PrimaryButton left={<AddIcon />} onClick={handleOpenCreateFundModal}>
+              Add fund
+            </PrimaryButton>
+          )}
+        </Actions>
       </PortfolioHeader>
       <FundList>
         {portfolio.funds.map((fund) => (
-          <FundListItem key={fund.id} fund={fund} onUpdateClick={handleOpenUpdateFundModal} />
+          <FundListItem
+            key={fund.id}
+            fund={fund}
+            isSelected={isFundSelected(fund.id)}
+            onSelectedChange={handleSelectedFundChange}
+            onUpdateClick={handleOpenUpdateFundModal}
+          />
         ))}
       </FundList>
       <BalanceForm<BalanceAmount> defaultValues={{ amount }} onSubmit={handleBalancePortfolio}>
@@ -95,6 +135,14 @@ const App = () => {
 const AppContainer = styled.main`
   ${FundList} {
     margin-bottom: ${({ theme }) => theme.spacing.md};
+  }
+`;
+
+const Actions = styled.div`
+  margin-left: auto;
+
+  > * + * {
+    margin-left: ${({ theme }) => theme.spacing.sm};
   }
 `;
 

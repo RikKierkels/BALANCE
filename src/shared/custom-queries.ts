@@ -3,7 +3,7 @@ import { ByRoleMatcher } from "@testing-library/dom/types/matches";
 
 const roleByNameQueryAll =
   (role: ByRoleMatcher) => (container: HTMLElement, name: ByRoleOptions["name"], args: Omit<ByRoleOptions, "name">) =>
-    within(container).getAllByRole(role, { name, ...args });
+    within(container).queryAllByRole(role, { name, ...args });
 
 const [queryButtonByName, getAllButtonsByName, getButtonByName, findAllButtonsByName, findButtonByName] = buildQueries(
   roleByNameQueryAll("button"),
@@ -20,7 +20,7 @@ const [
 ] = buildQueries(
   (container: HTMLElement, id: Matcher, options?: SelectorMatcherOptions) =>
     within(container)
-      .getAllByLabelText(id, options)
+      .queryAllByLabelText(id, options)
       .map((input) => input.closest("label")!),
   (_, value) => `Found multiple labels for text: ${value}`,
   (_, value) => `Unable to find a label for text: ${value}`,
