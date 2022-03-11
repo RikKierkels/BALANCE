@@ -9,7 +9,7 @@ export const defaultTheme: DefaultTheme = {
     button: {
       primary: "#2aad7c",
       primaryOffset: "#ffffff",
-      secondary: "#d4434b",
+      secondary: "#000000",
       secondaryOffset: "#ffffff",
       iconLightHover: "rgba(255,255,255, 0.2)",
       iconDarkHover: "rgba(0,0,0,0.2)",
@@ -26,6 +26,7 @@ export const defaultTheme: DefaultTheme = {
     modal: {
       background: "#ffffff",
       backdrop: "rgba(0, 0, 0, 0.8)",
+      border: "#f3f3f3",
       closeIcon: "#ffffff",
     },
     input: {

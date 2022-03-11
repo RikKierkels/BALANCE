@@ -27,6 +27,7 @@ declare module "styled-components" {
     modal: {
       backdrop: string;
       background: string;
+      border: string;
       closeIcon: string;
     };
     input: {

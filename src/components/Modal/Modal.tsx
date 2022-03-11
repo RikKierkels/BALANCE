@@ -55,16 +55,18 @@ const Container = styled.div`
 
 const Dialog = styled.section`
   width: calc(${({ theme }) => theme.app.width} * 0.5);
-  padding: ${({ theme }) => theme.spacing.lg};
   background-color: ${({ theme }) => theme.colors.modal.background};
 
-  > * + * {
-    margin-top: ${({ theme }) => theme.spacing.lg};
+  > * {
+    padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
+  }
+
+  > *:first-child {
+    border-bottom: 2px solid ${({ theme }) => theme.colors.modal.border};
   }
 `;
 
 const Title = styled.h2`
-  text-align: center;
   font-weight: 500;
 `;
 

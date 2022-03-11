@@ -2,7 +2,7 @@ import { css } from "styled-components";
 
 export const button = (color: string, colorOffset: string) => css`
   padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
-  border: 2px solid transparent;
+  border: 2px solid ${color};
   background-color: ${color};
   color: ${colorOffset};
   font-size: ${({ theme }) => theme.font.lg};
@@ -10,7 +10,6 @@ export const button = (color: string, colorOffset: string) => css`
 
   &:focus,
   &:hover {
-    border: 2px solid ${color};
     background-color: ${colorOffset};
     color: ${color};
   }

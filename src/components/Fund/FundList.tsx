@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const FundList = styled.ul`
   > * + * {
-    border-bottom: 2px solid ${({ theme }) => theme.colors.fund.border};
+    border-top: 2px solid ${({ theme }) => theme.colors.fund.border};
   }
 `;
 

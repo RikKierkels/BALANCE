@@ -1,10 +1,11 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import styled from "styled-components";
 import { Fund, FundCreateOrUpdate } from "../../shared/portfolio";
 import PrimaryButton from "../Buttons/PrimaryButton";
 import Input from "../Form/Input";
 import { inputs } from "../Form/input-props";
 import Form from "../Form/Form";
+import SecondaryButton from "../Buttons/SecondaryButton";
 
 const fromFactorToPercentage = (factor: number) => factor * 100;
 const fromPercentageToFactor = (percentage: number) => percentage / 100;
@@ -19,10 +20,11 @@ const toDefaultFormValues = (fund?: Fund): Partial<FundCreateOrUpdate> => ({
 
 type Props = {
   fund?: Fund;
+  onCancel: () => void;
   onSubmit: (fund: FundCreateOrUpdate) => void;
 };
 
-const FundCreateOrUpdateForm = ({ fund, onSubmit }: Props) => {
+const FundCreateOrUpdateForm = ({ fund, onCancel, onSubmit }: PropsWithChildren<Props>) => {
   const handleSubmit = (fund: FundCreateOrUpdate) => onSubmit({ ...fund, weight: fromPercentageToFactor(fund.weight) });
 
   return (
@@ -33,7 +35,12 @@ const FundCreateOrUpdateForm = ({ fund, onSubmit }: Props) => {
           <Input label="Quantity" error={errors?.quantity?.message} {...inputs.quantity(register)} />
           <Input label="Price" error={errors?.price?.message} {...inputs.price(register)} />
           <Input label="Target weight" error={errors?.weight?.message} {...inputs.weight(register)} />
-          <PrimaryButton type="submit">Save</PrimaryButton>
+          <Buttons>
+            <SecondaryButton type="button" onClick={onCancel}>
+              Cancel
+            </SecondaryButton>
+            <PrimaryButton type="submit">{fund ? "Update fund" : "Add fund"}</PrimaryButton>
+          </Buttons>
         </>
       )}
     </StyledForm>
@@ -48,6 +55,19 @@ const StyledForm = styled(Form)`
   > * + * {
     margin-top: ${({ theme }) => theme.spacing.md};
   }
+
+  > :last-child {
+    margin-top: calc(${({ theme }) => theme.spacing.md} * 1.5);
+  }
 ` as typeof Form;
+
+const Buttons = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
+  > * + * {
+    margin-left: ${({ theme }) => theme.spacing.sm};
+  }
+`;
 
 export default FundCreateOrUpdateForm;

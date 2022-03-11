@@ -17,7 +17,6 @@ import FundCreateOrUpdateForm from "./components/Fund/FundCreateOrUpdateForm";
 import { Fund, FundCreateOrUpdate, FundPrices } from "./shared/portfolio";
 import FundPricesUpdateForm from "./components/Fund/FundPricesUpdateForm";
 import { inputs } from "./components/Form/input-props";
-import FundDeleteConfirmation from "./components/Fund/FundDeleteConfirmation";
 
 const App = () => {
   const { open, close } = useModal();
@@ -28,7 +27,7 @@ const App = () => {
   );
 
   const handleOpenCreateFundModal = () =>
-    open(<FundCreateOrUpdateForm onSubmit={handleCreateFund} />, { title: "Add a new fund" });
+    open(<FundCreateOrUpdateForm onCancel={close} onSubmit={handleCreateFund} />, { title: "Add fund" });
 
   const handleCreateFund = (fund: FundCreateOrUpdate) => {
     dispatch({ type: "fundCreated", payload: { fund } });
@@ -36,17 +35,14 @@ const App = () => {
   };
 
   const handleOpenUpdateFundModal = (fund: Fund) =>
-    open(<FundCreateOrUpdateForm fund={fund} onSubmit={handleUpdateFund} />, { title: "Update your fund" });
+    open(<FundCreateOrUpdateForm fund={fund} onCancel={close} onSubmit={handleUpdateFund} />, {
+      title: "Update fund",
+    });
 
   const handleUpdateFund = (fund: FundCreateOrUpdate) => {
     dispatch({ type: "fundUpdated", payload: { fund } });
     close();
   };
-
-  const handleOpenDeleteFundModal = (id: string) =>
-    open(<FundDeleteConfirmation onConfirm={() => handleDeleteFund(id)} onCancel={close} />, {
-      title: "Are you sure you want to remove this fund?",
-    });
 
   const handleDeleteFund = (id: string) => {
     dispatch({ type: "fundDeleted", payload: { id } });
@@ -81,12 +77,7 @@ const App = () => {
       </PortfolioHeader>
       <FundList>
         {portfolio.funds.map((fund) => (
-          <FundListItem
-            key={fund.id}
-            fund={fund}
-            onUpdateClick={handleOpenUpdateFundModal}
-            onDeleteClick={handleOpenDeleteFundModal}
-          />
+          <FundListItem key={fund.id} fund={fund} onUpdateClick={handleOpenUpdateFundModal} />
         ))}
       </FundList>
       <BalanceForm<BalanceAmount> defaultValues={{ amount }} onSubmit={handleBalancePortfolio}>

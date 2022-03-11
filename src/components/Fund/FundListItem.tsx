@@ -12,10 +12,9 @@ import FundQuantityPrice from "./FundQuantityPrice";
 type Props = {
   fund: Fund;
   onUpdateClick: (fund: Fund) => void;
-  onDeleteClick: (id: string) => void;
 };
 
-const FundListItem = ({ fund, onUpdateClick, onDeleteClick }: Props) => (
+const FundListItem = ({ fund, onUpdateClick }: Props) => (
   <FundRow>
     <FundName>{fund.name}</FundName>
     <FundQuantityPrice quantity={fund.quantity} price={fund.price} />
@@ -24,14 +23,11 @@ const FundListItem = ({ fund, onUpdateClick, onDeleteClick }: Props) => (
     <IconButton onClick={() => onUpdateClick(fund)}>
       <UpdateIcon />
     </IconButton>
-    <IconButton onClick={() => onDeleteClick(fund.id)}>
-      <DeleteIcon />
-    </IconButton>
   </FundRow>
 );
 
 const FundRow = styled.li`
-  ${row("1.5fr 1fr 1fr 1fr 0.25fr 0.25fr")};
+  ${row("1.5fr 1fr 1fr 1fr 0.25fr")};
   background-color: ${({ theme }) => theme.colors.fund.background};
   font-size: ${({ theme }) => theme.font.sm};
 `;
