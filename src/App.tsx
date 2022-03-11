@@ -30,7 +30,6 @@ const App = () => {
   const isFundSelected = (id: string) => selectedFundIds.includes(id);
   const hasSelectedAllFunds = portfolio.funds.map(({ id }) => id).every(isFundSelected);
   const hasSelectedAnyFund = !!selectedFundIds.length;
-  const hasFunds = !!portfolio.funds.length;
 
   const handleOpenCreateFundModal = () =>
     open(<FundCreateOrUpdateForm onCancel={close} onSubmit={handleCreateFund} />, { title: "Add fund" });
