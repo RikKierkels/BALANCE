@@ -15,9 +15,10 @@ import PrimaryButton from "./components/Buttons/PrimaryButton";
 import FundCreateOrUpdateForm from "./components/Fund/FundCreateOrUpdateForm";
 import { Fund, FundCreateOrUpdate, FundPrices } from "./shared/portfolio";
 import FundPricesUpdateForm from "./components/Fund/FundPricesUpdateForm";
-import { inputs } from "./components/Form/input-props";
+import { checkboxes, inputs } from "./components/Form/input-props";
 import FundDeleteConfirmation from "./components/Fund/FundDeleteConfirmation";
 import LinkButton from "./components/Buttons/LinkButton";
+import Checkbox from "./components/Form/Checkbox";
 
 const App = () => {
   const { open, close } = useModal();
@@ -85,13 +86,7 @@ const App = () => {
   return (
     <AppContainer>
       <PortfolioHeader>
-        <input
-          type="checkbox"
-          aria-label={hasSelectedAllFunds ? "Deselect all funds" : "Select all funds"}
-          title={hasSelectedAllFunds ? "Deselect all funds" : "Select all funds"}
-          checked={hasSelectedAllFunds}
-          onChange={handleSelectedAllFundsChange}
-        />
+        <Checkbox {...checkboxes.fund(hasSelectedAllFunds)} onChange={handleSelectedAllFundsChange} />
         <PortfolioTotal total={portfolio.total} />
         <Actions>
           {hasSelectedAnyFund ? (

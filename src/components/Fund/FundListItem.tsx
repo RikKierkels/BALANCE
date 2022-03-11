@@ -7,6 +7,8 @@ import IconButton from "../Buttons/IconButton";
 import FundTotal from "./FundTotal";
 import FundWeight from "./FundWeight";
 import FundQuantityPrice from "./FundQuantityPrice";
+import Checkbox from "../Form/Checkbox";
+import { checkboxes } from "../Form/input-props";
 
 type Props = {
   fund: Fund;
@@ -17,13 +19,7 @@ type Props = {
 
 const FundListItem = ({ fund, isSelected, onSelectedChange, onUpdateClick }: Props) => (
   <FundRow>
-    <input
-      type="checkbox"
-      aria-label={isSelected ? `Deselect ${fund.name}` : `Select ${fund.name}`}
-      title={isSelected ? `Deselect ${fund.name}` : `Select ${fund.name}`}
-      checked={isSelected}
-      onChange={() => onSelectedChange(fund)}
-    />
+    <Checkbox {...checkboxes.fund(isSelected, fund.name)} onChange={() => onSelectedChange(fund)} />
     <FundName>{fund.name}</FundName>
     <FundQuantityPrice quantity={fund.quantity} price={fund.price} />
     <FundTotal total={fund.total} />

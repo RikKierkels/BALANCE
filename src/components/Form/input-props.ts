@@ -55,3 +55,15 @@ export const inputs: Record<
     }),
   }),
 };
+
+export const checkboxes: Record<string, (checked: boolean, name?: string) => React.ComponentPropsWithoutRef<"input">> =
+  {
+    fund: (checked: boolean, name: string = "all funds") => {
+      const label = `${checked ? "Deselect" : "Select"} ${name}`;
+      return {
+        "aria-label": label,
+        title: label,
+        checked,
+      };
+    },
+  };
