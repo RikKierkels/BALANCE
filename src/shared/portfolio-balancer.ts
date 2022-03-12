@@ -28,7 +28,11 @@ const updateWeights = ({ funds, total }: Portfolio): Portfolio => ({
 
 const increaseQuantity =
   (by: number) =>
-  (fund: Fund): Fund => ({ ...fund, quantity: fund.quantity + by, total: fund.total + by * fund.price });
+  (fund: Fund): Fund => ({
+    ...fund,
+    quantity: fund.quantity + by,
+    total: fund.total + by * fund.price,
+  });
 const increaseQuantityByOne = increaseQuantity(1);
 
 const increaseQuantityOf =

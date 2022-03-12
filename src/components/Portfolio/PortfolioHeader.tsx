@@ -1,9 +1,15 @@
 import styled from "styled-components";
-import { row } from "../../design/mixins";
 
 const PortfolioHeader = styled.div`
-  ${row("0.25fr 3.5fr 2fr")};
+  display: grid;
+  grid-template-columns: 0.25fr 3.75fr 2fr;
+  align-items: center;
   background-color: ${({ theme }) => theme.colors.header.background};
+  padding-right: ${({ theme }) => theme.spacing.xlg};
+
+  > *:first-child {
+    padding: ${({ theme }) => theme.spacing.xlg};
+  }
 
   > *:nth-child(2) {
     text-align: end;

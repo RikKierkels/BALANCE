@@ -18,6 +18,11 @@ const Label = styled.label`
   * + * {
     margin-left: ${({ theme }) => theme.spacing.sm};
   }
+
+  &:hover,
+  > *:hover {
+    cursor: pointer;
+  }
 `;
 
 const Input = styled.input`

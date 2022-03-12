@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
-import { ReactComponent as UpdateIcon } from "../../assets/pencil.svg";
 import { Fund } from "../../shared/portfolio";
 import { row } from "../../design/mixins";
-import IconButton from "../Buttons/IconButton";
 import FundTotal from "./FundTotal";
 import FundWeight from "./FundWeight";
 import FundQuantityPrice from "./FundQuantityPrice";
@@ -18,22 +16,52 @@ type Props = {
 };
 
 const FundListItem = ({ fund, isSelected, onSelectedChange, onUpdateClick }: Props) => (
-  <FundRow>
+  <FundContainer isSelected={isSelected}>
     <Checkbox {...checkboxes.fund(isSelected, fund.name)} onChange={() => onSelectedChange(fund)} />
-    <FundName>{fund.name}</FundName>
-    <FundQuantityPrice quantity={fund.quantity} price={fund.price} />
-    <FundTotal total={fund.total} />
-    <FundWeight weight={fund.weight} />
-    <IconButton onClick={() => onUpdateClick(fund)}>
-      <UpdateIcon />
-    </IconButton>
-  </FundRow>
+    <FundClickArea onClick={() => onUpdateClick(fund)}>
+      <FundName>{fund.name}</FundName>
+      <FundQuantityPrice quantity={fund.quantity} price={fund.price} />
+      <FundTotal total={fund.total} />
+      <FundWeight weight={fund.weight} />
+    </FundClickArea>
+  </FundContainer>
 );
 
-const FundRow = styled.li`
-  ${row("0.25fr 1.5fr 1fr 1fr 1fr 0.25fr")};
-  background-color: ${({ theme }) => theme.colors.fund.background};
+const FundContainer = styled.li<{ isSelected: boolean }>`
+  display: flex;
+  align-items: center;
+  background-color: ${({ isSelected, theme }) =>
+    isSelected ? theme.colors.fund.positive : theme.colors.fund.background};
+
+  > * {
+    align-self: stretch;
+    background-color: inherit;
+  }
+
+  > *:first-child {
+    padding: ${({ theme }) => theme.spacing.xlg};
+  }
+
+  > *:last-child {
+    padding-right: ${({ theme }) => theme.spacing.xlg};
+  }
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.fund.positive};
+  }
+`;
+
+const FundClickArea = styled.button`
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  align-items: center;
+  width: 100%;
+  text-align: start;
   font-size: ${({ theme }) => theme.font.sm};
+
+  &:focus {
+    outline: 0;
+  }
 `;
 
 const FundName = styled.span`
