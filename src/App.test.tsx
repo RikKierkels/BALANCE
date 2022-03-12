@@ -159,7 +159,7 @@ describe("updating an existing fund in the portfolio", () => {
     render(<App />);
 
     const [_, fund] = screen.getAllByRole("listitem");
-    userEvent.click(within(fund).getButtonByName(/pencil/i));
+    userEvent.click(within(fund).getButtonByName(/update/i));
     const modal = within(screen.getByRole("dialog"));
 
     const nameInput = modal.getByLabelText(/name/i);

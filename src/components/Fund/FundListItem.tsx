@@ -1,7 +1,6 @@
-import React, { useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Fund } from "../../shared/portfolio";
-import { row } from "../../design/mixins";
 import FundTotal from "./FundTotal";
 import FundWeight from "./FundWeight";
 import FundQuantityPrice from "./FundQuantityPrice";
@@ -18,7 +17,7 @@ type Props = {
 const FundListItem = ({ fund, isSelected, onSelectedChange, onUpdateClick }: Props) => (
   <FundContainer isSelected={isSelected}>
     <Checkbox {...checkboxes.fund(isSelected, fund.name)} onChange={() => onSelectedChange(fund)} />
-    <FundClickArea onClick={() => onUpdateClick(fund)}>
+    <FundClickArea aria-label="Update" onClick={() => onUpdateClick(fund)}>
       <FundName>{fund.name}</FundName>
       <FundQuantityPrice quantity={fund.quantity} price={fund.price} />
       <FundTotal total={fund.total} />
