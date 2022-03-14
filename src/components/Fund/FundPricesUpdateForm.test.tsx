@@ -6,9 +6,9 @@ import { Fund } from "../../shared/portfolio";
 
 const validate = (name: string, message: string, funds: Fund[]) =>
   test(name, async () => {
-    render(<FundPricesUpdateForm onSubmit={() => {}} funds={funds} />);
+    render(<FundPricesUpdateForm funds={funds} onCancel={() => {}} onSubmit={() => {}} />);
 
-    fireEvent.click(screen.getButtonByName(/save/i));
+    fireEvent.click(screen.getButtonByName(/update/i));
 
     const [labelOne, labelTwo, labelThree] = funds.map(({ name }) => screen.getLabelByLabelText(name)).map(within);
     expect(await labelOne.findByText(message)).toBeInTheDocument();

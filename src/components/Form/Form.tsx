@@ -14,7 +14,7 @@ const Form = <T extends Record<string, any> = Record<string, any>>({
   children,
   ...props
 }: Props<T>) => {
-  const methods = useForm<T>({ defaultValues });
+  const methods = useForm<T>({ defaultValues, mode: "onBlur" });
   return (
     <form onSubmit={methods.handleSubmit(onSubmit)} {...props}>
       {children(methods)}

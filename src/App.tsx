@@ -1,9 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import FundListItem from "./components/Fund/FundListItem";
-import FundList from "./components/Fund/FundList";
-import PortfolioHeader from "./components/Portfolio/PortfolioHeader";
-import PortfolioTotal from "./components/Portfolio/PortfolioTotal";
+import FundRows from "./components/Fund/FundRows";
 import InputCurrency from "./components/Form/InputCurrency";
 import BalanceForm, { BalanceAmount } from "./components/Balance/BalanceForm";
 import useLocalStorageReducer from "./hooks/use-local-storage-reducer";
@@ -15,10 +12,16 @@ import PrimaryButton from "./components/Buttons/PrimaryButton";
 import FundCreateOrUpdateForm from "./components/Fund/FundCreateOrUpdateForm";
 import { Fund, FundCreateOrUpdate, FundPrices } from "./shared/portfolio";
 import FundPricesUpdateForm from "./components/Fund/FundPricesUpdateForm";
-import { checkboxes, inputs } from "./components/Form/input-props";
+import { inputs } from "./components/Form/input-props";
 import FundDeleteConfirmation from "./components/Fund/FundDeleteConfirmation";
 import LinkButton from "./components/Buttons/LinkButton";
-import Checkbox from "./components/Form/Checkbox";
+import SecondaryButton from "./components/Buttons/SecondaryButton";
+import SelectableRow from "./components/Fund/SelectableRow";
+import NonSelectableRow from "./components/Fund/NonSelectableRow";
+import FundQuantityPrice from "./components/Fund/FundQuantityPrice";
+import FundTotal from "./components/Fund/FundTotal";
+import FundWeight from "./components/Fund/FundWeight";
+import PortfolioTotal from "./components/Portfolio/PortfolioTotal";
 
 const App = () => {
   const { open, close } = useModal();
@@ -51,7 +54,7 @@ const App = () => {
   };
 
   const handleOpenDeleteFundModal = () =>
-    open(<FundDeleteConfirmation onConfirm={handleDeleteFunds} onCancel={close} />, {
+    open(<FundDeleteConfirmation onCancel={close} onConfirm={handleDeleteFunds} />, {
       title: `Delete ${selectedFundIds.length} fund${selectedFundIds.length > 1 ? "s" : ""}?`,
     });
 
@@ -61,7 +64,7 @@ const App = () => {
   };
 
   const handleOpenUpdateFundPricesModal = () =>
-    open(<FundPricesUpdateForm funds={portfolio.funds} onSubmit={handleUpdatePrices} />, {
+    open(<FundPricesUpdateForm funds={portfolio.funds} onCancel={close} onSubmit={handleUpdatePrices} />, {
       title: "Update prices",
     });
 
@@ -84,36 +87,54 @@ const App = () => {
   };
 
   return (
-    <AppContainer>
-      <PortfolioHeader>
-        <Checkbox {...checkboxes.fund(hasSelectedAllFunds)} onChange={handleSelectedAllFundsChange} />
-        <PortfolioTotal total={portfolio.total} />
-        <Actions>
-          {hasSelectedAnyFund ? (
-            <>
-              <LinkButton onClick={handleDeselectAllFunds}>Deselect</LinkButton>
-              <PrimaryButton left={<DeleteIcon />} onClick={handleOpenDeleteFundModal}>
-                Delete
-              </PrimaryButton>
-            </>
-          ) : (
+    <Main>
+      <Actions>
+        {hasSelectedAnyFund ? (
+          <>
+            <LinkButton onClick={handleDeselectAllFunds}>Deselect</LinkButton>
+            <PrimaryButton left={<DeleteIcon />} onClick={handleOpenDeleteFundModal}>
+              Delete
+            </PrimaryButton>
+          </>
+        ) : (
+          <>
+            <SecondaryButton onClick={handleOpenUpdateFundPricesModal}>Update prices</SecondaryButton>
             <PrimaryButton left={<AddIcon />} onClick={handleOpenCreateFundModal}>
               Add fund
             </PrimaryButton>
-          )}
-        </Actions>
-      </PortfolioHeader>
-      <FundList>
+          </>
+        )}
+      </Actions>
+      <FundHeaderRow
+        labels={{ checkbox: "all funds" }}
+        isSelected={hasSelectedAllFunds}
+        onSelectedChange={handleSelectedAllFundsChange}
+      >
+        <FundName>Name</FundName>
+        <span>Quantity x Price</span>
+        <span>Total</span>
+        <span>Actual / Target weight</span>
+      </FundHeaderRow>
+      <FundRows>
         {portfolio.funds.map((fund) => (
-          <FundListItem
+          <FundRow
+            forwardedAs="li"
             key={fund.id}
-            fund={fund}
+            labels={{ checkbox: fund.name, button: "Update" }}
             isSelected={isFundSelected(fund.id)}
-            onSelectedChange={handleSelectedFundChange}
-            onUpdateClick={handleOpenUpdateFundModal}
-          />
+            onSelectedChange={() => handleSelectedFundChange(fund)}
+            onClick={() => handleOpenUpdateFundModal(fund)}
+          >
+            <FundName>{fund.name}</FundName>
+            <FundQuantityPrice quantity={fund.quantity} price={fund.price} />
+            <FundTotal total={fund.total} />
+            <FundWeight weight={fund.weight} />
+          </FundRow>
         ))}
-      </FundList>
+      </FundRows>
+      <FundTotalRow>
+        <PortfolioTotal total={portfolio.total} />
+      </FundTotalRow>
       <BalanceForm<BalanceAmount> defaultValues={{ amount }} onSubmit={handleBalancePortfolio}>
         {({ register }) => (
           <>
@@ -122,21 +143,52 @@ const App = () => {
           </>
         )}
       </BalanceForm>
-    </AppContainer>
+    </Main>
   );
 };
 
-const AppContainer = styled.main`
-  ${FundList} {
-    margin-bottom: ${({ theme }) => theme.spacing.md};
+const FundHeaderRow = styled(SelectableRow)`
+  background-color: ${({ theme }) => theme.colors.header.background};
+`;
+
+const FundRow = styled(SelectableRow)`
+  background-color: ${({ isSelected, theme }) =>
+    isSelected ? theme.colors.fund.positive : theme.colors.fund.background};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.fund.positive};
   }
 `;
 
+const FundTotalRow = styled(NonSelectableRow)`
+  background-color: ${({ theme }) => theme.colors.header.background};
+  min-height: 3rem;
+
+  span {
+    grid-column: 3;
+  }
+`;
+
+const FundName = styled.span`
+  font-size: ${({ theme }) => theme.font.md};
+`;
+
 const Actions = styled.div`
-  margin-left: auto;
+  display: flex;
+  justify-content: flex-end;
 
   > * + * {
     margin-left: ${({ theme }) => theme.spacing.sm};
+  }
+`;
+
+const Main = styled.main`
+  ${FundHeaderRow} {
+    margin-top: ${({ theme }) => theme.spacing.md};
+  }
+
+  ${FundTotalRow} {
+    margin-bottom: ${({ theme }) => theme.spacing.md};
   }
 `;
 

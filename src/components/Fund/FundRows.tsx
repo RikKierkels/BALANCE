@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-const FundList = styled.ul`
+const FundRows = styled.ul`
   > * + * {
     border-top: 2px solid ${({ theme }) => theme.colors.fund.border};
   }
 `;
 
-export default FundList;
+export default FundRows;

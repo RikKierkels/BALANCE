@@ -319,19 +319,19 @@ describe("deleting a fund in the portfolio", () => {
   });
 });
 
-describe.skip("updating the prices of funds in the portfolio", () => {
+describe("updating the prices of funds in the portfolio", () => {
   it("renders the updated portfolio", async () => {
     stubUseLocalStorage({ selectedFundIds: [], amount: 100, portfolio: createPortfolio(), increment: null });
     render(<App />);
 
-    userEvent.click(screen.getButtonByName(/money/i));
+    userEvent.click(screen.getButtonByName(/update prices/i));
     const modal = within(screen.getByRole("dialog"));
 
     const priceInput = modal.getByLabelText(/hsbc/i);
     userEvent.clear(priceInput);
     userEvent.type(priceInput, "300");
     expect(modal.getByLabelText(/ishares/i)).toBeInTheDocument();
-    userEvent.click(screen.getButtonByName(/save/i));
+    userEvent.click(modal.getButtonByName(/update/i));
 
     expect(await screen.findByTestId("portfolio-total")).toHaveTextContent("€ 3.300,00");
 
