@@ -7,8 +7,8 @@ type Props = React.PropsWithChildren<{ error?: string } & InputProps>;
 const Input = React.forwardRef<HTMLInputElement, Props>(({ children, className, error, ...props }, ref) => (
   <StyledLabel className={className}>
     <span>{children}</span>
-    <StyledInput ref={ref} {...props} />
-    {!!error && <Error>{error}</Error>}
+    <StyledInput ref={ref} aria-invalid={!!error ? "true" : "false"} {...props} />
+    {!!error && <Error role="alert">{error}</Error>}
   </StyledLabel>
 ));
 
