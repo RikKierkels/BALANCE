@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 type InputProps = React.ComponentPropsWithoutRef<"input">;
-export type Props = { label?: string; error?: string } & InputProps;
+type Props = React.PropsWithChildren<{ error?: string } & InputProps>;
 
-const Input = React.forwardRef<HTMLInputElement, Props>(({ label, error, className, ...props }, ref) => (
+const Input = React.forwardRef<HTMLInputElement, Props>(({ children, className, error, ...props }, ref) => (
   <StyledLabel className={className}>
-    <span>{label}</span>
+    <span>{children}</span>
     <StyledInput ref={ref} {...props} />
     {!!error && <Error>{error}</Error>}
   </StyledLabel>

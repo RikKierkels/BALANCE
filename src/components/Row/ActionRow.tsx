@@ -13,7 +13,7 @@ type Props = PropsWithChildren<{
   onClick?: () => void;
 }>;
 
-const SelectableRow = ({ children, labels, isSelected, onSelectedChange, onClick, ...props }: Props) => {
+const ActionRow = ({ children, labels, isSelected, onSelectedChange, onClick, ...props }: Props) => {
   const label = `${isSelected ? "Deselect" : "Select"} ${labels.checkbox}`;
 
   return (
@@ -38,4 +38,4 @@ const Action = styled.button`
   }
 `;
 
-export default SelectableRow;
+export default ActionRow;

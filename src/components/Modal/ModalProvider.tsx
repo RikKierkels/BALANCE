@@ -17,21 +17,18 @@ type ModalContext = {
   isOpen: boolean;
 };
 
+const EMPTY_MODAL: ModalState = { content: null, options: { title: "" } };
 const Context = React.createContext<ModalContext | undefined>(undefined);
 
 export const useModal = () => {
   const context = React.useContext(Context);
-  if (!context) {
-    throw new Error("useModal must be used within a ModalProvider.");
-  }
+  if (!context) throw new Error("useModal must be used within a ModalProvider.");
 
   return context;
 };
 
-const EMPTY_MODAL: ModalState = { content: null, options: { title: "" } };
-
 const ModalProvider = ({ children }: PropsWithChildren<{}>) => {
-  const [{ content, options }, setModal] = useState<ModalState>(EMPTY_MODAL);
+  const [{ content, options }, setModal] = useState(EMPTY_MODAL);
   const isOpen = !!content;
   useLockBodyScroll(isOpen);
 

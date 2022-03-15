@@ -31,10 +31,18 @@ const FundCreateOrUpdateForm = ({ fund, onCancel, onSubmit }: Props) => {
     <StyledForm<FundCreateOrUpdate> defaultValues={toDefaultFormValues(fund)} onSubmit={handleSubmit}>
       {({ register, formState: { errors } }) => (
         <>
-          <Input label="Name" error={errors?.name?.message} {...inputs.name(register)} />
-          <Input label="Quantity" error={errors?.quantity?.message} {...inputs.quantity(register)} />
-          <Input label="Price" error={errors?.price?.message} {...inputs.price(register)} />
-          <Input label="Target weight" error={errors?.weight?.message} {...inputs.weight(register)} />
+          <Input error={errors?.name?.message} {...inputs.name(register)}>
+            Name
+          </Input>
+          <Input error={errors?.quantity?.message} {...inputs.quantity(register)}>
+            Quantity
+          </Input>
+          <Input error={errors?.price?.message} {...inputs.price(register)}>
+            Price
+          </Input>
+          <Input error={errors?.weight?.message} {...inputs.weight(register)}>
+            Target weight
+          </Input>
           <Actions>
             <SecondaryButton type="button" onClick={onCancel}>
               Cancel

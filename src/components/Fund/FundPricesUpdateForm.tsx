@@ -20,13 +20,10 @@ const FundPricesUpdateForm = ({ funds, onCancel, onSubmit }: Props) => (
   <StyledForm<FundPrices> defaultValues={toFundPrices(funds)} onSubmit={onSubmit}>
     {({ register, formState: { errors } }) => (
       <>
-        {funds.map((fund) => (
-          <Input
-            key={fund.id}
-            label={fund.name}
-            error={errors?.[fund.id]?.message}
-            {...inputs.price(register, fund.id)}
-          />
+        {funds.map(({ id, name }) => (
+          <Input key={id} error={errors?.[id]?.message} {...inputs.price(register, id)}>
+            {name}
+          </Input>
         ))}
         <Actions>
           <SecondaryButton type="button" onClick={onCancel}>

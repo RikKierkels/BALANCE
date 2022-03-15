@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import FundRows from "./components/Fund/FundRows";
 import InputCurrency from "./components/Form/InputCurrency";
 import BalanceForm, { BalanceAmount } from "./components/Balance/BalanceForm";
 import useLocalStorageReducer from "./hooks/use-local-storage-reducer";
@@ -16,8 +15,8 @@ import { inputs } from "./components/Form/input-props";
 import FundDeleteConfirmation from "./components/Fund/FundDeleteConfirmation";
 import LinkButton from "./components/Buttons/LinkButton";
 import SecondaryButton from "./components/Buttons/SecondaryButton";
-import SelectableRow from "./components/Fund/SelectableRow";
-import NonSelectableRow from "./components/Fund/NonSelectableRow";
+import ActionRow from "./components/Row/ActionRow";
+import StaticRow from "./components/Row/StaticRow";
 import FundQuantityPrice from "./components/Fund/FundQuantityPrice";
 import FundTotal from "./components/Fund/FundTotal";
 import FundWeight from "./components/Fund/FundWeight";
@@ -105,7 +104,7 @@ const App = () => {
           </>
         )}
       </Actions>
-      <FundHeaderRow
+      <HeaderRow
         labels={{ checkbox: "all funds" }}
         isSelected={hasSelectedAllFunds}
         onSelectedChange={handleSelectedAllFundsChange}
@@ -114,7 +113,7 @@ const App = () => {
         <span>Quantity x Price</span>
         <span>Total</span>
         <span>Actual / Target weight</span>
-      </FundHeaderRow>
+      </HeaderRow>
       <FundRows>
         {portfolio.funds.map((fund) => (
           <FundRow
@@ -132,9 +131,9 @@ const App = () => {
           </FundRow>
         ))}
       </FundRows>
-      <FundTotalRow>
-        <PortfolioTotal total={portfolio.total} />
-      </FundTotalRow>
+      <TotalRow>
+        <Total total={portfolio.total} />
+      </TotalRow>
       <BalanceForm<BalanceAmount> defaultValues={{ amount }} onSubmit={handleBalancePortfolio}>
         {({ register }) => (
           <>
@@ -147,32 +146,6 @@ const App = () => {
   );
 };
 
-const FundHeaderRow = styled(SelectableRow)`
-  background-color: ${({ theme }) => theme.colors.header.background};
-`;
-
-const FundRow = styled(SelectableRow)`
-  background-color: ${({ isSelected, theme }) =>
-    isSelected ? theme.colors.fund.positive : theme.colors.fund.background};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.fund.positive};
-  }
-`;
-
-const FundTotalRow = styled(NonSelectableRow)`
-  background-color: ${({ theme }) => theme.colors.header.background};
-  min-height: 3rem;
-
-  span {
-    grid-column: 3;
-  }
-`;
-
-const FundName = styled.span`
-  font-size: ${({ theme }) => theme.font.md};
-`;
-
 const Actions = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -182,12 +155,41 @@ const Actions = styled.div`
   }
 `;
 
-const Main = styled.main`
-  ${FundHeaderRow} {
-    margin-top: ${({ theme }) => theme.spacing.md};
-  }
+const HeaderRow = styled(ActionRow)`
+  background-color: ${({ theme }) => theme.colors.header.background};
+`;
 
-  ${FundTotalRow} {
+const FundRows = styled.ul`
+  > * + * {
+    border-top: 2px solid ${({ theme }) => theme.colors.fund.border};
+  }
+`;
+
+const FundRow = styled(ActionRow)`
+  background-color: ${({ isSelected, theme }) =>
+    isSelected ? theme.colors.fund.positive : theme.colors.fund.background};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.fund.positive};
+  }
+`;
+
+const TotalRow = styled(StaticRow)`
+  min-height: 3rem;
+  background-color: ${({ theme }) => theme.colors.header.background};
+`;
+
+const Total = styled(PortfolioTotal)`
+  grid-column: 3;
+`;
+
+const FundName = styled.span`
+  font-size: ${({ theme }) => theme.font.md};
+`;
+
+const Main = styled.main`
+  ${Actions},
+  ${TotalRow} {
     margin-bottom: ${({ theme }) => theme.spacing.md};
   }
 `;

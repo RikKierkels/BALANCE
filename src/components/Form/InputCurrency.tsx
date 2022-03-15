@@ -33,9 +33,9 @@ const Currency = styled.div`
 `;
 
 const Input = styled.input`
-  border-left: 1px solid ${({ theme }) => theme.colors.fund.border};
   flex: 1 1 auto;
   min-width: 0;
+  border-left: 1px solid ${({ theme }) => theme.colors.fund.border};
 `;
 
 export default InputCurrency;

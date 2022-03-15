@@ -1,8 +1,8 @@
 import React, { PropsWithChildren } from "react";
 import styled from "styled-components";
 
-type ButtonProps = PropsWithChildren<React.ComponentPropsWithoutRef<"button">>;
-type Props = { isLight?: boolean } & ButtonProps;
+type ButtonProps = React.ComponentPropsWithoutRef<"button">;
+type Props = PropsWithChildren<{ isLight?: boolean } & ButtonProps>;
 
 const IconButton = React.forwardRef<HTMLButtonElement, Props>(({ children, isLight = false, ...props }, ref) => (
   <Button isLight={isLight} ref={ref} {...props}>
@@ -10,7 +10,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, Props>(({ children, isLig
   </Button>
 ));
 
-const Button = styled.button<{ isLight: boolean }>`
+const Button = styled.button<Pick<Props, "isLight">>`
   display: inline-flex;
   justify-content: center;
   align-items: center;

@@ -1,11 +1,10 @@
 import React, { PropsWithChildren, ReactNode } from "react";
 import styled from "styled-components";
 
-type BaseButtonProps = PropsWithChildren<
-  React.ComponentPropsWithoutRef<"button"> & { left?: ReactNode; right?: ReactNode }
->;
+type ButtonProps = React.ComponentPropsWithoutRef<"button">;
+type Props = PropsWithChildren<{ left?: ReactNode; right?: ReactNode } & ButtonProps>;
 
-const BaseButton = React.forwardRef<HTMLButtonElement, BaseButtonProps>(({ children, left, right, ...props }, ref) => (
+const BaseButton = React.forwardRef<HTMLButtonElement, Props>(({ children, left, right, ...props }, ref) => (
   <Button ref={ref} {...props}>
     {left && <Left>{left}</Left>}
     {children}

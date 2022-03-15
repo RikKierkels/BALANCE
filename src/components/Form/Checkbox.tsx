@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-type Props = Omit<React.ComponentPropsWithoutRef<"input">, "type"> & { label?: string };
+type InputProps = Omit<React.ComponentPropsWithoutRef<"input">, "type">;
+type Props = React.PropsWithChildren<InputProps>;
 
-const Checkbox = React.forwardRef<HTMLInputElement, Props>(({ label, className, ...props }, ref) => (
+const Checkbox = React.forwardRef<HTMLInputElement, Props>(({ children, className, ...props }, ref) => (
   <Label className={className}>
     <Input type="checkbox" ref={ref} {...props} />
-    {label && <span>{label}</span>}
+    {children && <span>{children}</span>}
   </Label>
 ));
 
@@ -29,8 +30,8 @@ const Input = styled.input`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1rem;
-  height: 1rem;
+  width: 1em;
+  height: 1em;
   margin: 0;
   border: 0.15em solid ${({ theme }) => theme.colors.input.border};
   font: inherit;
@@ -39,11 +40,11 @@ const Input = styled.input`
 
   &:before {
     content: "";
-    width: 0.5rem;
-    height: 0.5rem;
+    width: 0.5em;
+    height: 0.5em;
     transform: scale(0);
     transition: 100ms ${({ theme }) => theme.animations.easeOutCubic};
-    box-shadow: inset 1rem 1rem ${({ theme }) => theme.colors.button.primary};
+    box-shadow: inset 1em 1em ${({ theme }) => theme.colors.button.primary};
   }
 
   &:checked::before {
