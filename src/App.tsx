@@ -23,6 +23,7 @@ import FundQuantityPrice from "./components/Fund/FundQuantityPrice";
 import FundTotal from "./components/Fund/FundTotal";
 import FundWeight from "./components/Fund/FundWeight";
 import PortfolioTotal from "./components/Portfolio/PortfolioTotal";
+import FundCreateOnboarding from "./components/Fund/FundCreateOnboarding";
 
 const App = () => {
   const { open, close } = useModal();
@@ -35,6 +36,7 @@ const App = () => {
   const isFundSelected = (id: string) => selectedFundIds.includes(id);
   const hasSelectedAllFunds = portfolio.funds.map(({ id }) => id).every(isFundSelected);
   const hasSelectedAnyFund = !!selectedFundIds.length;
+  const hasAnyFund = !!portfolio.funds.length;
 
   const handleOpenCreateFundModal = () =>
     open(<FundCreateOrUpdateForm onCancel={close} onSubmit={handleCreateFund} />, { title: "Add fund" });
@@ -87,33 +89,33 @@ const App = () => {
     dispatch({ type: "allFundsDeselected" });
   };
 
+  if (!hasAnyFund) return <FundCreateOnboarding onCreateFundClick={handleOpenCreateFundModal} />;
+
   return (
     <Main>
-      <Actions>
-        {hasSelectedAnyFund ? (
-          <>
-            <LinkButton onClick={handleDeselectAllFunds}>Deselect</LinkButton>
-            <PrimaryButton left={<DeleteIcon />} onClick={handleOpenDeleteFundModal}>
-              Delete
-            </PrimaryButton>
-          </>
-        ) : (
-          <>
-            <SecondaryButton left={<UpdateIcon />} onClick={handleOpenUpdateFundPricesModal}>
-              Update prices
-            </SecondaryButton>
-            <PrimaryButton left={<AddIcon />} onClick={handleOpenCreateFundModal}>
-              Add fund
-            </PrimaryButton>
-          </>
-        )}
-      </Actions>
+      {hasSelectedAnyFund ? (
+        <Actions>
+          <LinkButton onClick={handleDeselectAllFunds}>Deselect</LinkButton>
+          <PrimaryButton left={<DeleteIcon />} onClick={handleOpenDeleteFundModal}>
+            Delete
+          </PrimaryButton>
+        </Actions>
+      ) : (
+        <Actions>
+          <SecondaryButton left={<UpdateIcon />} onClick={handleOpenUpdateFundPricesModal}>
+            Update prices
+          </SecondaryButton>
+          <PrimaryButton left={<AddIcon />} onClick={handleOpenCreateFundModal}>
+            Add fund
+          </PrimaryButton>
+        </Actions>
+      )}
       <HeaderRow
         labels={{ checkbox: "all funds" }}
         isSelected={hasSelectedAllFunds}
         onSelectedChange={handleSelectedAllFundsChange}
       >
-        <FundName>Name</FundName>
+        <span>Name</span>
         <span>Quantity x Price</span>
         <span>Total</span>
         <span>Actual / Target weight</span>
@@ -128,7 +130,7 @@ const App = () => {
             onSelectedChange={() => handleSelectedFundChange(fund)}
             onClick={() => handleOpenUpdateFundModal(fund)}
           >
-            <FundName>{fund.name}</FundName>
+            <span>{fund.name}</span>
             <FundQuantityPrice quantity={fund.quantity} price={fund.price} />
             <FundTotal total={fund.total} />
             <FundWeight weight={fund.weight} />
@@ -178,10 +180,6 @@ const FundRow = styled(ActionRow)`
   &:hover {
     background-color: ${({ theme }) => theme.colors.fund.positive};
   }
-`;
-
-const FundName = styled.span`
-  font-size: ${({ theme }) => theme.font.md};
 `;
 
 const TotalRow = styled(StaticRow)`

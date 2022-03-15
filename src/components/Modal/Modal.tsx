@@ -24,7 +24,7 @@ const Modal = ({ children, title }: Props) => {
     <Backdrop>
       <Container role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <Dialog ref={ref}>
-          {title && <Title id="modal-title">{title}</Title>}
+          {title && <h2 id="modal-title">{title}</h2>}
           <Body>{children}</Body>
         </Dialog>
         <CloseButton isLight onClick={close}>
@@ -64,10 +64,6 @@ const Dialog = styled.section`
   > *:first-child {
     border-bottom: 2px solid ${({ theme }) => theme.colors.modal.border};
   }
-`;
-
-const Title = styled.h2`
-  font-weight: 500;
 `;
 
 const Body = styled.div`

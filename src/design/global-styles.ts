@@ -1,8 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;500&display=swap');
-  
   html {
     box-sizing: border-box;
     font-size: ${({ theme }) => theme.font.md};
@@ -15,6 +13,14 @@ const GlobalStyle = createGlobalStyle`
   button {
     font-family: 'Noto Sans Mono', monospace;
     font-weight: 400;
+  }
+  
+  h2 {
+    font-weight: 500;
+  }
+  
+  p {
+    line-height: 1.2;
   }
 
   input,

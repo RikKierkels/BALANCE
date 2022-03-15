@@ -26,7 +26,6 @@ const Button = styled.button`
   svg {
     width: 0.75em;
     height: 0.75em;
-    vertical-align: -0.1em;
     fill: white;
   }
 `;

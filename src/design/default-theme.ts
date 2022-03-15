@@ -50,7 +50,8 @@ export const defaultTheme: DefaultTheme = {
     xs: "12px",
     sm: "14px",
     md: "16px",
-    lg: "20px",
+    lg: "18px",
+    xlg: "20px",
   },
   animations: {
     easeOutCubic: "cubic-bezier(0.215, 0.61, 0.335, 1)",

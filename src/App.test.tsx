@@ -34,27 +34,35 @@ const createPortfolio = (): Portfolio => ({
   total: 400,
 });
 
-describe("when rendered without stored state", () => {
-  it("renders the total amount", () => {
+describe("without a stored portfolio", () => {
+  it("renders the create fund onboarding", () => {
     render(<App />);
 
-    expect(screen.getByTestId("portfolio-total")).toHaveTextContent("€ 0,00");
+    expect(screen.getByText("Add your first fund")).toBeInTheDocument();
   });
 
-  it("doesn't render any funds", () => {
+  it("when a new fund is added, shows the portfolio", async () => {
     render(<App />);
 
-    expect(screen.queryAllByRole("listitem")).toHaveLength(0);
-  });
+    userEvent.click(screen.getButtonByName(/add a fund/i));
+    const modal = within(screen.getByRole("dialog"));
+    userEvent.type(modal.getByLabelText(/name/i), "S&P 500");
+    userEvent.type(modal.getByLabelText(/quantity/i), "10");
+    userEvent.type(modal.getByLabelText(/price/i), "100");
+    userEvent.type(modal.getByLabelText(/weight/i), "25");
+    userEvent.click(modal.getButtonByName(/add fund/i));
 
-  it("the amount input has no value", () => {
-    render(<App />);
+    expect(await screen.findByTestId("portfolio-total")).toHaveTextContent("€ 1.000,00");
 
-    expect(screen.getByLabelText(/amount/i)).toHaveValue(null);
+    const fund = within(screen.getByRole("listitem"));
+    expect(fund.getByText("S&P 500")).toBeInTheDocument();
+    expect(fund.getByText("10 x € 100,00")).toBeInTheDocument();
+    expect(fund.getByText("€ 1.000,00")).toBeInTheDocument();
+    expect(fund.getByText("100,00% / 25,00%")).toBeInTheDocument();
   });
 });
 
-describe("when rendered with stored state", () => {
+describe("with a stored portfolio", () => {
   it("renders the total amount", async () => {
     stubUseLocalStorage({ selectedFundIds: [], amount: 100, portfolio: createPortfolio(), increment: null });
 
@@ -83,7 +91,7 @@ describe("when rendered with stored state", () => {
     expect(fundTwo.getByText("75,00% / 50,00%")).toBeInTheDocument();
   });
 
-  it("sets the amount input's value", () => {
+  it("sets the amount input value to the stored amount", () => {
     stubUseLocalStorage({ selectedFundIds: [], amount: 100, portfolio: createPortfolio(), increment: null });
 
     render(<App />);
