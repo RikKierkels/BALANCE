@@ -6,6 +6,8 @@ import useLocalStorageReducer from "./hooks/use-local-storage-reducer";
 import { reducer } from "./reducer";
 import { ReactComponent as AddIcon } from "../src/assets/plus.svg";
 import { ReactComponent as DeleteIcon } from "../src/assets/times.svg";
+import { ReactComponent as UpdateIcon } from "./assets/redo.svg";
+import { ReactComponent as BalanceIcon } from "./assets/play.svg";
 import { useModal } from "./components/Modal/ModalProvider";
 import PrimaryButton from "./components/Buttons/PrimaryButton";
 import FundCreateOrUpdateForm from "./components/Fund/FundCreateOrUpdateForm";
@@ -97,7 +99,9 @@ const App = () => {
           </>
         ) : (
           <>
-            <SecondaryButton onClick={handleOpenUpdateFundPricesModal}>Update prices</SecondaryButton>
+            <SecondaryButton left={<UpdateIcon />} onClick={handleOpenUpdateFundPricesModal}>
+              Update prices
+            </SecondaryButton>
             <PrimaryButton left={<AddIcon />} onClick={handleOpenCreateFundModal}>
               Add fund
             </PrimaryButton>
@@ -137,7 +141,9 @@ const App = () => {
       <BalanceForm<BalanceAmount> defaultValues={{ amount }} onSubmit={handleBalancePortfolio}>
         {({ register }) => (
           <>
-            <PrimaryButton type="submit">Balance</PrimaryButton>
+            <BalanceButton right={<BalanceIcon />} type="submit">
+              Balance
+            </BalanceButton>
             <InputCurrency aria-label="amount" {...inputs.amount(register)} />
           </>
         )}
@@ -174,6 +180,10 @@ const FundRow = styled(ActionRow)`
   }
 `;
 
+const FundName = styled.span`
+  font-size: ${({ theme }) => theme.font.md};
+`;
+
 const TotalRow = styled(StaticRow)`
   min-height: 3rem;
   background-color: ${({ theme }) => theme.colors.header.background};
@@ -183,8 +193,10 @@ const Total = styled(PortfolioTotal)`
   grid-column: 3;
 `;
 
-const FundName = styled.span`
-  font-size: ${({ theme }) => theme.font.md};
+const BalanceButton = styled(PrimaryButton)`
+  width: auto;
+  align-items: center;
+  font-size: ${({ theme }) => theme.font.lg};
 `;
 
 const Main = styled.main`

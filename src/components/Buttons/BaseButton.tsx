@@ -24,13 +24,10 @@ const Button = styled.button`
   transition: 0.3s ${({ theme }) => theme.animations.easeOutCubic};
 
   svg {
-    width: 0.65em;
-    height: 0.65em;
-
-    // TODO: Change SVG's so this is not needed
-    path:last-child {
-      fill: white;
-    }
+    width: 0.75em;
+    height: 0.75em;
+    vertical-align: -0.1em;
+    fill: white;
   }
 `;
 
