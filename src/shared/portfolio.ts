@@ -24,7 +24,7 @@ export type FundCreateOrUpdate = Pick<Fund, "id" | "name" | "quantity" | "price"
 export type FundPrices = Record<Fund["id"], Fund["price"]>;
 
 export type PortfolioIncrement = {
-  funds: FundIncrement[];
+  funds: Record<Fund["id"], FundIncrement>;
   total: Portfolio["total"];
 };
 

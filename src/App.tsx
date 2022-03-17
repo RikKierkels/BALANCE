@@ -19,15 +19,13 @@ import LinkButton from "./components/Buttons/LinkButton";
 import SecondaryButton from "./components/Buttons/SecondaryButton";
 import ActionRow from "./components/Row/ActionRow";
 import StaticRow from "./components/Row/StaticRow";
-import FundQuantityPrice from "./components/Fund/FundQuantityPrice";
-import FundTotal from "./components/Fund/FundTotal";
-import FundWeight from "./components/Fund/FundWeight";
 import PortfolioTotal from "./components/Portfolio/PortfolioTotal";
 import FundCreateOnboarding from "./components/Fund/FundCreateOnboarding";
+import FundRow from "./components/Fund/FundRow";
 
 const App = () => {
   const { open, close } = useModal();
-  const [{ selectedFundIds, amount, portfolio }, dispatch] = useLocalStorageReducer(
+  const [{ selectedFundIds, amount, portfolio, increment }, dispatch] = useLocalStorageReducer(
     reducer,
     { selectedFundIds: [], amount: undefined, portfolio: { funds: [], total: 0 }, increment: null },
     "state",
@@ -123,18 +121,14 @@ const App = () => {
       <FundRows>
         {portfolio.funds.map((fund) => (
           <FundRow
-            forwardedAs="li"
             key={fund.id}
+            fund={fund}
+            increment={increment?.funds?.[fund.id]}
             labels={{ checkbox: fund.name, button: "Update" }}
             isSelected={isFundSelected(fund.id)}
             onSelectedChange={() => handleSelectedFundChange(fund)}
             onClick={() => handleOpenUpdateFundModal(fund)}
-          >
-            <span>{fund.name}</span>
-            <FundQuantityPrice quantity={fund.quantity} price={fund.price} />
-            <FundTotal total={fund.total} />
-            <FundWeight weight={fund.weight} />
-          </FundRow>
+          />
         ))}
       </FundRows>
       <TotalRow>
@@ -170,15 +164,6 @@ const HeaderRow = styled(ActionRow)`
 const FundRows = styled.ul`
   > * + * {
     border-top: 2px solid ${({ theme }) => theme.colors.fund.border};
-  }
-`;
-
-const FundRow = styled(ActionRow)`
-  background-color: ${({ isSelected, theme }) =>
-    isSelected ? theme.colors.fund.positive : theme.colors.fund.background};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.fund.positive};
   }
 `;
 

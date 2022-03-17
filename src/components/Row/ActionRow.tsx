@@ -3,7 +3,7 @@ import Checkbox from "../Form/Checkbox";
 import Row from "./Row";
 import styled from "styled-components";
 
-type Props = PropsWithChildren<{
+export type Props = PropsWithChildren<{
   labels: {
     checkbox: string;
     button?: string;

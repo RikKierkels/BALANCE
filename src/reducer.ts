@@ -5,10 +5,13 @@ import { balance, updateTotal, updateWeights } from "./shared/portfolio-balancer
 
 const toPortfolioIncrement = (before: Portfolio, after: Portfolio): PortfolioIncrement => ({
   total: after.total - before.total,
-  funds: zip(before.funds, after.funds).map(toFundIncrement),
+  funds: zip(before.funds, after.funds).reduce(
+    (funds, [before, after]) => ({ [before.id]: toFundIncrement(before, after), ...funds }),
+    {},
+  ),
 });
 
-const toFundIncrement = ([before, after]: [Fund, Fund]): FundIncrement => ({
+const toFundIncrement = (before: Fund, after: Fund): FundIncrement => ({
   id: after.id,
   quantity: after.quantity - before.quantity,
   total: after.total - before.total,

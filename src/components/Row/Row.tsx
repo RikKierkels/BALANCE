@@ -13,6 +13,7 @@ const Row = styled.div`
   > *:last-child {
     display: grid;
     grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    grid-column-gap: ${({ theme }) => theme.spacing.xlg};
     align-items: center;
     width: 100%;
     padding-right: ${({ theme }) => theme.spacing.xlg};
