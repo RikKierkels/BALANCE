@@ -2,8 +2,8 @@ import styled from "styled-components";
 import ActionRow, { Props as ActionRowProps } from "../Row/ActionRow";
 import { Fund, FundIncrement as FundIncrementType } from "../../shared/portfolio";
 import React from "react";
-import { useCurrencyFormatter, usePercentageFormatter } from "../../hooks/use-formatter";
-import FundIncrement from "./FundIncrement";
+import { useCurrencyFormatter, useNumberFormatter, usePercentageFormatter } from "../../hooks/use-formatter";
+import Increment from "./Increment";
 
 type Props = {
   fund: Fund;
@@ -21,6 +21,7 @@ const FundRow = ({
   increment,
   ...props
 }: Props) => {
+  const number = useNumberFormatter();
   const currency = useCurrencyFormatter();
   const percentage = usePercentageFormatter();
 
@@ -29,15 +30,15 @@ const FundRow = ({
       <span>{name}</span>
       <span>
         {quantity} x {currency.format(price)}
-        <FundIncrement value={increment?.quantity} />
+        <Increment value={increment?.quantity} formatter={number.formatWithSign} />
       </span>
       <span>
         {currency.format(total)}
-        <FundIncrement value={increment?.total} formatter={currency.format} />
+        <Increment value={increment?.total} formatter={currency.formatWithSign} />
       </span>
       <span>
         {percentage.format(actual)} / {percentage.format(target)}
-        <FundIncrement value={increment?.weight} formatter={percentage.format} />
+        <Increment value={increment?.weight} formatter={percentage.formatWithSign} />
       </span>
     </Row>
   );

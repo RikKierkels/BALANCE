@@ -1,16 +1,19 @@
 import { useCurrencyFormatter } from "../../hooks/use-formatter";
+import Increment from "../Fund/Increment";
 
 type Props = {
-  total: number;
   className?: string;
+  total: number;
+  increment?: number;
 };
 
-const PortfolioTotal = ({ className, total }: Props) => {
-  const { format } = useCurrencyFormatter();
+const PortfolioTotal = ({ className, total, increment }: Props) => {
+  const currency = useCurrencyFormatter();
 
   return (
     <span data-testid="portfolio-total" className={className}>
-      {format(total)}
+      {currency.format(total)}
+      <Increment value={increment} formatter={currency.formatWithSign} />
     </span>
   );
 };

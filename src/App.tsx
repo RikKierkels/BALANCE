@@ -116,7 +116,7 @@ const App = () => {
         <span>Name</span>
         <span>Quantity x Price</span>
         <span>Total</span>
-        <span>Actual / Target weight</span>
+        <span>Actual / Target</span>
       </HeaderRow>
       <FundRows>
         {portfolio.funds.map((fund) => (
@@ -132,7 +132,7 @@ const App = () => {
         ))}
       </FundRows>
       <TotalRow>
-        <Total total={portfolio.total} />
+        <Total total={portfolio.total} increment={increment?.total} />
       </TotalRow>
       <BalanceForm<BalanceAmount> defaultValues={{ amount }} onSubmit={handleBalancePortfolio}>
         {({ register }) => (
@@ -168,7 +168,8 @@ const FundRows = styled.ul`
 `;
 
 const TotalRow = styled(StaticRow)`
-  min-height: 3rem;
+  min-height: 4rem;
+  line-height: normal;
   background-color: ${({ theme }) => theme.colors.header.background};
 `;
 

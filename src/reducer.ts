@@ -6,7 +6,7 @@ import { balance, updateTotal, updateWeights } from "./shared/portfolio-balancer
 const toPortfolioIncrement = (before: Portfolio, after: Portfolio): PortfolioIncrement => ({
   total: after.total - before.total,
   funds: zip(before.funds, after.funds).reduce(
-    (funds, [before, after]) => ({ [before.id]: toFundIncrement(before, after), ...funds }),
+    (funds, [before, after]) => ({ ...funds, [before.id]: toFundIncrement(before, after) }),
     {},
   ),
 });

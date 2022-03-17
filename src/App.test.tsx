@@ -112,17 +112,22 @@ describe("balancing the portfolio", () => {
     userEvent.click(screen.getButtonByName(/balance/i));
 
     expect(await screen.findByTestId("portfolio-total")).toHaveTextContent("€ 600,00");
+    expect(screen.getByTestId("portfolio-total")).toHaveTextContent("€ +200,00");
     const [fundOne, fundTwo] = screen.getAllByRole("listitem").map(within);
 
     expect(fundOne.getByText("HSBC World")).toBeInTheDocument();
     expect(fundOne.getByText("30 x € 10,00")).toBeInTheDocument();
+    expect(fundOne.getByText("+20")).toBeInTheDocument();
     expect(fundOne.getByText("€ 300,00")).toBeInTheDocument();
+    expect(fundOne.getByText("€ +200,00")).toBeInTheDocument();
     expect(fundOne.getByText("50,00% / 50,00%")).toBeInTheDocument();
+    expect(fundOne.getByText("+25,00%")).toBeInTheDocument();
 
     expect(fundTwo.getByText("iShares EM")).toBeInTheDocument();
     expect(fundTwo.getByText("15 x € 20,00")).toBeInTheDocument();
     expect(fundTwo.getByText("€ 300,00")).toBeInTheDocument();
     expect(fundTwo.getByText("50,00% / 50,00%")).toBeInTheDocument();
+    expect(fundTwo.getByText("-25,00%")).toBeInTheDocument();
   });
 });
 
