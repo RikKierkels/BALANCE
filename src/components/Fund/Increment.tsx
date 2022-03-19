@@ -9,5 +9,5 @@ const Increment = ({ value, formatter = (n) => `${n}` }: Props) =>
 export default Increment;
 
 const StyledIncrement = styled.div<{ isNegative: boolean }>`
-  color: ${({ isNegative, theme }) => (isNegative ? theme.colors.fund.negative : theme.colors.fund.positive)};
+  color: ${({ isNegative, theme }) => (isNegative ? theme.colors.increment.negative : theme.colors.increment.positive)};
 `;

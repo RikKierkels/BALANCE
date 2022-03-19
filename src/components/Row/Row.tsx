@@ -7,7 +7,7 @@ const Row = styled.div`
 
   > * {
     align-self: stretch;
-    background-color: inherit;
+    background-color: transparent;
   }
 
   > *:last-child {

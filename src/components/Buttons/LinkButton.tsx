@@ -6,11 +6,11 @@ const LinkButton = styled(BaseButton)`
   padding-right: 0;
   border-color: transparent;
   background-color: transparent;
-  color: ${({ theme }) => theme.colors.link.primary};
+  color: ${({ theme }) => theme.colors.button.link.text};
 
   &:hover,
   &:focus {
-    color: ${({ theme }) => theme.colors.link.hover};
+    color: ${({ theme }) => theme.colors.button.link.hover};
   }
 `;
 

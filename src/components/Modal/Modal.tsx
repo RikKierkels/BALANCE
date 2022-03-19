@@ -55,6 +55,7 @@ const Container = styled.div`
 
 const Dialog = styled.section`
   width: calc(${({ theme }) => theme.app.width} * 0.5);
+  border-radius: ${({ theme }) => theme.radius.modal};
   background-color: ${({ theme }) => theme.colors.modal.background};
 
   > * {

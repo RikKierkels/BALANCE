@@ -22,6 +22,7 @@ const Button = styled.button`
   padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
   font-size: ${({ theme }) => theme.font.md};
   transition: 0.3s ${({ theme }) => theme.animations.easeOutCubic};
+  border-radius: ${({ theme }) => theme.radius.button};
 
   svg {
     width: 0.75em;

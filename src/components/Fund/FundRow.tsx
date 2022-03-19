@@ -48,9 +48,9 @@ export default FundRow;
 
 const Row = styled(ActionRow)`
   background-color: ${({ isSelected, theme }) =>
-    isSelected ? theme.colors.fund.positive : theme.colors.fund.background};
+    isSelected ? theme.colors.fund.selected : theme.colors.fund.background};
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.fund.positive};
+    background-color: ${({ theme }) => theme.colors.fund.selected};
   }
 `;

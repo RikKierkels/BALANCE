@@ -5,6 +5,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-size: ${({ theme }) => theme.font.md};
     line-height: 1;
+    color: ${({ theme }) => theme.colors.text};
   }
 
   html,

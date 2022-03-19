@@ -33,6 +33,7 @@ const StyledLabel = styled.label`
 const StyledInput = styled.input`
   padding: ${({ theme }) => theme.spacing.sm};
   border: 1px solid ${({ theme }) => theme.colors.input.border};
+  border-radius: ${({ theme }) => theme.radius.input};
 `;
 
 const Error = styled.div`

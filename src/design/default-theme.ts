@@ -5,25 +5,38 @@ export const defaultTheme: DefaultTheme = {
     width: "1020px",
   },
   colors: {
-    background: "#f3f3f3",
+    background: "#fefbf6",
+    text: "#000000",
     button: {
-      primary: "#2aad7c",
-      primaryOffset: "#ffffff",
-      secondary: "#000000",
-      secondaryOffset: "#ffffff",
+      primary: {
+        background: "#0d4b82",
+        text: "#ffffff",
+        border: "#0d4b82",
+      },
+      secondary: {
+        background: "#fff",
+        text: "#313131",
+        border: "#0d4b82",
+      },
+      link: {
+        text: "#0d4b82",
+        hover: "inherit",
+      },
       iconLightHover: "rgba(255,255,255, 0.2)",
       iconDarkHover: "rgba(0,0,0,0.2)",
     },
-    link: {
-      primary: "#2aad7c",
-      hover: "#000000",
-    },
     header: {
-      background: "#ebebeb",
+      background: "#e6f0f9",
+    },
+    total: {
+      background: "#fff",
     },
     fund: {
-      background: "#ffffff",
+      background: "#fff",
       border: "#f3f3f3",
+      selected: "#f7fafd",
+    },
+    increment: {
       positive: "#2aad7c",
       negative: "#d4434b",
     },
@@ -34,9 +47,22 @@ export const defaultTheme: DefaultTheme = {
       closeIcon: "#ffffff",
     },
     input: {
-      border: "#000000",
+      background: "#ffffff",
+      border: "#7a7a7a",
       error: "#d4434b",
     },
+    checkbox: {
+      background: "#ffffff",
+      border: "#000000",
+      checked: "#0d4b82",
+    },
+  },
+  radius: {
+    button: "6px",
+    checkbox: "3px",
+    input: "3px",
+    modal: "6px",
+    row: "6px",
   },
   spacing: {
     xxs: "0.125rem",

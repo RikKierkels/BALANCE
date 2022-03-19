@@ -29,13 +29,19 @@ const Currency = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.fund.background};
+  border-top-left-radius: ${({ theme }) => theme.radius.input};
+  border-bottom-left-radius: ${({ theme }) => theme.radius.input};
+  background-color: ${({ theme }) => theme.colors.input.background};
 `;
 
 const Input = styled.input`
   flex: 1 1 auto;
   min-width: 0;
+  // TODO: Add Themeing.
   border-left: 1px solid ${({ theme }) => theme.colors.fund.border};
+  border-top-right-radius: ${({ theme }) => theme.radius.input};
+  border-bottom-right-radius: ${({ theme }) => theme.radius.input};
+  background-color: ${({ theme }) => theme.colors.input.background};
 `;
 
 export default InputCurrency;

@@ -137,10 +137,10 @@ const App = () => {
       <BalanceForm<BalanceAmount> defaultValues={{ amount }} onSubmit={handleBalancePortfolio}>
         {({ register }) => (
           <>
+            <InputCurrency aria-label="amount" {...inputs.amount(register)} />
             <BalanceButton right={<BalanceIcon />} type="submit">
               Balance
             </BalanceButton>
-            <InputCurrency aria-label="amount" {...inputs.amount(register)} />
           </>
         )}
       </BalanceForm>
@@ -158,19 +158,23 @@ const Actions = styled.div`
 `;
 
 const HeaderRow = styled(ActionRow)`
+  border-top-left-radius: ${({ theme }) => theme.radius.row};
+  border-top-right-radius: ${({ theme }) => theme.radius.row};
   background-color: ${({ theme }) => theme.colors.header.background};
 `;
 
 const FundRows = styled.ul`
-  > * + * {
-    border-top: 2px solid ${({ theme }) => theme.colors.fund.border};
+  > * {
+    border-bottom: 2px solid ${({ theme }) => theme.colors.fund.border};
   }
 `;
 
 const TotalRow = styled(StaticRow)`
   min-height: 4rem;
+  border-bottom-left-radius: ${({ theme }) => theme.radius.row};
+  border-bottom-right-radius: ${({ theme }) => theme.radius.row};
   line-height: normal;
-  background-color: ${({ theme }) => theme.colors.header.background};
+  background-color: ${({ theme }) => theme.colors.total.background};
 `;
 
 const Total = styled(PortfolioTotal)`

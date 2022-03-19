@@ -7,24 +7,37 @@ declare module "styled-components" {
 
   type Colors = {
     background: string;
+    text: string;
     button: {
-      primary: string;
-      primaryOffset: string;
-      secondary: string;
-      secondaryOffset: string;
+      primary: {
+        background: string;
+        text: string;
+        border: string;
+      };
+      secondary: {
+        background: string;
+        text: string;
+        border: string;
+      };
+      link: {
+        text: string;
+        hover: string;
+      };
       iconLightHover: string;
       iconDarkHover: string;
     };
-    link: {
-      primary: string;
-      hover: string;
-    };
     header: {
+      background: string;
+    };
+    total: {
       background: string;
     };
     fund: {
       background: string;
       border: string;
+      selected: string;
+    };
+    increment: {
       positive: string;
       negative: string;
     };
@@ -35,9 +48,23 @@ declare module "styled-components" {
       closeIcon: string;
     };
     input: {
+      background: string;
       border: string;
       error: string;
     };
+    checkbox: {
+      background: string;
+      border: string;
+      checked: string;
+    };
+  };
+
+  type Radius = {
+    button: string;
+    checkbox: string;
+    input: string;
+    modal: string;
+    row: string;
   };
 
   type Spacing = {
@@ -64,6 +91,7 @@ declare module "styled-components" {
   export interface DefaultTheme {
     app: App;
     colors: Colors;
+    radius: Radius;
     spacing: Spacing;
     font: Font;
     animations: Animations;

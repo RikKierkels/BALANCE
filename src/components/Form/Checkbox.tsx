@@ -33,9 +33,10 @@ const Input = styled.input`
   width: 1em;
   height: 1em;
   margin: 0;
-  border: 0.15em solid ${({ theme }) => theme.colors.input.border};
+  border: 0.15em solid ${({ theme }) => theme.colors.checkbox.border};
+  border-radius: ${({ theme }) => theme.radius.checkbox};
   font: inherit;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.checkbox.background};
   appearance: none;
 
   &:before {
@@ -44,7 +45,7 @@ const Input = styled.input`
     height: 0.5em;
     transform: scale(0);
     transition: 100ms ${({ theme }) => theme.animations.easeOutCubic};
-    box-shadow: inset 1em 1em ${({ theme }) => theme.colors.button.primary};
+    box-shadow: inset 1em 1em ${({ theme }) => theme.colors.checkbox.checked};
   }
 
   &:checked::before {
