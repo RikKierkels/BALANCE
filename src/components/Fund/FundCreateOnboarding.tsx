@@ -30,7 +30,7 @@ const Main = styled.main`
   margin-left: auto;
   margin-right: auto;
   max-width: 60ch;
-  padding: ${({ theme }) => theme.spacing.xlg};
+  padding: ${({ theme }) => theme.spacing.xxlg};
   background-color: white;
 
   > * + * {
@@ -55,5 +55,5 @@ const FundIconWrapper = styled.div`
 const StyledFundIcon = styled(FundIcon)`
   width: 2.5rem;
   height: 2.5rem;
-  fill: ${({ theme }) => theme.colors.button.iconDarkHover};
+  fill: ${({ theme }) => theme.colors.button.primary.border};
 `;

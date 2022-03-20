@@ -19,7 +19,7 @@ const Button = styled.button`
   align-items: baseline;
   border-width: 2px;
   border-style: solid;
-  padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
+  padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.lg};
   font-size: ${({ theme }) => theme.font.md};
   transition: 0.3s ${({ theme }) => theme.animations.easeOutCubic};
   border-radius: ${({ theme }) => theme.radius.button};

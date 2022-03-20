@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { outlineWithElevation } from "../../design/mixin";
 
 type InputProps = Omit<React.ComponentPropsWithoutRef<"input">, "type">;
 type Props = React.PropsWithChildren<InputProps>;
@@ -33,19 +34,20 @@ const Input = styled.input`
   width: 1em;
   height: 1em;
   margin: 0;
-  border: 0.15em solid ${({ theme }) => theme.colors.checkbox.border};
   border-radius: ${({ theme }) => theme.radius.checkbox};
   font: inherit;
   background-color: ${({ theme }) => theme.colors.checkbox.background};
   appearance: none;
+  ${({ theme }) => outlineWithElevation(theme.colors.checkbox.outline)}
 
   &:before {
     content: "";
-    width: 0.5em;
-    height: 0.5em;
+    width: 0.6em;
+    height: 0.6em;
     transform: scale(0);
     transition: 100ms ${({ theme }) => theme.animations.easeOutCubic};
     box-shadow: inset 1em 1em ${({ theme }) => theme.colors.checkbox.checked};
+    border-radius: calc(${({ theme }) => theme.radius.checkbox} - 1px);
   }
 
   &:checked::before {

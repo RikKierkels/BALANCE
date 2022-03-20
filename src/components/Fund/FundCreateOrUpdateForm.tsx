@@ -61,11 +61,11 @@ const StyledForm = styled(Form)`
   }
 
   > * + * {
-    margin-top: ${({ theme }) => theme.spacing.md};
+    margin-top: ${({ theme }) => theme.spacing.xlg};
   }
 
   > :last-child {
-    margin-top: ${({ theme }) => theme.spacing.lg};
+    margin-top: ${({ theme }) => theme.spacing.xxlg};
   }
 ` as typeof Form;
 

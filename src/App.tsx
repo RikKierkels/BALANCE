@@ -165,7 +165,7 @@ const HeaderRow = styled(ActionRow)`
 
 const FundRows = styled.ul`
   > * {
-    border-bottom: 2px solid ${({ theme }) => theme.colors.fund.border};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.fund.border};
   }
 `;
 
@@ -190,7 +190,7 @@ const BalanceButton = styled(PrimaryButton)`
 const Main = styled.main`
   ${Actions},
   ${TotalRow} {
-    margin-bottom: ${({ theme }) => theme.spacing.md};
+    margin-bottom: ${({ theme }) => theme.spacing.lg};
   }
 `;
 

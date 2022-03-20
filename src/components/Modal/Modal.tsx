@@ -4,8 +4,6 @@ import styled from "styled-components";
 import useClickAway from "react-use/lib/useClickAway";
 import useKey from "react-use/lib/useKey";
 import FocusLock from "react-focus-lock";
-import { ReactComponent as CloseIcon } from "../../assets/times.svg";
-import IconButton from "../Buttons/IconButton";
 import { useModal } from "./ModalProvider";
 
 const MODAL_CONTAINER_ID = "modal-root";
@@ -22,15 +20,10 @@ const Modal = ({ children, title }: Props) => {
 
   return ReactDOM.createPortal(
     <Backdrop>
-      <Container role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <Dialog ref={ref}>
-          {title && <h2 id="modal-title">{title}</h2>}
-          <Body>{children}</Body>
-        </Dialog>
-        <CloseButton isLight onClick={close}>
-          <StyledCloseIcon />
-        </CloseButton>
-      </Container>
+      <Dialog ref={ref} role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        {title && <h2 id="modal-title">{title}</h2>}
+        <Body>{children}</Body>
+      </Dialog>
     </Backdrop>,
     container,
   );
@@ -45,12 +38,8 @@ const Backdrop = styled(FocusLock)`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  padding: 0 ${({ theme }) => theme.spacing.md};
+  padding: 0 ${({ theme }) => theme.spacing.xxlg};
   background-color: ${({ theme }) => theme.colors.modal.backdrop};
-`;
-
-const Container = styled.div`
-  position: relative;
 `;
 
 const Dialog = styled.section`
@@ -59,7 +48,7 @@ const Dialog = styled.section`
   background-color: ${({ theme }) => theme.colors.modal.background};
 
   > * {
-    padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.xlg};
+    padding: ${({ theme }) => theme.spacing.xlg} ${({ theme }) => theme.spacing.xxlg};
   }
 
   > *:first-child {
@@ -70,17 +59,6 @@ const Dialog = styled.section`
 const Body = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const CloseButton = styled(IconButton)`
-  position: absolute;
-  left: 100%;
-  top: 0;
-  margin-left: ${({ theme }) => theme.spacing.xs};
-`;
-
-const StyledCloseIcon = styled(CloseIcon)`
-  fill: ${({ theme }) => theme.colors.modal.closeIcon};
 `;
 
 export default Modal;

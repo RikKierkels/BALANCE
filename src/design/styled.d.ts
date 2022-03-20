@@ -13,18 +13,18 @@ declare module "styled-components" {
         background: string;
         text: string;
         border: string;
+        outline: string;
       };
       secondary: {
         background: string;
         text: string;
         border: string;
+        outline: string;
       };
       link: {
         text: string;
         hover: string;
       };
-      iconLightHover: string;
-      iconDarkHover: string;
     };
     header: {
       background: string;
@@ -45,17 +45,19 @@ declare module "styled-components" {
       backdrop: string;
       background: string;
       border: string;
-      closeIcon: string;
     };
     input: {
       background: string;
       border: string;
+      text: string;
       error: string;
+      outline: string;
+      outlineError: string;
     };
     checkbox: {
       background: string;
-      border: string;
       checked: string;
+      outline: string;
     };
   };
 
@@ -74,6 +76,7 @@ declare module "styled-components" {
     md: string;
     lg: string;
     xlg: string;
+    xxlg: string;
   };
 
   type Font = {
