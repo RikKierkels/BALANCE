@@ -23,6 +23,7 @@ export const defaultTheme: DefaultTheme = {
       link: {
         text: "#196BB5",
         hover: "inherit",
+        outline: "0 0 0 /0%",
       },
     },
     header: {

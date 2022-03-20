@@ -24,6 +24,7 @@ declare module "styled-components" {
       link: {
         text: string;
         hover: string;
+        outline: string;
       };
     };
     header: {

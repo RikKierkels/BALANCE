@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import BaseButton from "./BaseButton";
+import { outlineWithoutElevation } from "../../design/mixin";
 
 const LinkButton = styled(BaseButton)`
   padding-left: 0;
@@ -7,6 +8,7 @@ const LinkButton = styled(BaseButton)`
   border-color: transparent;
   background-color: transparent;
   color: ${({ theme }) => theme.colors.button.link.text};
+  ${({ theme }) => outlineWithoutElevation(theme.colors.button.link.outline)}
 
   &:hover,
   &:focus {
