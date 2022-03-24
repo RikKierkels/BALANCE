@@ -29,16 +29,17 @@ const FundRow = ({
     <Row forwardedAs="li" {...props}>
       <span>{name}</span>
       <span>
-        {quantity} x {currency.format(price)}
-        <Increment value={increment?.quantity} formatter={number.formatWithSign} />
+        {percentage.format(actual)} / {percentage.format(target)}
+        <Increment value={increment?.weight} formatter={percentage.formatToPartsWithSign} />
       </span>
+      <span>
+        {quantity}
+        <Increment value={increment?.quantity} formatter={number.formatToPartsWithSign} />
+      </span>
+      <span>{currency.format(price)}</span>
       <span>
         {currency.format(total)}
-        <Increment value={increment?.total} formatter={currency.formatWithSign} />
-      </span>
-      <span>
-        {percentage.format(actual)} / {percentage.format(target)}
-        <Increment value={increment?.weight} formatter={percentage.formatWithSign} />
+        <Increment value={increment?.total} formatter={currency.formatToPartsWithSign} />
       </span>
     </Row>
   );

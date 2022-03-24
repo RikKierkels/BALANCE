@@ -114,9 +114,10 @@ const App = () => {
         onSelectedChange={handleSelectedAllFundsChange}
       >
         <span>Name</span>
-        <span>Quantity x Price</span>
-        <span>Total</span>
         <span>Actual / Target</span>
+        <span>Amount</span>
+        <span>Price</span>
+        <span>Total</span>
       </HeaderRow>
       <FundRows>
         {portfolio.funds.map((fund) => (
@@ -178,7 +179,8 @@ const TotalRow = styled(StaticRow)`
 `;
 
 const Total = styled(PortfolioTotal)`
-  grid-column: 3;
+  grid-column: 5;
+  text-align: end;
 `;
 
 const BalanceButton = styled(PrimaryButton)`

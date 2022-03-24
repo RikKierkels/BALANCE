@@ -13,12 +13,11 @@ const Row = styled.div`
 
   > *:last-child {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    grid-template-columns: 1.5fr 1fr 0.5fr 0.5fr 0.75fr;
     grid-column-gap: ${({ theme }) => theme.spacing.xxlg};
     align-items: center;
     width: 100%;
     padding-right: ${({ theme }) => theme.spacing.xxlg};
-    text-align: start;
     font-size: ${({ theme }) => theme.font.sm};
   }
 `;

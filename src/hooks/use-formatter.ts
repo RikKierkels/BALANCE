@@ -1,18 +1,8 @@
-interface NumberFormatPart {
-  type: string;
-  value: string;
-}
-type FormatterOptions = {
-  locale?: string;
-  style?: string;
-  currency?: string;
-  minimumFractionDigits?: number;
-  maximumFractionDigits?: number;
-  signDisplay?: "always";
-};
-type CurrencyFormatterOptions = Omit<FormatterOptions, "style">;
-type PercentageFormatterOptions = Omit<FormatterOptions, "style" | "currency">;
-type NumberFormatterOptions = PercentageFormatterOptions;
+type FormatterOptions = Intl.NumberFormatOptions & { locale?: string };
+type UseCurrencyFormatterOptions = Omit<FormatterOptions, "style">;
+type UsePercentageFormatterOptions = Omit<FormatterOptions, "style" | "currency">;
+type UseNumberFormatterOptions = UsePercentageFormatterOptions;
+type UseFormatterOptions = UseCurrencyFormatterOptions | UsePercentageFormatterOptions | UseNumberFormatterOptions;
 
 const DEFAULT_LOCALE = "nl-NL";
 const DEFAULT_CURRENCY = "EUR";
@@ -44,38 +34,24 @@ const withNumber = (options: FormatterOptions = {}): FormatterOptions => ({
 const withSignAlways = (options: FormatterOptions = {}): FormatterOptions => ({ ...options, signDisplay: "always" });
 
 const createNumberFormatter = ({ locale, ...options }: FormatterOptions) => new Intl.NumberFormat(locale, options);
-const toCurrencySymbol = (parts: NumberFormatPart[]) => parts.find((part) => part.type === "currency")?.value;
+const toCurrencySymbol = (parts: Intl.NumberFormatPart[]) => parts.find((part) => part.type === "currency")?.value;
 
-export const useCurrencyFormatter = (options?: CurrencyFormatterOptions) => {
-  options = withCurrency(options);
+const toFormatter = (options: UseFormatterOptions) => {
   const formatter = createNumberFormatter(options);
   const formatterWithSign = createNumberFormatter(withSignAlways(options));
 
   return {
     format: formatter.format,
     formatWithSign: formatterWithSign.format,
-    symbol: toCurrencySymbol(formatter.formatToParts(0)),
+    // This context for formatToParts breaks if not returned as a wrapping function.
+    formatToParts: (n: number) => formatter.formatToParts(n),
+    formatToPartsWithSign: (n: number) => formatterWithSign.formatToParts(n),
   };
 };
 
-export const usePercentageFormatter = (options?: PercentageFormatterOptions) => {
-  options = withPercentage(options);
-  const formatter = createNumberFormatter(options);
-  const formatterWithSign = createNumberFormatter(withSignAlways(options));
-
-  return {
-    format: formatter.format,
-    formatWithSign: formatterWithSign.format,
-  };
-};
-
-export const useNumberFormatter = (options?: NumberFormatterOptions) => {
-  options = withNumber(options);
-  const formatter = createNumberFormatter(options);
-  const formatterWithSign = createNumberFormatter(withSignAlways(options));
-
-  return {
-    format: formatter.format,
-    formatWithSign: formatterWithSign.format,
-  };
+export const useNumberFormatter = (options?: UseNumberFormatterOptions) => toFormatter(withNumber(options));
+export const usePercentageFormatter = (options?: UsePercentageFormatterOptions) => toFormatter(withPercentage(options));
+export const useCurrencyFormatter = (options?: UseCurrencyFormatterOptions) => {
+  const formatter = toFormatter(withCurrency(options));
+  return { ...formatter, symbol: toCurrencySymbol(formatter.formatToParts(0)) };
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ReactComponent as WarningIcon } from "../../assets/warning.svg";
-import { outlineWithElevation, outlineWithoutElevation } from "../../design/mixin";
+import { outlineWithoutElevation } from "../../design/mixin";
 
 type InputProps = React.ComponentPropsWithoutRef<"input">;
 type Props = React.PropsWithChildren<{ error?: string } & InputProps>;

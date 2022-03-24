@@ -42,8 +42,8 @@ const Input = styled.input`
 
   &:before {
     content: "";
-    width: 0.6em;
-    height: 0.6em;
+    width: 0.625em;
+    height: 0.625em;
     transform: scale(0);
     transition: 100ms ${({ theme }) => theme.animations.easeOutCubic};
     box-shadow: inset 1em 1em ${({ theme }) => theme.colors.checkbox.checked};

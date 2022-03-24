@@ -13,7 +13,7 @@ const PortfolioTotal = ({ className, total, increment }: Props) => {
   return (
     <span data-testid="portfolio-total" className={className}>
       {currency.format(total)}
-      <Increment value={increment} formatter={currency.formatWithSign} />
+      <Increment value={increment} formatter={currency.formatToPartsWithSign} />
     </span>
   );
 };
