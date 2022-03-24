@@ -31,14 +31,18 @@ const Main = styled.main`
   margin-right: auto;
   max-width: 60ch;
   padding: ${({ theme }) => theme.spacing.xxlg};
-  background-color: white;
+  background-color: ${({ theme }) => theme.colors.onboarding.background};
 
   > * + * {
-    margin-top: ${({ theme }) => theme.spacing.lg};
+    margin-top: ${({ theme }) => theme.spacing.xxlg};
   }
 
   > *:nth-child(3) {
     margin-top: ${({ theme }) => theme.spacing.sm};
+  }
+
+  > *:last-child {
+    margin-top: ${({ theme }) => theme.spacing.xxlg};
   }
 `;
 
@@ -55,5 +59,5 @@ const FundIconWrapper = styled.div`
 const StyledFundIcon = styled(FundIcon)`
   width: 2.5rem;
   height: 2.5rem;
-  fill: ${({ theme }) => theme.colors.button.primary.border};
+  fill: ${({ theme }) => theme.colors.onboarding.icon};
 `;

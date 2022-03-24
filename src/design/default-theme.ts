@@ -59,6 +59,10 @@ export const defaultTheme: DefaultTheme = {
       checked: "#196BB5",
       outline: "45 56 67 / 16%",
     },
+    onboarding: {
+      background: "#fff",
+      icon: "#2d3843",
+    },
   },
   radius: {
     button: "6px",

@@ -60,6 +60,10 @@ declare module "styled-components" {
       checked: string;
       outline: string;
     };
+    onboarding: {
+      background: string;
+      icon: string;
+    };
   };
 
   type Radius = {
