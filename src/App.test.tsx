@@ -56,9 +56,10 @@ describe("without a stored portfolio", () => {
 
     const fund = within(screen.getByRole("listitem"));
     expect(fund.getByText("S&P 500")).toBeInTheDocument();
-    expect(fund.getByText("10 x € 100,00")).toBeInTheDocument();
-    expect(fund.getByText("€ 1.000,00")).toBeInTheDocument();
     expect(fund.getByText("100,00% / 25,00%")).toBeInTheDocument();
+    expect(fund.getByText("10")).toBeInTheDocument();
+    expect(fund.getByText("€ 100,00")).toBeInTheDocument();
+    expect(fund.getByText("€ 1.000,00")).toBeInTheDocument();
   });
 });
 
@@ -81,14 +82,16 @@ describe("with a stored portfolio", () => {
     const [fundOne, fundTwo] = funds.map(within);
 
     expect(fundOne.getByText("HSBC World")).toBeInTheDocument();
-    expect(fundOne.getByText("10 x € 10,00")).toBeInTheDocument();
-    expect(fundOne.getByText("€ 100,00")).toBeInTheDocument();
     expect(fundOne.getByText("25,00% / 50,00%")).toBeInTheDocument();
+    expect(fundOne.getByText("10")).toBeInTheDocument();
+    expect(fundOne.getByText("€ 10,00")).toBeInTheDocument();
+    expect(fundOne.getByText("€ 100,00")).toBeInTheDocument();
 
     expect(fundTwo.getByText("iShares EM")).toBeInTheDocument();
-    expect(fundTwo.getByText("15 x € 20,00")).toBeInTheDocument();
-    expect(fundTwo.getByText("€ 300,00")).toBeInTheDocument();
     expect(fundTwo.getByText("75,00% / 50,00%")).toBeInTheDocument();
+    expect(fundTwo.getByText("15")).toBeInTheDocument();
+    expect(fundTwo.getByText("€ 20,00")).toBeInTheDocument();
+    expect(fundTwo.getByText("€ 300,00")).toBeInTheDocument();
   });
 
   it("sets the amount input value to the stored amount", () => {
@@ -116,18 +119,20 @@ describe("balancing the portfolio", () => {
     const [fundOne, fundTwo] = screen.getAllByRole("listitem").map(within);
 
     expect(fundOne.getByText("HSBC World")).toBeInTheDocument();
-    expect(fundOne.getByText("30 x € 10,00")).toBeInTheDocument();
-    expect(fundOne.getByText("+20")).toBeInTheDocument();
-    expect(fundOne.getByText("€ 300,00")).toBeInTheDocument();
-    expect(fundOne.getByText("€ +200,00")).toBeInTheDocument();
     expect(fundOne.getByText("50,00% / 50,00%")).toBeInTheDocument();
     expect(fundOne.getByText("+25,00%")).toBeInTheDocument();
+    expect(fundOne.getByText("30")).toBeInTheDocument();
+    expect(fundOne.getByText("+20")).toBeInTheDocument();
+    expect(fundOne.getByText("€ 10,00")).toBeInTheDocument();
+    expect(fundOne.getByText("€ 300,00")).toBeInTheDocument();
+    expect(fundOne.getByText("€ +200,00")).toBeInTheDocument();
 
     expect(fundTwo.getByText("iShares EM")).toBeInTheDocument();
-    expect(fundTwo.getByText("15 x € 20,00")).toBeInTheDocument();
-    expect(fundTwo.getByText("€ 300,00")).toBeInTheDocument();
     expect(fundTwo.getByText("50,00% / 50,00%")).toBeInTheDocument();
     expect(fundTwo.getByText("-25,00%")).toBeInTheDocument();
+    expect(fundTwo.getByText("15")).toBeInTheDocument();
+    expect(fundTwo.getByText("€ 20,00")).toBeInTheDocument();
+    expect(fundTwo.getByText("€ 300,00")).toBeInTheDocument();
   });
 });
 
@@ -149,19 +154,22 @@ describe("adding a new fund to the portfolio", () => {
     const [fundOne, fundTwo, fundThree] = screen.getAllByRole("listitem").map(within);
 
     expect(fundOne.getByText("HSBC World")).toBeInTheDocument();
-    expect(fundOne.getByText("10 x € 10,00")).toBeInTheDocument();
-    expect(fundOne.getByText("€ 100,00")).toBeInTheDocument();
     expect(fundOne.getByText("7,14% / 50,00%")).toBeInTheDocument();
+    expect(fundOne.getByText("10")).toBeInTheDocument();
+    expect(fundOne.getByText("€ 10,00")).toBeInTheDocument();
+    expect(fundOne.getByText("€ 100,00")).toBeInTheDocument();
 
     expect(fundTwo.getByText("iShares EM")).toBeInTheDocument();
-    expect(fundTwo.getByText("15 x € 20,00")).toBeInTheDocument();
-    expect(fundTwo.getByText("€ 300,00")).toBeInTheDocument();
     expect(fundTwo.getByText("21,43% / 50,00%")).toBeInTheDocument();
+    expect(fundTwo.getByText("15")).toBeInTheDocument();
+    expect(fundTwo.getByText("€ 20,00")).toBeInTheDocument();
+    expect(fundTwo.getByText("€ 300,00")).toBeInTheDocument();
 
     expect(fundThree.getByText("S&P 500")).toBeInTheDocument();
-    expect(fundThree.getByText("10 x € 100,00")).toBeInTheDocument();
-    expect(fundThree.getByText("€ 1.000,00")).toBeInTheDocument();
     expect(fundThree.getByText("71,43% / 25,00%")).toBeInTheDocument();
+    expect(fundThree.getByText("10")).toBeInTheDocument();
+    expect(fundThree.getByText("€ 100,00")).toBeInTheDocument();
+    expect(fundThree.getByText("€ 1.000,00")).toBeInTheDocument();
   });
 });
 
@@ -196,14 +204,16 @@ describe("updating an existing fund in the portfolio", () => {
     const [fundOne, fundTwo] = screen.getAllByRole("listitem").map(within);
 
     expect(fundOne.getByText("HSBC World")).toBeInTheDocument();
-    expect(fundOne.getByText("10 x € 10,00")).toBeInTheDocument();
-    expect(fundOne.getByText("€ 100,00")).toBeInTheDocument();
     expect(fundOne.getByText("14,08% / 50,00%")).toBeInTheDocument();
+    expect(fundOne.getByText("10")).toBeInTheDocument();
+    expect(fundOne.getByText("€ 10,00")).toBeInTheDocument();
+    expect(fundOne.getByText("€ 100,00")).toBeInTheDocument();
 
     expect(fundTwo.getByText("iShares EM UPDATED")).toBeInTheDocument();
-    expect(fundTwo.getByText("20 x € 30,50")).toBeInTheDocument();
-    expect(fundTwo.getByText("€ 610,00")).toBeInTheDocument();
     expect(fundTwo.getByText("85,92% / 75,00%")).toBeInTheDocument();
+    expect(fundTwo.getByText("20")).toBeInTheDocument();
+    expect(fundTwo.getByText("€ 30,50")).toBeInTheDocument();
+    expect(fundTwo.getByText("€ 610,00")).toBeInTheDocument();
   });
 });
 
@@ -310,9 +320,10 @@ describe("deleting a fund in the portfolio", () => {
 
     const [fundOne] = funds;
     expect(fundOne.getByText("HSBC World")).toBeInTheDocument();
-    expect(fundOne.getByText("10 x € 10,00")).toBeInTheDocument();
-    expect(fundOne.getByText("€ 100,00")).toBeInTheDocument();
     expect(fundOne.getByText("100,00% / 50,00%")).toBeInTheDocument();
+    expect(fundOne.getByText("10")).toBeInTheDocument();
+    expect(fundOne.getByText("€ 10,00")).toBeInTheDocument();
+    expect(fundOne.getByText("€ 100,00")).toBeInTheDocument();
   });
 
   it("when cancelled, keeps the fund and doesn't update the portfolio", async () => {
@@ -350,13 +361,15 @@ describe("updating the prices of funds in the portfolio", () => {
 
     const [fundOne, fundTwo] = screen.getAllByRole("listitem").map(within);
     expect(fundOne.getByText("HSBC World")).toBeInTheDocument();
-    expect(fundOne.getByText("10 x € 300,00")).toBeInTheDocument();
-    expect(fundOne.getByText("€ 3.000,00")).toBeInTheDocument();
     expect(fundOne.getByText("90,91% / 50,00%")).toBeInTheDocument();
+    expect(fundOne.getByText("10")).toBeInTheDocument();
+    expect(fundOne.getByText("€ 300,00")).toBeInTheDocument();
+    expect(fundOne.getByText("€ 3.000,00")).toBeInTheDocument();
 
     expect(fundTwo.getByText("iShares EM")).toBeInTheDocument();
-    expect(fundTwo.getByText("15 x € 20,00")).toBeInTheDocument();
-    expect(fundTwo.getByText("€ 300,00")).toBeInTheDocument();
     expect(fundTwo.getByText("9,09% / 50,00%")).toBeInTheDocument();
+    expect(fundTwo.getByText("15")).toBeInTheDocument();
+    expect(fundTwo.getByText("€ 20,00")).toBeInTheDocument();
+    expect(fundTwo.getByText("€ 300,00")).toBeInTheDocument();
   });
 });

@@ -19,7 +19,7 @@ const Modal = ({ children, title }: Props) => {
   useKey("Escape", close);
 
   return ReactDOM.createPortal(
-    <Backdrop>
+    <Backdrop returnFocus={true}>
       <Dialog ref={ref} role="dialog" aria-modal="true" aria-labelledby="modal-title">
         {title && <h2 id="modal-title">{title}</h2>}
         <Body>{children}</Body>
