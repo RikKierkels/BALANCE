@@ -1,9 +1,7 @@
-import React from "react";
+import React, { MutableRefObject, useRef } from "react";
 import styled from "styled-components";
 import InputCurrency from "./components/Form/InputCurrency";
 import BalanceForm, { BalanceAmount } from "./components/Balance/BalanceForm";
-import useLocalStorageReducer from "./hooks/use-local-storage-reducer";
-import { reducer } from "./reducer";
 import { ReactComponent as AddIcon } from "../src/assets/plus.svg";
 import { ReactComponent as DeleteIcon } from "../src/assets/times.svg";
 import { ReactComponent as UpdateIcon } from "./assets/redo.svg";
@@ -20,21 +18,27 @@ import SecondaryButton from "./components/Buttons/SecondaryButton";
 import ActionRow from "./components/Row/ActionRow";
 import StaticRow from "./components/Row/StaticRow";
 import PortfolioTotal from "./components/Portfolio/PortfolioTotal";
-import FundCreateOnboarding from "./components/Fund/FundCreateOnboarding";
 import FundRow from "./components/Fund/FundRow";
+import { useAppState } from "./AppStateProvider";
+import useShortcut from "./hooks/use-shortcut";
+import Shortcut from "./components/Common/Shortcut";
+
+// Defer the click so the pressed shortcut key isn't filled in the focussed input of a modal.
+const handleShortcutPress = (button: HTMLButtonElement) => setTimeout(() => button.click(), 0);
 
 const App = () => {
-  const { open, close } = useModal();
-  const [{ selectedFundIds, amount, portfolio, increment }, dispatch] = useLocalStorageReducer(
-    reducer,
-    { selectedFundIds: [], amount: undefined, portfolio: { funds: [], total: 0 }, increment: null },
-    "state",
-  );
+  const { open, close, isOpen: isModalOpen } = useModal();
+  const [{ selectedFundIds, amount, portfolio, increment }, dispatch] = useAppState();
+  const shortcuts = {
+    delete: { shortcut: "D", ref: useShortcut<HTMLButtonElement>("d", handleShortcutPress) },
+    updatePrices: { shortcut: "P", ref: useShortcut<HTMLButtonElement>("p", handleShortcutPress) },
+    add: { shortcut: "N", ref: useShortcut<HTMLButtonElement>("n", handleShortcutPress) },
+    balance: { shortcut: "B", ref: useShortcut<HTMLButtonElement>("b", handleShortcutPress) },
+  };
 
   const isFundSelected = (id: string) => selectedFundIds.includes(id);
   const hasSelectedAllFunds = portfolio.funds.map(({ id }) => id).every(isFundSelected);
   const hasSelectedAnyFund = !!selectedFundIds.length;
-  const hasAnyFund = !!portfolio.funds.length;
 
   const handleOpenCreateFundModal = () =>
     open(<FundCreateOrUpdateForm onCancel={close} onSubmit={handleCreateFund} />, { title: "Add fund" });
@@ -87,23 +91,39 @@ const App = () => {
     dispatch({ type: "allFundsDeselected" });
   };
 
-  if (!hasAnyFund) return <FundCreateOnboarding onCreateFundClick={handleOpenCreateFundModal} />;
-
   return (
     <Main>
       {hasSelectedAnyFund ? (
         <Actions>
           <LinkButton onClick={handleDeselectAllFunds}>Deselect</LinkButton>
-          <PrimaryButton left={<DeleteIcon />} onClick={handleOpenDeleteFundModal}>
+          <PrimaryButton
+            ref={shortcuts.delete.ref}
+            disabled={isModalOpen}
+            left={<DeleteIcon />}
+            right={<Shortcut>{shortcuts.delete.shortcut}</Shortcut>}
+            onClick={handleOpenDeleteFundModal}
+          >
             Delete
           </PrimaryButton>
         </Actions>
       ) : (
         <Actions>
-          <SecondaryButton left={<UpdateIcon />} onClick={handleOpenUpdateFundPricesModal}>
+          <SecondaryButton
+            ref={shortcuts.updatePrices.ref}
+            disabled={isModalOpen}
+            left={<UpdateIcon />}
+            right={<Shortcut isLight>{shortcuts.updatePrices.shortcut}</Shortcut>}
+            onClick={handleOpenUpdateFundPricesModal}
+          >
             Update prices
           </SecondaryButton>
-          <PrimaryButton left={<AddIcon />} onClick={handleOpenCreateFundModal}>
+          <PrimaryButton
+            ref={shortcuts.add.ref}
+            disabled={isModalOpen}
+            left={<AddIcon />}
+            right={<Shortcut>{shortcuts.add.shortcut}</Shortcut>}
+            onClick={handleOpenCreateFundModal}
+          >
             Add fund
           </PrimaryButton>
         </Actions>
@@ -139,7 +159,12 @@ const App = () => {
         {({ register }) => (
           <>
             <InputCurrency aria-label="amount" {...inputs.amount(register)} />
-            <BalanceButton right={<BalanceIcon />} type="submit">
+            <BalanceButton
+              ref={shortcuts.balance.ref}
+              disabled={isModalOpen}
+              left={<BalanceIcon />}
+              right={<Shortcut>{shortcuts.balance.shortcut}</Shortcut>}
+            >
               Balance
             </BalanceButton>
           </>

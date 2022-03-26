@@ -1,14 +1,14 @@
-import { render, screen } from "../../shared/utils-test";
-import FundCreateOnboarding from "./FundCreateOnboarding";
+import { render, screen } from "./shared/utils-test";
+import AppOnboarding from "./AppOnboarding";
 
 test("renders a title", () => {
-  render(<FundCreateOnboarding onCreateFundClick={() => {}} />);
+  render(<AppOnboarding onCreateFundClick={() => {}} />);
 
   expect(screen.getByText("Add your first fund")).toBeInTheDocument();
 });
 
 test("renders information about adding a fund", () => {
-  render(<FundCreateOnboarding onCreateFundClick={() => {}} />);
+  render(<AppOnboarding onCreateFundClick={() => {}} />);
 
   expect(
     screen.getByText(

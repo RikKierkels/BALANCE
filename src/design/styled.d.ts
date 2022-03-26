@@ -64,6 +64,10 @@ declare module "styled-components" {
       background: string;
       icon: string;
     };
+    shortcut: {
+      primary: string;
+      secondary: string;
+    };
   };
 
   type Radius = {
@@ -72,6 +76,7 @@ declare module "styled-components" {
     input: string;
     modal: string;
     row: string;
+    shortcut: string;
   };
 
   type Spacing = {

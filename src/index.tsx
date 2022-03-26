@@ -4,13 +4,29 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Theme from "./design/Theme";
 import ModalProvider from "./components/Modal/ModalProvider";
+import AppOnboarding from "./AppOnboarding";
+import AppStateProvider, { useAppState } from "./AppStateProvider";
+
+const Index = () => {
+  const [{ portfolio }] = useAppState();
+  return !!portfolio.funds.length ? <App /> : <AppOnboarding />;
+};
 
 ReactDOM.render(
   <React.StrictMode>
     <Theme>
-      <ModalProvider>
-        <App />
-      </ModalProvider>
+      <AppStateProvider
+        initialState={{
+          selectedFundIds: [],
+          amount: undefined,
+          portfolio: { funds: [], total: 0 },
+          increment: null,
+        }}
+      >
+        <ModalProvider>
+          <Index />
+        </ModalProvider>
+      </AppStateProvider>
     </Theme>
   </React.StrictMode>,
   document.getElementById("root"),

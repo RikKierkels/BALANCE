@@ -1,7 +1,9 @@
+import React from "react";
 import { v4 as uuid } from "uuid";
-import { pipe, zip } from "./shared/util";
 import { Fund, FundCreateOrUpdate, FundIncrement, FundPrices, Portfolio, PortfolioIncrement } from "./shared/portfolio";
+import { pipe, zip } from "./shared/util";
 import { balance, updateTotal, updateWeights } from "./shared/portfolio-balancer";
+import useLocalStorageReducer from "./hooks/use-local-storage-reducer";
 
 const toPortfolioIncrement = (before: Portfolio, after: Portfolio): PortfolioIncrement => ({
   total: after.total - before.total,
@@ -47,7 +49,7 @@ type Action =
   | { type: "allFundsSelected" }
   | { type: "allFundsDeselected" };
 
-export const reducer = (state: State, action: Action): State => {
+const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "portfolioBalanced":
       const { amount } = action.payload;
@@ -108,3 +110,23 @@ export const reducer = (state: State, action: Action): State => {
       return { ...state, selectedFundIds: [] };
   }
 };
+
+type AppStateContext = [State, React.Dispatch<Action>];
+
+const Context = React.createContext<AppStateContext | undefined>(undefined);
+
+export const useAppState = () => {
+  const context = React.useContext(Context);
+  if (!context) throw new Error("useAppState must be used within a AppStateProvider.");
+
+  return context;
+};
+
+type Props = React.PropsWithChildren<{ initialState: State; storageKey?: string }>;
+
+const AppStateProvider = ({ children, initialState, storageKey = "state" }: Props) => {
+  const [state, dispatch] = useLocalStorageReducer(reducer, initialState, storageKey);
+  return <Context.Provider value={[state, dispatch]}>{children}</Context.Provider>;
+};
+
+export default AppStateProvider;

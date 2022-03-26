@@ -63,6 +63,10 @@ export const defaultTheme: DefaultTheme = {
       background: "#fff",
       icon: "#2d3843",
     },
+    shortcut: {
+      primary: "#318ee3",
+      secondary: "#e1e6ea",
+    },
   },
   radius: {
     button: "6px",
@@ -70,6 +74,7 @@ export const defaultTheme: DefaultTheme = {
     input: "6px",
     modal: "6px",
     row: "6px",
+    shortcut: "4px",
   },
   spacing: {
     xxs: "0.125rem",

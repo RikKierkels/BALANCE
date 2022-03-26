@@ -8,18 +8,18 @@ type Props<T> = {
   children: (methods: UseFormReturn<T>) => React.ReactNode;
 } & FormProps;
 
-const Form = <T extends Record<string, any> = Record<string, any>>({
-  defaultValues,
-  onSubmit,
-  children,
-  ...props
-}: Props<T>) => {
+const Form = <T extends Record<string, any> = Record<string, any>>(
+  { defaultValues, onSubmit, children, ...props }: Props<T>,
+  ref: React.ForwardedRef<HTMLFormElement>,
+) => {
   const methods = useForm<T>({ defaultValues, mode: "onBlur" });
   return (
-    <form onSubmit={methods.handleSubmit(onSubmit)} {...props}>
+    <form ref={ref} onSubmit={methods.handleSubmit(onSubmit)} {...props}>
       {children(methods)}
     </form>
   );
 };
 
-export default Form;
+export default React.forwardRef(Form) as <T>(
+  props: Props<T> & { ref?: React.ForwardedRef<HTMLFormElement> },
+) => ReturnType<typeof Form>;
