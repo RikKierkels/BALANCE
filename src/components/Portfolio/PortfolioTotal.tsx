@@ -1,5 +1,5 @@
 import { useCurrencyFormatter } from "../../hooks/use-formatter";
-import Increment from "../Fund/Increment";
+import Increment from "../Common/Increment";
 
 type Props = {
   className?: string;

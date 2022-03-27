@@ -3,11 +3,14 @@ import { render, queries, RenderOptions, BoundFunctions, screen, within } from "
 import * as customQueries from "./custom-queries";
 import Theme from "../design/Theme";
 import ModalProvider from "../components/Modal/ModalProvider";
+import AppStateProvider from "../AppStateProvider";
 
 const AllProviders = ({ children }: PropsWithChildren<{}>) => (
   <Theme>
     <div id="modal-root" />
-    <ModalProvider>{children}</ModalProvider>
+    <AppStateProvider>
+      <ModalProvider>{children}</ModalProvider>
+    </AppStateProvider>
   </Theme>
 );
 

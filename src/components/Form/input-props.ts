@@ -1,6 +1,6 @@
 import { UseFormRegister, UseFormRegisterReturn, ValidationRule } from "react-hook-form";
 import { FundCreateOrUpdate, FundPrices } from "../../shared/portfolio";
-import { BalanceAmount } from "../Balance/BalanceForm";
+import { BalanceAmount } from "../Portfolio/PortfolioBalanceForm";
 import React from "react";
 
 const required = (name: string = "value"): ValidationRule<boolean> => ({

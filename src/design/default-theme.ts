@@ -1,6 +1,6 @@
 import { DefaultTheme } from "styled-components";
 
-export const defaultTheme: DefaultTheme = {
+export const DEFAULT_THEME: DefaultTheme = {
   app: {
     width: "1020px",
   },

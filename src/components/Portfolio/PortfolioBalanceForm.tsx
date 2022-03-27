@@ -3,7 +3,7 @@ import Form from "../Form/Form";
 
 export type BalanceAmount = { amount: number };
 
-const BalanceForm = styled(Form)`
+const PortfolioBalanceForm = styled(Form)`
   display: flex;
 
   > * {
@@ -15,4 +15,4 @@ const BalanceForm = styled(Form)`
   }
 ` as typeof Form;
 
-export default BalanceForm;
+export default PortfolioBalanceForm;

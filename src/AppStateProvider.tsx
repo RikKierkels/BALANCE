@@ -37,8 +37,13 @@ const updateFundPrice = (fund: Fund, price: number) => ({
   total: fund.quantity * price,
 });
 
-type State = { selectedFundIds: string[]; amount?: number; portfolio: Portfolio; increment: PortfolioIncrement | null };
-type Action =
+export type AppState = {
+  selectedFundIds: string[];
+  amount?: number;
+  portfolio: Portfolio;
+  increment: PortfolioIncrement | null;
+};
+type AppActions =
   | { type: "portfolioBalanced"; payload: { amount: number } }
   | { type: "fundCreated"; payload: { fund: FundCreateOrUpdate } }
   | { type: "fundUpdated"; payload: { fund: FundCreateOrUpdate } }
@@ -49,7 +54,7 @@ type Action =
   | { type: "allFundsSelected" }
   | { type: "allFundsDeselected" };
 
-const reducer = (state: State, action: Action): State => {
+const reducer = (state: AppState, action: AppActions): AppState => {
   switch (action.type) {
     case "portfolioBalanced":
       const { amount } = action.payload;
@@ -111,7 +116,7 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
-type AppStateContext = [State, React.Dispatch<Action>];
+type AppStateContext = [AppState, React.Dispatch<AppActions>];
 
 const Context = React.createContext<AppStateContext | undefined>(undefined);
 
@@ -122,9 +127,16 @@ export const useAppState = () => {
   return context;
 };
 
-type Props = React.PropsWithChildren<{ initialState: State; storageKey?: string }>;
+const INITIAL_STATE: AppState = {
+  selectedFundIds: [],
+  amount: undefined,
+  portfolio: { funds: [], total: 0 },
+  increment: null,
+};
 
-const AppStateProvider = ({ children, initialState, storageKey = "state" }: Props) => {
+type Props = React.PropsWithChildren<{ initialState?: AppState; storageKey?: string }>;
+
+const AppStateProvider = ({ children, initialState = INITIAL_STATE, storageKey = "state" }: Props) => {
   const [state, dispatch] = useLocalStorageReducer(reducer, initialState, storageKey);
   return <Context.Provider value={[state, dispatch]}>{children}</Context.Provider>;
 };

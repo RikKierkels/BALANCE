@@ -3,7 +3,7 @@ import ActionRow, { Props as ActionRowProps } from "../Row/ActionRow";
 import { Fund, FundIncrement as FundIncrementType } from "../../shared/portfolio";
 import React from "react";
 import { useCurrencyFormatter, useNumberFormatter, usePercentageFormatter } from "../../hooks/use-formatter";
-import Increment from "./Increment";
+import Increment from "../Common/Increment";
 
 type Props = {
   fund: Fund;
