@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useRef } from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import InputCurrency from "../Form/InputCurrency";
 import PortfolioBalanceForm, { BalanceAmount } from "./PortfolioBalanceForm";
@@ -9,7 +9,7 @@ import { ReactComponent as BalanceIcon } from "../../assets/play.svg";
 import { useModal } from "../Modal/ModalProvider";
 import PrimaryButton from "../Buttons/PrimaryButton";
 import FundCreateOrUpdateForm from "../Fund/FundCreateOrUpdateForm";
-import { Fund, FundCreateOrUpdate, FundPrices } from "../../shared/portfolio";
+import { Fund } from "../../shared/portfolio";
 import FundPricesUpdateForm from "../Fund/FundPricesUpdateForm";
 import { inputs } from "../Form/input-props";
 import FundDeleteConfirmation from "../Fund/FundDeleteConfirmation";
@@ -19,7 +19,7 @@ import ActionRow from "../Row/ActionRow";
 import StaticRow from "../Row/StaticRow";
 import PortfolioTotal from "./PortfolioTotal";
 import FundRow from "../Fund/FundRow";
-import { useAppState } from "../../AppStateProvider";
+import { AppAction, useAppState } from "../../AppStateProvider";
 import useShortcut from "../../hooks/use-shortcut";
 import Shortcut from "../Common/Shortcut";
 
@@ -29,66 +29,98 @@ const Portfolio = () => {
   const { open, close, isOpen: isModalOpen } = useModal();
   const [{ selectedFundIds, amount, portfolio, increment }, dispatch] = useAppState();
   const shortcuts = {
-    delete: { shortcut: "D", ref: useShortcut<HTMLButtonElement>("d", click) },
+    addFund: { shortcut: "N", ref: useShortcut<HTMLButtonElement>("n", click) },
+    deleteFunds: { shortcut: "D", ref: useShortcut<HTMLButtonElement>("d", click) },
     updatePrices: { shortcut: "P", ref: useShortcut<HTMLButtonElement>("p", click) },
-    add: { shortcut: "N", ref: useShortcut<HTMLButtonElement>("n", click) },
     balance: { shortcut: "B", ref: useShortcut<HTMLButtonElement>("b", click) },
   };
 
-  const isFundSelected = (id: string) => selectedFundIds.includes(id);
+  const dispatchAndClose = useCallback(
+    (action: AppAction) => {
+      dispatch(action);
+      close();
+    },
+    [dispatch, close],
+  );
+
+  const handleOpenCreateFundModal = useCallback(
+    () =>
+      open(
+        <FundCreateOrUpdateForm
+          onCancel={close}
+          onSubmit={(fund) => dispatchAndClose({ type: "fundCreated", payload: { fund } })}
+        />,
+        {
+          title: "Add fund",
+        },
+      ),
+    [open, close, dispatchAndClose],
+  );
+
+  const handleOpenUpdateFundModal = useCallback(
+    (fund: Fund) =>
+      open(
+        <FundCreateOrUpdateForm
+          fund={fund}
+          onCancel={close}
+          onSubmit={(updatedFund) => dispatchAndClose({ type: "fundUpdated", payload: { fund: updatedFund } })}
+        />,
+        {
+          title: "Update fund",
+        },
+      ),
+    [open, close, dispatchAndClose],
+  );
+
+  const handleOpenDeleteFundModal = useCallback(
+    () =>
+      open(
+        <FundDeleteConfirmation
+          onCancel={close}
+          onConfirm={() => dispatchAndClose({ type: "fundsDeleted", payload: { ids: selectedFundIds } })}
+        />,
+        {
+          title: `Delete ${selectedFundIds.length} fund(s)`,
+        },
+      ),
+    [open, close, dispatchAndClose, selectedFundIds],
+  );
+
+  const handleOpenUpdateFundPricesModal = useCallback(
+    () =>
+      open(
+        <FundPricesUpdateForm
+          funds={portfolio.funds}
+          onCancel={close}
+          onSubmit={(prices) => dispatchAndClose({ type: "fundPricesUpdated", payload: { prices } })}
+        />,
+        {
+          title: "Update prices",
+        },
+      ),
+    [open, close, portfolio.funds, dispatchAndClose],
+  );
+
+  const isFundSelected = useCallback((id: string) => selectedFundIds.includes(id), [selectedFundIds]);
   const hasSelectedAllFunds = portfolio.funds.map(({ id }) => id).every(isFundSelected);
   const hasSelectedAnyFund = !!selectedFundIds.length;
 
-  const handleOpenCreateFundModal = () =>
-    open(<FundCreateOrUpdateForm onCancel={close} onSubmit={handleCreateFund} />, { title: "Add fund" });
+  const handleSelectedFundChange = useCallback(
+    ({ id }: Fund) => dispatch({ type: isFundSelected(id) ? "fundDeselected" : "fundSelected", payload: { id } }),
+    [dispatch, isFundSelected],
+  );
 
-  const handleCreateFund = (fund: FundCreateOrUpdate) => {
-    dispatch({ type: "fundCreated", payload: { fund } });
-    close();
-  };
+  const handleSelectedAllFundsChange = useCallback(
+    () => dispatch({ type: hasSelectedAllFunds ? "allFundsDeselected" : "allFundsSelected" }),
+    [dispatch, hasSelectedAllFunds],
+  );
 
-  const handleOpenUpdateFundModal = (fund: Fund) =>
-    open(<FundCreateOrUpdateForm fund={fund} onCancel={close} onSubmit={handleUpdateFund} />, {
-      title: "Update fund",
-    });
+  const handleDeselectAllFunds = useCallback(() => dispatch({ type: "allFundsDeselected" }), [dispatch]);
 
-  const handleUpdateFund = (fund: FundCreateOrUpdate) => {
-    dispatch({ type: "fundUpdated", payload: { fund } });
-    close();
-  };
-
-  const handleOpenDeleteFundModal = () =>
-    open(<FundDeleteConfirmation onCancel={close} onConfirm={handleDeleteFunds} />, {
-      title: `Delete ${selectedFundIds.length} fund${selectedFundIds.length > 1 ? "s" : ""}?`,
-    });
-
-  const handleDeleteFunds = () => {
-    dispatch({ type: "fundsDeleted", payload: { ids: selectedFundIds } });
-    close();
-  };
-
-  const handleOpenUpdateFundPricesModal = () =>
-    open(<FundPricesUpdateForm funds={portfolio.funds} onCancel={close} onSubmit={handleUpdatePrices} />, {
-      title: "Update prices",
-    });
-
-  const handleUpdatePrices = (prices: FundPrices) => {
-    dispatch({ type: "fundPricesUpdated", payload: { prices } });
-    close();
-  };
-
-  const handleBalancePortfolio = ({ amount }: BalanceAmount) =>
-    dispatch({ type: "portfolioBalanced", payload: { amount } });
-
-  const handleSelectedFundChange = ({ id }: Fund) =>
-    dispatch({ type: isFundSelected(id) ? "fundDeselected" : "fundSelected", payload: { id } });
-
-  const handleSelectedAllFundsChange = () =>
-    dispatch({ type: hasSelectedAllFunds ? "allFundsDeselected" : "allFundsSelected" });
-
-  const handleDeselectAllFunds = () => {
-    dispatch({ type: "allFundsDeselected" });
-  };
+  const handleBalancePortfolio = useCallback(
+    ({ amount }: BalanceAmount) => dispatch({ type: "portfolioBalanced", payload: { amount } }),
+    [dispatch],
+  );
 
   return (
     <Main>
@@ -96,10 +128,10 @@ const Portfolio = () => {
         <Actions>
           <LinkButton onClick={handleDeselectAllFunds}>Deselect</LinkButton>
           <PrimaryButton
-            ref={shortcuts.delete.ref}
+            ref={shortcuts.deleteFunds.ref}
             disabled={isModalOpen}
             left={<DeleteIcon />}
-            right={<Shortcut>{shortcuts.delete.shortcut}</Shortcut>}
+            right={<Shortcut>{shortcuts.deleteFunds.shortcut}</Shortcut>}
             onClick={handleOpenDeleteFundModal}
           >
             Delete
@@ -117,10 +149,10 @@ const Portfolio = () => {
             Update prices
           </SecondaryButton>
           <PrimaryButton
-            ref={shortcuts.add.ref}
+            ref={shortcuts.addFund.ref}
             disabled={isModalOpen}
             left={<AddIcon />}
-            right={<Shortcut>{shortcuts.add.shortcut}</Shortcut>}
+            right={<Shortcut>{shortcuts.addFund.shortcut}</Shortcut>}
             onClick={handleOpenCreateFundModal}
           >
             Add fund

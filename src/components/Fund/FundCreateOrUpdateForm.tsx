@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import { Fund, FundCreateOrUpdate } from "../../shared/portfolio";
 import PrimaryButton from "../Buttons/PrimaryButton";
@@ -25,7 +25,10 @@ type Props = {
 };
 
 const FundCreateOrUpdateForm = ({ fund, onCancel, onSubmit }: Props) => {
-  const handleSubmit = (fund: FundCreateOrUpdate) => onSubmit({ ...fund, weight: fromPercentageToFactor(fund.weight) });
+  const handleSubmit = useCallback(
+    (fund: FundCreateOrUpdate) => onSubmit({ ...fund, weight: fromPercentageToFactor(fund.weight) }),
+    [onSubmit],
+  );
 
   return (
     <StyledForm<FundCreateOrUpdate> defaultValues={toDefaultFormValues(fund)} onSubmit={handleSubmit}>

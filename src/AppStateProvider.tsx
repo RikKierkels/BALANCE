@@ -43,7 +43,7 @@ export type AppState = {
   portfolio: Portfolio;
   increment: PortfolioIncrement | null;
 };
-type AppActions =
+export type AppAction =
   | { type: "portfolioBalanced"; payload: { amount: number } }
   | { type: "fundCreated"; payload: { fund: FundCreateOrUpdate } }
   | { type: "fundUpdated"; payload: { fund: FundCreateOrUpdate } }
@@ -54,7 +54,7 @@ type AppActions =
   | { type: "allFundsSelected" }
   | { type: "allFundsDeselected" };
 
-const reducer = (state: AppState, action: AppActions): AppState => {
+const reducer = (state: AppState, action: AppAction): AppState => {
   switch (action.type) {
     case "portfolioBalanced":
       const { amount } = action.payload;
@@ -116,7 +116,7 @@ const reducer = (state: AppState, action: AppActions): AppState => {
   }
 };
 
-type AppStateContext = [AppState, React.Dispatch<AppActions>];
+type AppStateContext = [AppState, React.Dispatch<AppAction>];
 
 const Context = React.createContext<AppStateContext | undefined>(undefined);
 

@@ -36,7 +36,7 @@ const withSignAlways = (options: FormatterOptions = {}): FormatterOptions => ({ 
 const createNumberFormatter = ({ locale, ...options }: FormatterOptions) => new Intl.NumberFormat(locale, options);
 const toCurrencySymbol = (parts: Intl.NumberFormatPart[]) => parts.find((part) => part.type === "currency")?.value;
 
-const toFormatter = (options: UseFormatterOptions) => {
+const useFormatter = (options: UseFormatterOptions) => {
   const formatter = createNumberFormatter(options);
   const formatterWithSign = createNumberFormatter(withSignAlways(options));
 
@@ -49,9 +49,10 @@ const toFormatter = (options: UseFormatterOptions) => {
   };
 };
 
-export const useNumberFormatter = (options?: UseNumberFormatterOptions) => toFormatter(withNumber(options));
-export const usePercentageFormatter = (options?: UsePercentageFormatterOptions) => toFormatter(withPercentage(options));
+export const useNumberFormatter = (options?: UseNumberFormatterOptions) => useFormatter(withNumber(options));
+export const usePercentageFormatter = (options?: UsePercentageFormatterOptions) =>
+  useFormatter(withPercentage(options));
 export const useCurrencyFormatter = (options?: UseCurrencyFormatterOptions) => {
-  const formatter = toFormatter(withCurrency(options));
+  const formatter = useFormatter(withCurrency(options));
   return { ...formatter, symbol: toCurrencySymbol(formatter.formatToParts(0)) };
 };
