@@ -1,8 +1,8 @@
 import { render, screen } from "../../shared/utils-test";
-import FundDeleteConfirmation from "./FundDeleteConfirmation";
+import FundDeleteForm from "./FundDeleteForm";
 
 test("renders a confirmation message", () => {
-  render(<FundDeleteConfirmation onConfirm={() => {}} onCancel={() => {}} />);
+  render(<FundDeleteForm onConfirm={() => {}} onCancel={() => {}} />);
 
   expect(
     screen.getByText(

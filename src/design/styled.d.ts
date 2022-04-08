@@ -12,13 +12,11 @@ declare module "styled-components" {
       primary: {
         background: string;
         text: string;
-        border: string;
         outline: string;
       };
       secondary: {
         background: string;
         text: string;
-        border: string;
         outline: string;
       };
       link: {

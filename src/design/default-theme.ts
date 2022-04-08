@@ -11,13 +11,11 @@ export const DEFAULT_THEME: DefaultTheme = {
       primary: {
         background: "#196BB5",
         text: "#fff",
-        border: "transparent",
         outline: "25 107 181",
       },
       secondary: {
         background: "#fff",
         text: "#2d3843",
-        border: "transparent",
         outline: "45 56 67  / 16%",
       },
       link: {

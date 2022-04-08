@@ -17,8 +17,7 @@ export default BaseButton;
 const Button = styled.button`
   display: inline-flex;
   align-items: baseline;
-  border-width: 2px;
-  border-style: solid;
+  border: 2px solid transparent;
   padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.lg};
   font-size: ${({ theme }) => theme.font.md};
   transition: 0.3s ${({ theme }) => theme.animations.easeOutCubic};

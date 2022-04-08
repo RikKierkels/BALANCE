@@ -7,6 +7,7 @@ test("when a new fund is added through the onboarding, shows the portfolio", asy
   render(<App />);
 
   userEvent.click(screen.getButtonByName(/add a fund/i));
+
   const modal = within(screen.getByRole("dialog"));
   userEvent.type(modal.getByLabelText(/name/i), "S&P 500");
   userEvent.type(modal.getByLabelText(/quantity/i), "10");

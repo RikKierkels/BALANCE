@@ -2,13 +2,13 @@ import React from "react";
 import { render, screen } from "../../shared/utils-test";
 import Increment from "./Increment";
 
-test.each([undefined, 0])("without a value, renders nothing", (value) => {
+test.each([undefined, 0])("with a falsy value, renders nothing", (value) => {
   const { container } = render(<Increment value={value} formatter={() => []} />);
 
   expect(container.firstChild).toBeEmptyDOMElement();
 });
 
-test("without parts, renders nothing", () => {
+test("with empty parts, renders nothing", () => {
   const { container } = render(<Increment value={5} formatter={() => []} />);
 
   expect(container.firstChild).toBeEmptyDOMElement();

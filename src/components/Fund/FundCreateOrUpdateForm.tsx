@@ -6,6 +6,7 @@ import Input from "../Form/Input";
 import { inputs } from "../Form/input-props";
 import Form from "../Form/Form";
 import SecondaryButton from "../Buttons/SecondaryButton";
+import FundForm from "./FundForm";
 
 const fromFactorToPercentage = (factor: number) => factor * 100;
 const fromPercentageToFactor = (percentage: number) => percentage / 100;
@@ -31,7 +32,12 @@ const FundCreateOrUpdateForm = ({ fund, onCancel, onSubmit }: Props) => {
   );
 
   return (
-    <StyledForm<FundCreateOrUpdate> defaultValues={toDefaultFormValues(fund)} onSubmit={handleSubmit}>
+    <FundForm<FundCreateOrUpdate>
+      defaultValues={toDefaultFormValues(fund)}
+      labels={{ submit: `${fund ? "Update" : "Add"} fund` }}
+      onCancel={onCancel}
+      onSubmit={handleSubmit}
+    >
       {({ register, formState: { errors } }) => (
         <>
           <Input error={errors?.name?.message} {...inputs.name(register)}>
@@ -46,39 +52,10 @@ const FundCreateOrUpdateForm = ({ fund, onCancel, onSubmit }: Props) => {
           <Input error={errors?.weight?.message} {...inputs.weight(register)}>
             Target weight
           </Input>
-          <Actions>
-            <SecondaryButton type="button" onClick={onCancel}>
-              Cancel
-            </SecondaryButton>
-            <PrimaryButton type="submit">{fund ? "Update fund" : "Add fund"}</PrimaryButton>
-          </Actions>
         </>
       )}
-    </StyledForm>
+    </FundForm>
   );
 };
-
-const StyledForm = styled(Form)`
-  > * {
-    width: 100%;
-  }
-
-  > * + * {
-    margin-top: ${({ theme }) => theme.spacing.xlg};
-  }
-
-  > :last-child {
-    margin-top: ${({ theme }) => theme.spacing.xxlg};
-  }
-` as typeof Form;
-
-const Actions = styled.div`
-  display: flex;
-  justify-content: flex-end;
-
-  > * + * {
-    margin-left: ${({ theme }) => theme.spacing.sm};
-  }
-`;
 
 export default FundCreateOrUpdateForm;

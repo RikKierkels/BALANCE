@@ -12,7 +12,7 @@ import FundCreateOrUpdateForm from "../Fund/FundCreateOrUpdateForm";
 import { Fund } from "../../shared/portfolio";
 import FundPricesUpdateForm from "../Fund/FundPricesUpdateForm";
 import { inputs } from "../Form/input-props";
-import FundDeleteConfirmation from "../Fund/FundDeleteConfirmation";
+import FundDeleteForm from "../Fund/FundDeleteForm";
 import LinkButton from "../Buttons/LinkButton";
 import SecondaryButton from "../Buttons/SecondaryButton";
 import ActionRow from "../Row/ActionRow";
@@ -75,7 +75,7 @@ const Portfolio = () => {
   const handleOpenDeleteFundModal = useCallback(
     () =>
       open(
-        <FundDeleteConfirmation
+        <FundDeleteForm
           onCancel={close}
           onConfirm={() => dispatchAndClose({ type: "fundsDeleted", payload: { ids: selectedFundIds } })}
         />,

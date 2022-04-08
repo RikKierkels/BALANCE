@@ -9,7 +9,7 @@ test("renders a title", () => {
   expect(screen.getByText("Add your first fund")).toBeInTheDocument();
 });
 
-test("renders information about adding a fund", () => {
+test("renders details about adding a fund", () => {
   render(<Onboarding />);
 
   expect(
