@@ -1,11 +1,7 @@
 import React, { useCallback } from "react";
-import styled from "styled-components";
 import { Fund, FundCreateOrUpdate } from "../../shared/portfolio";
-import PrimaryButton from "../Buttons/PrimaryButton";
 import Input from "../Form/Input";
 import { inputs } from "../Form/input-props";
-import Form from "../Form/Form";
-import SecondaryButton from "../Buttons/SecondaryButton";
 import FundForm from "./FundForm";
 
 const fromFactorToPercentage = (factor: number) => factor * 100;
